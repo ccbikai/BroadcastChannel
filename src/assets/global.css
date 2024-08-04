@@ -1,0 +1,117 @@
+@view-transition {
+  navigation: auto;
+}
+
+.site-title {
+  view-transition-name: site-title;
+  transition: 0.2s ease;
+}
+
+.item {
+  transition: 0.2s ease;
+}
+
+[popover]:not(:popover-open):not(dialog[open]) {
+  display: none;
+}
+
+.image-preview-wrap {
+  display: block;
+}
+
+.image-preview-button {
+  -webkit-appearance: none;
+  outline: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-bottom: 16px;
+}
+
+.modal {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+}
+
+.modal-img {
+  margin: auto;
+  max-width: calc(100% - 40px);
+  max-height: calc(100% - 40px);
+  border-radius: var(--media-border-radius);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadows);
+  cursor: pointer;
+}
+.search-icon {
+  position: absolute;
+  top: 20px;
+  right: 0px;
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+
+  &::after {
+    content: '🔍';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--background-color);
+    text-align: center;
+    vertical-align: middle;
+    line-height: 24px;
+  }
+}
+
+.search-icon:checked + .search-form {
+  display: block !important;
+}
+.search-form {
+  display: none;
+  background: rgba(255, 255, 255, 0.75);
+  padding: 8px;
+  position: sticky;
+  top: 60px;
+  border-radius: var(--box-border-radius);
+
+  > input {
+    border: 1px solid var(--background-color);
+    border-radius: var(--box-border-radius);
+    outline: none;
+    font-size: 12px;
+    line-height: 2.4;
+    padding: 0 0.5em;
+    box-sizing: border-box;
+    width: 100%;
+  }
+}
+
+.copyright-wrap {
+  position: sticky;
+  top: 120px;
+  color: #666;
+  line-height: 1.5;
+  font-size: 14px;
+  display: none;
+}
+
+@media screen and (min-width: 600px) {
+  .search-form {
+    display: block;
+  }
+
+  .search-icon {
+    display: none;
+  }
+
+  .copyright-wrap {
+    display: block;
+  }
+}

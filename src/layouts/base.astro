@@ -1,0 +1,124 @@
+---
+import '../assets/normalize.css'
+import '../assets/style.css'
+import '../assets/global.css'
+import { SEO } from 'astro-seo'
+import { getEnv } from '../lib/env'
+
+const { SITE_URL } = Astro.locals
+const { channel } = Astro.props
+
+const locale = getEnv(import.meta.env, Astro, 'LOCALE')
+
+const seo = channel?.seo
+const canonical = SITE_URL.startsWith('http')
+  ? new URL(SITE_URL).origin + Astro.url.pathname
+  : Astro.url.origin + Astro.url.pathname
+const origin = new URL(canonical).origin
+const twitter = getEnv(import.meta.env, Astro, 'TWITTER')
+
+const seoParams = {
+  title: seo?.title,
+  description: seo?.text ?? channel?.description,
+  canonical,
+  noindex: getEnv(import.meta.env, Astro, 'NOINDEX'),
+  nofollow: getEnv(import.meta.env, Astro, 'NOFOLLOW'),
+  openGraph: {
+    basic: {
+      type: 'website',
+      title: channel?.title ?? '',
+      url: canonical,
+      image: channel?.avatar ? channel.avatar : origin + '/favicon.ico',
+    },
+    optional: {
+      description: seo?.text ?? channel?.description,
+      locale: getEnv(import.meta.env, Astro, 'LOCALE'),
+    },
+  },
+  extend: {
+    link: [{ rel: 'icon', href: '/favicon.svg' }],
+  },
+}
+
+const HEADER_INJECT = getEnv(import.meta.env, Astro, 'HEADER_INJECT')
+const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
+---
+
+<!doctype html>
+<html lang={locale ?? 'en'}>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f1ec" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={channel?.title}
+      href={origin + '/rss.xml'}
+    />
+    <SEO
+      charset="utf-8"
+      titleTemplate={`%s | ${channel?.title}`}
+      titleDefault={[channel?.title, seoParams.description]
+        .filter(Boolean)
+        .join(' - ')}
+      twitter={{
+        card: 'summary_large_image',
+        creator: twitter ? `@${twitter}` : undefined,
+      }}
+      {...seoParams}
+    />
+    <Fragment set:html={HEADER_INJECT} />
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="container">
+        <div id="main-container">
+          <slot />
+        </div>
+        <div id="aside-container">
+          <slot name="aside">
+            <div class="nav">
+              <div class="nav-item">
+                <a
+                  href={SITE_URL}
+                  title={channel?.title}
+                  class={`nav-link current`}>Home</a
+                >
+              </div>
+            </div>
+            <input
+              class="search-icon"
+              name="icon"
+              type="checkbox"
+              placeholder="Search"
+            />
+            <form class="search-form" action="/search/result" method="get">
+              <input type="text" name="q" placeholder="Search" />
+            </form>
+            <div class="copyright-wrap">
+              Powered by
+              <a
+                href="https://github.com/ccbikai/BroadcastChannel"
+                title="BroadcastChannel"
+                target="_blank"
+                rel="noopener"
+              >
+                BroadcastChannel
+              </a> &
+              <a
+                href="https://github.com/Planetable/SiteTemplateSepia"
+                title="Sepia"
+                target="_blank"
+                rel="noopener"
+              >
+                Sepia
+              </a>
+            </div>
+          </slot>
+        </div>
+      </div>
+    </div>
+
+    <Fragment set:html={FOOTER_INJECT} />
+  </body>
+</html>

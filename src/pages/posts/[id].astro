@@ -1,0 +1,26 @@
+---
+import List from '../../components/list.astro'
+import { getChannelInfo } from '../../lib/telegram'
+
+const { SITE_URL } = Astro.locals
+
+const channel = await getChannelInfo(Astro)
+
+const post = await getChannelInfo(Astro, {
+  id: Astro.params.id,
+})
+
+channel.posts = [post]
+channel.seo = post
+
+export const prerender = false
+---
+
+<List channel={channel} before={false} after={false}>
+  <div slot="header" id="breadcrumb">
+    <img src={channel.avatar} class="breadcrumb-avatar" />
+    <div class="breadcrumb-title">
+      <a href={SITE_URL} class="site-title">{channel.title}</a>
+    </div>
+  </div>
+</List>

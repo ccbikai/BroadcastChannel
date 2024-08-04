@@ -1,0 +1,177 @@
+---
+import dayjs from '../lib/dayjs'
+import { getEnv } from '../lib/env'
+
+const locale = getEnv(import.meta.env, Astro, 'LOCALE')
+const timezone = getEnv(import.meta.env, Astro, 'TIMEZONE')
+
+locale && dayjs.locale(locale)
+
+const { SITE_URL } = Astro.locals
+const { post } = Astro.props
+
+const datetime = dayjs(post.datetime).tz(timezone)
+const timeago = datetime.isBefore(dayjs().subtract(1, 'w'))
+  ? datetime.format('HH:mm · ll · ddd')
+  : datetime.fromNow()
+---
+
+<div class="item" style={{ 'view-transition-name': `post-${post.id}` }}>
+  <div class="time-box">
+    <div class="dot"></div>
+    <div class="time">
+      <a
+        href={`${SITE_URL}posts/${post.id}`}
+        title={post.datetime}
+        class="item-link">{timeago}</a
+      >
+    </div>
+  </div>
+  {
+    post.content.length > 0 && (
+      <div class={`text-box content`} set:html={post.content} />
+    )
+  }
+  {
+    post.tags.length > 0 && (
+      <div
+        class="tag-box"
+        style={post.content.length === 0 ? 'padding-top: 30px;' : ''}
+      >
+        <div class="tag-icon" />
+        {post.tags.map((tag) => (
+          <a href={`/search/%23${tag}`} title={tag} class="tag">
+            {tag}
+          </a>
+        ))}
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .content {
+    word-break: break-word;
+  }
+  .content :global(img) {
+    width: calc(100% - var(--box-margin));
+  }
+  .content :global(.tgme_widget_message_link_preview) {
+    margin-top: 16px;
+    display: none;
+
+    .link_preview_site_name,
+    .link_preview_title,
+    .link_preview_description {
+      display: none;
+    }
+  }
+
+  .content
+    :global(.tgme_widget_message_link_preview):has(.link_preview_site_name) {
+    display: block;
+    background: var(--cell-background-color);
+    border-left: 3px solid var(--highlight-color);
+    padding: 6px;
+    padding-left: 10px;
+    border-radius: var(--box-border-radius);
+
+    .link_preview_title {
+      display: block;
+      font-size: 1em;
+      font-weight: bolder;
+      line-height: 2;
+    }
+
+    .link_preview_description {
+      display: block;
+      font-size: 0.8em;
+      line-height: 1.5;
+    }
+  }
+
+  .content :global(.tgme_widget_message_video) {
+    aspect-ratio: 1 / 1;
+  }
+
+  .content :global(.tgme_widget_message_link_preview):has(.link_preview_image) {
+    display: flex;
+    position: relative;
+    border: none;
+    padding: 0;
+    background: transparent;
+
+    .link_preview_image {
+      aspect-ratio: 1200 / 630;
+      object-fit: cover;
+    }
+
+    .link_preview_site_name {
+      display: block;
+      position: absolute;
+      bottom: var(--box-margin);
+      left: var(--box-margin);
+      padding-left: 4px;
+      padding-right: 4px;
+      background-color: rgba(0, 0, 0, 0.66);
+      font-size: 14px;
+      color: #fff;
+      line-height: 1.5;
+      border-radius: var(--box-border-radius);
+      text-overflow: ellipsis;
+      max-width: calc(100% - 28px);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .link_preview_title,
+    .link_preview_description {
+      display: none;
+    }
+  }
+
+  .content :global(blockquote) {
+    margin: 16px 0;
+    font-size: 0.8em;
+    background: var(--cell-background-color);
+    border-left: 3px solid var(--highlight-color);
+    padding: 6px;
+    padding-left: 10px;
+    border-radius: var(--box-border-radius);
+  }
+
+  .content :global(.tgme_widget_message_sticker) {
+    display: block;
+  }
+
+  .item :global(.content):has(.tgme_widget_message_user_photo) {
+    display: flex;
+
+    .tgme_widget_message_user_photo {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  .content :global(.tgme_widget_message_voice) {
+    display: block !important;
+  }
+
+  .content :global(.tgme_widget_message_poll_options) {
+    display: block;
+
+    .tgme_widget_message_poll_option_percent {
+      float: left;
+      margin-right: 8px;
+    }
+  }
+
+  .content :global(.tgme_widget_message_location_wrap) {
+    display: block;
+    .tgme_widget_message_location {
+      padding-top: 50%;
+      background: no-repeat center;
+      background-size: cover;
+    }
+  }
+</style>

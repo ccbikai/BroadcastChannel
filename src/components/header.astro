@@ -1,0 +1,135 @@
+---
+import { getEnv } from '../lib/env'
+import voidFile from '../assets/void.png'
+import rss from '../assets/rss.svg'
+import podcast from '../assets/podcast.svg'
+import twitter from '../assets/twitter.svg'
+import github from '../assets/github.svg'
+import discord from '../assets/discord.svg'
+import telegram from '../assets/telegram.svg'
+
+const { SITE_URL } = Astro.locals
+const { channel } = Astro.props
+
+const PODCASRT = getEnv(import.meta.env, Astro, 'PODCASRT')
+const TWITTER = getEnv(import.meta.env, Astro, 'TWITTER')
+const GITHUB = getEnv(import.meta.env, Astro, 'GITHUB')
+const TELEGRAM = getEnv(import.meta.env, Astro, 'TELEGRAM')
+const DISCORD = getEnv(import.meta.env, Astro, 'DISCORD')
+
+const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
+---
+
+<div id="header">
+  <a href={SITE_URL} title={channel?.title}>
+    <img
+      src={channel?.avatar?.startsWith('http')
+        ? staticProxy + channel?.avatar
+        : voidFile.src}
+      alt={channel?.title}
+      class="header-avatar"
+    />
+  </a>
+  <div class="header-title">
+    <a href={SITE_URL} class="site-title" title={channel?.title}>
+      {channel?.title}
+    </a>
+  </div>
+  <div class="header-icons">
+    <a
+      href={`${SITE_URL}rss.xml`}
+      target="_blank"
+      rel="alternate"
+      type="application/rss+xml"
+      title="RSS Feed"
+    >
+      <img {...rss} alt="RSS" class="social-icon" width="1em" />
+    </a>
+
+    {
+      PODCASRT && (
+        <a href={PODCASRT} target="_blank" title="Podcast">
+          <img {...podcast} alt="Podcast" class="social-icon" width="1em" />
+        </a>
+      )
+    }
+
+    {
+      TWITTER && TWITTER.length > 0 && (
+        <a
+          href={`https://twitter.com/${TWITTER}`}
+          title="Twitter"
+          target="_blank"
+        >
+          <img
+            {...twitter}
+            alt={`twitter.com/${TWITTER}`}
+            class="social-icon"
+            width="1em"
+          />
+        </a>
+      )
+    }
+
+    {
+      GITHUB && GITHUB.length > 0 && (
+        <a href={`https://github.com/${GITHUB}`} title="Github" target="_blank">
+          <img
+            {...github}
+            alt={`github.com/${GITHUB}`}
+            class="social-icon"
+            width="1em"
+          />
+        </a>
+      )
+    }
+
+    {
+      TELEGRAM && TELEGRAM.length > 0 && (
+        <a href={`https://t.me/${TELEGRAM}`} title="Telegram" target="_blank">
+          <img
+            {...telegram}
+            alt={`t.me/${TELEGRAM}`}
+            class="social-icon"
+            width="1em"
+          />
+        </a>
+      )
+    }
+
+    {
+      DISCORD && DISCORD.length > 0 && (
+        <a href={DISCORD} title="Discord" target="_blank">
+          <img
+            {...discord}
+            alt="Discord Invite"
+            class="social-icon"
+            width="1em"
+          />
+        </a>
+      )
+    }
+  </div>
+</div>
+
+{
+  channel?.description && channel?.description.length > 0 && (
+    <div class="text-box" id="site-intro">
+      {channel?.description}
+    </div>
+  )
+}
+
+<style>
+  #site-intro {
+    color: var(--secondary-color);
+  }
+
+  .social-icon {
+    padding: 4px;
+  }
+
+  .header-icons {
+    gap: 2px;
+  }
+</style>
