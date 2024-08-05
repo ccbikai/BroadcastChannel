@@ -8,11 +8,15 @@ const targetWhitelist = [
 
 export const prerender = false
 
-export async function GET(Astro) {
-  const { request, params, url } = Astro
-  const target = new URL(params.url + url.search)
-  if (!targetWhitelist.some(host => target.host.endsWith(host))) {
-    return Astro.redirect(target.toString(), 302)
+export async function GET({ request, params, url }) {
+  try {
+    const target = new URL(params.url + url.search)
+    if (!targetWhitelist.some(domain => target.hostname.endsWith(domain))) {
+      return Response.redirect(target.toString(), 302)
+    }
+    return fetch(target.toString(), request)
   }
-  return fetch(target.toString(), request)
+  catch (error) {
+    return new Response(error.message, { status: 500 })
+  }
 }

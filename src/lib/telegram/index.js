@@ -28,8 +28,17 @@ function getImages($, item, { staticProxy, id, index, title }) {
 
 function getVideo($, item, { staticProxy, index }) {
   const video = $(item).find('.tgme_widget_message_video_wrap video')
-  video?.attr('src', staticProxy + video?.attr('src'))?.attr('controls', true)?.attr('preload', index > 15 ? 'auto' : 'metadata')
-  return $.html(video)
+  video?.attr('src', staticProxy + video?.attr('src'))
+    ?.attr('controls', true)
+    ?.attr('preload', index > 15 ? 'auto' : 'metadata')
+    ?.attr('playsinline', true).attr('webkit-playsinline', true)
+
+  const roundVideo = $(item).find('.tgme_widget_message_roundvideo_wrap video')
+  roundVideo?.attr('src', staticProxy + roundVideo?.attr('src'))
+    ?.attr('controls', true)
+    ?.attr('preload', index > 15 ? 'auto' : 'metadata')
+    ?.attr('playsinline', true).attr('webkit-playsinline', true)
+  return $.html(video) + $.html(roundVideo)
 }
 
 function getLinkPreview($, item, { staticProxy, index }) {
@@ -52,10 +61,10 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
   const title = content?.text()?.match(/[^。\n]*(?=[。\n]|http)/g)?.[0] ?? content?.text() ?? ''
   const id = $(item).attr('data-post')?.replace(`${channel}/`, '')
 
-  $(content).find('a').each((_index, a) => {
-    $(a).attr('title', $(a).text())
+  $(content).find('a')?.each((_index, a) => {
+    $(a)?.attr('title', $(a)?.text())
   })
-  $(content).find('.emoji').attr('style', '')
+  $(content).find('.emoji')?.attr('style', '')
   const tags = $(content).find('a[href^="?q="]')?.each((_index, a) => {
     $(a)?.attr('href', `/search/${encodeURIComponent($(a)?.text())}`)
   })?.map((_index, a) => $(a)?.text()?.replace('#', ''))?.get()
@@ -68,16 +77,15 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
     tags,
     text: content?.text(),
     content: [
+      $.html($(item).find('.tgme_widget_message_reply')?.wrapInner('<small></small>')?.wrapInner('<blockquote></blockquote>')),
       getImages($, item, { staticProxy, id, index, title }),
       getVideo($, item, { staticProxy, id, index, title }),
       content?.html(),
       // $(item).find('.tgme_widget_message_sticker_wrap')?.html(),
       $(item).find('.tgme_widget_message_poll')?.html(),
       $.html($(item).find('.tgme_widget_message_document_wrap')),
-      $.html($(item).find('.tgme_widget_message_roundvideo')?.attr('controls', true)),
       $.html($(item).find('.tgme_widget_message_voice')?.attr('controls', true)),
       $.html($(item).find('.tgme_widget_message_location_wrap')),
-      $.html($(item).find('.tgme_widget_message_reply .tgme_widget_message_text')?.wrapInner('<blockquote></blockquote>')),
       getLinkPreview($, item, { staticProxy, index }),
     ].filter(Boolean).join('').replace(/(url\(["'])((https?:)?\/\/)/g, (match, p1, p2, _p3) => {
       if (p2 === '//') {

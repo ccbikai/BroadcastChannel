@@ -90,7 +90,8 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w'))
     }
   }
 
-  .content :global(.tgme_widget_message_video) {
+  .content
+    :global(.tgme_widget_message_video, .tgme_widget_message_roundvideo) {
     aspect-ratio: 1 / 1;
   }
 

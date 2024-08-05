@@ -9,11 +9,12 @@ import sentry from '@sentry/astro'
 
 const providers = {
   vercel: vercel({
+    isr: false,
     edgeMiddleware: false,
   }),
   cloudflare_pages: cloudflare(),
   netlify: netlify({
-    cacheOnDemandPages: true,
+    cacheOnDemandPages: false,
     edgeMiddleware: false,
   }),
   node: node({
