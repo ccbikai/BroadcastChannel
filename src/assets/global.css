@@ -41,13 +41,22 @@
 
 .modal-img {
   margin: auto;
-  max-width: calc(100% - 40px);
-  max-height: calc(100% - 40px);
+  max-width: calc(100% - 40px) !important;
+  max-height: calc(100% - 40px) !important;
   border-radius: var(--media-border-radius);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadows);
   cursor: pointer;
+  object-fit: scale-down;
 }
+
+@media screen and (min-width: 600px) {
+  .modal-img {
+    max-width: calc(100% - 80px) !important;
+    max-height: calc(100% - 80px) !important;
+  }
+}
+
 .search-icon {
   position: absolute;
   top: 20px;

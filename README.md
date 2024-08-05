@@ -30,12 +30,13 @@ For detailed tutorials, see [Deploy your Astro site](https://docs.astro.build/en
 
 ## 🏗️ Deployment
 
-1. [Fork](https://github.com/ccbikai/BroadcastChannel/fork) this project to your Github
+1. [Fork](https://github.com/ccbikai/BroadcastChannel/fork) this project to your GitHub
 2. Create a project on Cloudflare/Netlify/Vercel
 3. Select the `BroadcastChannel` project and the `Astro` framework
 4. Configure the environment variable `CHANNEL` with your channel name. This is the minimal configuration, for more configurations see the options below
 5. Save and deploy
 6. Bind a domain (optional).
+7. Update code, refer to the official GitHub documentation [Syncing a fork branch from the web UI](https://docs.github.com/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork#syncing-a-fork-branch-from-the-web-ui).
 
 ## ⚒️ Configuration
 
@@ -78,4 +79,4 @@ STATIC_PROXY=""
 
 1. [Follow me on Telegram](https://t.me/miantiao_me)
 2. [Follow me on 𝕏](https://x.com/0xKaiBi)
-3. [Sponsor me on Github](https://github.com/sponsors/ccbikai)
+3. [Sponsor me on GitHub](https://github.com/sponsors/ccbikai)

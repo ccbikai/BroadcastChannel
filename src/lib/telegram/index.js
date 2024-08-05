@@ -55,6 +55,10 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
   $(content).find('a').each((_index, a) => {
     $(a).attr('title', $(a).text())
   })
+  $(content).find('a[href^="?q="]').each((_index, a) => {
+    $(a).attr('href', `/search/result${$(a).attr('href')}`)
+  })
+  $(content).find('.emoji').attr('style', '')
 
   return {
     id,
@@ -89,12 +93,12 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
 
 const unnessaryHeaders = ['host', 'cookie', 'origin', 'referer']
 
-export async function getChannelInfo(Astro, { before = '', after = '', q = '', id = '' } = {}) {
-  const cacheKey = JSON.stringify({ before, after, q, id })
+export async function getChannelInfo(Astro, { before = '', after = '', q = '', type = 'list', id = '' } = {}) {
+  const cacheKey = JSON.stringify({ before, after, q, type, id })
   const cachedResult = cache.get(cacheKey)
 
   if (cachedResult) {
-    console.info('Macth Cache', { before, after, q, id })
+    console.info('Macth Cache', { before, after, q, type, id })
     return JSON.parse(JSON.stringify(cachedResult))
   }
 
@@ -112,7 +116,7 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', i
     }
   })
 
-  console.info('Fetching', url, { before, after, q, id })
+  console.info('Fetching', url, { before, after, q, type, id })
   const html = await $fetch(url, {
     headers,
     query: {
