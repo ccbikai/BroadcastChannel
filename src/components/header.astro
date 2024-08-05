@@ -27,6 +27,7 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
         ? staticProxy + channel?.avatar
         : voidFile.src}
       alt={channel?.title}
+      loading="eager"
       class="header-avatar"
     />
   </a>
@@ -73,7 +74,7 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
 
     {
       GITHUB && GITHUB.length > 0 && (
-        <a href={`https://github.com/${GITHUB}`} title="Github" target="_blank">
+        <a href={`https://github.com/${GITHUB}`} title="GitHub" target="_blank">
           <img
             {...github}
             alt={`github.com/${GITHUB}`}
