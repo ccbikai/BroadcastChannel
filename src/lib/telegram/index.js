@@ -55,17 +55,17 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
   $(content).find('a').each((_index, a) => {
     $(a).attr('title', $(a).text())
   })
-  $(content).find('a[href^="?q="]').each((_index, a) => {
-    $(a).attr('href', `/search/result${$(a).attr('href')}`)
-  })
   $(content).find('.emoji').attr('style', '')
+  const tags = $(content).find('a[href^="?q="]')?.each((_index, a) => {
+    $(a)?.attr('href', `/search/${encodeURIComponent($(a)?.text())}`)
+  })?.map((_index, a) => $(a)?.text()?.replace('#', ''))?.get()
 
   return {
     id,
     title,
     type: $(item).attr('class')?.includes('service_message') ? 'service' : 'text',
     datetime: $(item).find('.tgme_widget_message_date time')?.attr('datetime'),
-    tags: $(item).find('a[href^="?q"]')?.map((_index, item) => $(item).text()?.replace('#', ''))?.get(),
+    tags,
     text: content?.text(),
     content: [
       getImages($, item, { staticProxy, id, index, title }),
