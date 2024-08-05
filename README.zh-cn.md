@@ -30,12 +30,13 @@
 
 ## 🏗️ 部署
 
-1. [Fork](https://github.com/ccbikai/BroadcastChannel/fork) 此项目到你 Github
+1. [Fork](https://github.com/ccbikai/BroadcastChannel/fork) 此项目到你 GitHub
 2. 在 Cloudflare/Netlify/Vercel 创建项目
 3. 选择 `BroadcastChannel` 项目和 `Astro` 框架
 4. 配置环境变量 `CHANNEL` 为你的频道名称。此为最小化配置，更多配置见下面的配置项
 5. 保存并部署
 6. 绑定域名（可选）。
+7. 更新代码，参考 GitHub 官方文档 [从 Web UI 同步分叉分支](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork#syncing-a-fork-branch-from-the-web-ui)。
 
 ## ⚒️ 配置
 
@@ -78,4 +79,4 @@ STATIC_PROXY=""
 
 1. [在 Telegram 关注我](https://t.me/miantiao_me)
 2. [在 𝕏 上关注我](https://x.com/ccbikai)
-3. [在 Github 赞助我](https://github.com/sponsors/ccbikai)
+3. [在 GitHub 赞助我](https://github.com/sponsors/ccbikai)
