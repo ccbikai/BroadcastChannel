@@ -2,7 +2,8 @@ import rss from '@astrojs/rss'
 
 import { getChannelInfo } from '../lib/telegram'
 
-export const prerender = false
+// eslint-disable-next-line style/semi
+export const prerender = false;
 
 export async function GET(Astro) {
   const request = Astro.request
