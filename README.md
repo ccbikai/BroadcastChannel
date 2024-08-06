@@ -17,6 +17,7 @@ English | [简体中文](./README.zh-cn.md)
 
 ### Real users
 
+- [Find Blog👁发现博客](https://broadcastchannel.pages.dev/)
 - [Memos 广场 🎪](https://now.memobbs.app/)
 - [APPDO 数字生活指南](https://mini.appdo.xyz/)
 
