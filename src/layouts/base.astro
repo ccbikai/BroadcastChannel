@@ -73,8 +73,7 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
       {...seoParams}
     />
     <Fragment set:html={HEADER_INJECT} />
-    <script src="src/lib/backToTop.js" type="module"></script></head
-  >
+  </head>
 
   <body>
     <div id="wrapper">
@@ -125,9 +124,13 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
         </div>
       </div>
     </div>
-    <button id="back-to-top" aria-label="Back to top" title="Back to top">
+    <a
+      href="#wrapper"
+      id="back-to-top"
+      aria-label="Back to top"
+      title="Back to top"
+    >
       <svg
-        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -137,7 +140,7 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
       >
         <polyline points="18 15 12 9 6 15"></polyline>
       </svg>
-    </button>
+    </a>
     <Fragment set:html={FOOTER_INJECT} />
   </body>
 </html>
