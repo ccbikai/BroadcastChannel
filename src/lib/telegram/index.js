@@ -149,7 +149,7 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
   const channelInfo = {
     posts,
     title: $('.tgme_channel_info_header_title')?.text(),
-    description: $('.tgme_channel_info_description')?.text(),
+    description: $('.tgme_channel_info_description')?.html(),
     avatar: $('.tgme_page_photo_image img')?.attr('src'),
   }
 
