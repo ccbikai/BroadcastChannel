@@ -30,6 +30,7 @@
 - [OKHK 分享](https://tg.okhk.net/)
 - [gledos 的微型博客](https://microblogging.gledos.science)
 - [Steve Studio](https://tgc.surgeee.me/)
+- [LiFePO4:沙雕吐槽](https://lifepo4.top)
 
 ### 平台
 
