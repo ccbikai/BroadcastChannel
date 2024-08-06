@@ -145,7 +145,7 @@
       color: transparent;
       background: #ccc 60% 60% / 3000px 3000px;
       background-image: repeating-conic-gradient(
-        #ccc 0 0.0001%,
+        #999 0 0.0001%,
         #000 0 0.0002%
       );
     }
