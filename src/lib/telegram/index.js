@@ -65,7 +65,7 @@ function modifyHTMLContent($, content) {
 
 function getPost($, item, { channel, staticProxy, index = 0 }) {
   item = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
-  const content = modifyHTMLContent($, $(item).find('.tgme_widget_message_bubble > .tgme_widget_message_text'))
+  const content = modifyHTMLContent($, $(item).find('.tgme_widget_message_text'))
   const title = content?.text()?.match(/[^。\n]*(?=[。\n]|http)/g)?.[0] ?? content?.text() ?? ''
   const id = $(item).attr('data-post')?.replace(`${channel}/`, '')
 
