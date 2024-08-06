@@ -55,16 +55,20 @@ function getLinkPreview($, item, { staticProxy, index }) {
   return $.html(link)
 }
 
-function getPost($, item, { channel, staticProxy, index = 0 }) {
-  item = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
-  const content = $(item).find('.tgme_widget_message_bubble > .tgme_widget_message_text')
-  const title = content?.text()?.match(/[^。\n]*(?=[。\n]|http)/g)?.[0] ?? content?.text() ?? ''
-  const id = $(item).attr('data-post')?.replace(`${channel}/`, '')
-
+function modifyHTMLContent($, content) {
   $(content).find('a')?.each((_index, a) => {
     $(a)?.attr('title', $(a)?.text())
   })
   $(content).find('.emoji')?.attr('style', '')
+  return content
+}
+
+function getPost($, item, { channel, staticProxy, index = 0 }) {
+  item = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
+  const content = modifyHTMLContent($, $(item).find('.tgme_widget_message_bubble > .tgme_widget_message_text'))
+  const title = content?.text()?.match(/[^。\n]*(?=[。\n]|http)/g)?.[0] ?? content?.text() ?? ''
+  const id = $(item).attr('data-post')?.replace(`${channel}/`, '')
+
   const tags = $(content).find('a[href^="?q="]')?.each((_index, a) => {
     $(a)?.attr('href', `/search/${encodeURIComponent($(a)?.text())}`)
   })?.map((_index, a) => $(a)?.text()?.replace('#', ''))?.get()
@@ -149,7 +153,8 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
   const channelInfo = {
     posts,
     title: $('.tgme_channel_info_header_title')?.text(),
-    description: $('.tgme_channel_info_description')?.html(),
+    description: $('.tgme_channel_info_description')?.text(),
+    descriptionHTML: modifyHTMLContent($, $('.tgme_channel_info_description'))?.html(),
     avatar: $('.tgme_page_photo_image img')?.attr('src'),
   }
 

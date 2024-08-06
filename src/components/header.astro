@@ -114,8 +114,8 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
 </div>
 
 {
-  channel?.description && channel?.description.length > 0 && (
-    <div class="text-box" id="site-intro" set:html={channel?.description} />
+  channel?.descriptionHTML && channel?.descriptionHTML.length > 0 && (
+    <div class="text-box" id="site-intro" set:html={channel?.descriptionHTML} />
   )
 }
 
@@ -123,6 +123,10 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
   #site-intro {
     color: var(--secondary-color);
     word-break: break-word;
+
+    & :global(.emoji) {
+      font-style: normal;
+    }
   }
 
   .social-icon {

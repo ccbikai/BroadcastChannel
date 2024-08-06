@@ -1,7 +1,3 @@
-@view-transition {
-  navigation: auto;
-}
-
 .site-title {
   view-transition-name: site-title;
   transition: 0.2s ease;
@@ -11,8 +7,11 @@
   transition: 0.2s ease;
 }
 
-[popover]:not(:popover-open):not(dialog[open]) {
+[popover] {
   display: none;
+  &:popover-open {
+    display: block;
+  }
 }
 
 .image-preview-wrap {

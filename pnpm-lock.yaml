@@ -69,6 +69,9 @@ importers:
       lint-staged:
         specifier: ^15.2.8
         version: 15.2.8
+      postcss-nesting:
+        specifier: ^13.0.0
+        version: 13.0.0(postcss@8.4.40)
       prettier-plugin-astro:
         specifier: ^0.14.1
         version: 0.14.1
@@ -343,6 +346,18 @@ packages:
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
+
+  '@csstools/selector-resolve-nested@2.0.0':
+    resolution: {integrity: sha512-oklSrRvOxNeeOW1yARd4WNCs/D09cQjunGZUgSq6vM8GpzFswN+8rBZyJA29YFZhOTQ6GFzxgLDNtVbt9wPZMA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      postcss-selector-parser: ^6.1.0
+
+  '@csstools/selector-specificity@4.0.0':
+    resolution: {integrity: sha512-189nelqtPd8++phaHNwYovKZI0FOzH1vQEE3QhHHkNIGrg5fSs9CbYP3RvfEH5geztnIA9Jwq91wyOIwAW5JIQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      postcss-selector-parser: ^6.1.0
 
   '@dprint/formatter@0.3.0':
     resolution: {integrity: sha512-N9fxCxbaBOrDkteSOzaCqwWjso5iAe+WJPsHC021JfHNj2ThInPNEF13ORDKta3llq5D1TlclODCvOvipH7bWQ==}
@@ -2180,7 +2195,7 @@ packages:
     engines: {node: '>= 6'}
 
   cssesc@3.0.0:
-    resolution: {integrity: sha1-N3QZGZA7hoVl4cCep0dEXNGJg+4=}
+    resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
 
@@ -3739,6 +3754,12 @@ packages:
     peerDependencies:
       postcss: ^8.4.31
 
+  postcss-nesting@13.0.0:
+    resolution: {integrity: sha512-TCGQOizyqvEkdeTPM+t6NYwJ3EJszYE/8t8ILxw/YoeUvz2rz7aM8XTAmBWh9/DJjfaaabL88fWrsVHSPF2zgA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      postcss: ^8.4
+
   postcss-normalize-charset@7.0.0:
     resolution: {integrity: sha512-ABisNUXMeZeDNzCQxPxBCkXexvBrUHV+p7/BXOY+ulxkcjUZO0cp8ekGBwvIh2LbCwnWbyMPNJVtBSdyhM2zYQ==}
     engines: {node: ^18.12.0 || ^20.9.0 || >=22.0}
@@ -4445,7 +4466,7 @@ packages:
     engines: {node: '>=6.14.2'}
 
   util-deprecate@1.0.2:
-    resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
+    resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
@@ -5106,6 +5127,14 @@ snapshots:
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
+
+  '@csstools/selector-resolve-nested@2.0.0(postcss-selector-parser@6.1.1)':
+    dependencies:
+      postcss-selector-parser: 6.1.1
+
+  '@csstools/selector-specificity@4.0.0(postcss-selector-parser@6.1.1)':
+    dependencies:
+      postcss-selector-parser: 6.1.1
 
   '@dprint/formatter@0.3.0': {}
 
@@ -8850,6 +8879,13 @@ snapshots:
   postcss-minify-selectors@7.0.2(postcss@8.4.40):
     dependencies:
       cssesc: 3.0.0
+      postcss: 8.4.40
+      postcss-selector-parser: 6.1.1
+
+  postcss-nesting@13.0.0(postcss@8.4.40):
+    dependencies:
+      '@csstools/selector-resolve-nested': 2.0.0(postcss-selector-parser@6.1.1)
+      '@csstools/selector-specificity': 4.0.0(postcss-selector-parser@6.1.1)
       postcss: 8.4.40
       postcss-selector-parser: 6.1.1
 

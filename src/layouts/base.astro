@@ -55,6 +55,11 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
       title={channel?.title}
       href={origin + '/rss.xml'}
     />
+    <style is:inline>
+      @view-transition {
+        navigation: auto; /* enabled */
+      }
+    </style>
     <SEO
       charset="utf-8"
       titleTemplate={`%s | ${channel?.title}`}
