@@ -23,6 +23,7 @@ English | [简体中文](./README.zh-cn.md)
 - [85.60×53.98卡粉订阅/提醒](https://tg.docofcard.com/)
 - [Charles Chin's Whisper](https://memo.eallion.com/)
 - [PlayStation 新闻转发](https://playstationnews.pages.dev)
+- [LiFePO4:沙雕吐槽](https://lifepo4.top)
 
 ### Platform
 
