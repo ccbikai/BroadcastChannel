@@ -23,6 +23,11 @@ English | [简体中文](./README.zh-cn.md)
 - [85.60×53.98卡粉订阅/提醒](https://tg.docofcard.com/)
 - [Charles Chin's Whisper](https://memo.eallion.com/)
 - [PlayStation 新闻转发](https://playstationnews.pages.dev)
+- [Yu's Life](https://daily.pseudoyu.com/)
+- [Leslie 和朋友们](https://tg.imlg.co/)
+- [OKHK 分享](https://tg.okhk.net/)
+- [新闻在花频道](https://tg.istore.app/)
+- [gledos 的微型博客](https://microblogging.gledos.science)
 
 ### Platform
 
