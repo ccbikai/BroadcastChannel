@@ -30,6 +30,11 @@ const afterCursor = posts[0]?.id
         >
           Before
         </a>
+      ) : after && beforeCursor < 20 ? (
+        // When on the first page
+        <a href="#top" title="Back top" class="page">
+          Back top
+        </a>
       ) : (
         <span class="page-placeholder">&nbsp;</span>
       )
@@ -37,7 +42,13 @@ const afterCursor = posts[0]?.id
 
     <div class="pages-info"></div>
     {
-      (before && beforeCursor < 0) || after > 0 ? (
+      beforeCursor > 20 &&
+      afterCursor > 20 &&
+      // When on the first page
+      afterCursor - beforeCursor !== 0 &&
+      // When on the post page
+      after ? (
+        // When on the latest page
         <a href="#top" title="Back top" class="page">
           Back top
         </a>
