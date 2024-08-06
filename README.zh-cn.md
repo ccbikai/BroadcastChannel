@@ -21,6 +21,7 @@
 - [Memos 广场 🎪](https://now.memobbs.app/)
 - [APPDO 数字生活指南](https://mini.appdo.xyz/)
 - [85.60×53.98卡粉订阅/提醒](https://tg.docofcard.com/)
+- [Charles Chin's Whisper](https://memo.eallion.com/)
 
 ### 平台
 
