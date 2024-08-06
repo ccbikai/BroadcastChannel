@@ -638,11 +638,6 @@ audio::-webkit-media-controls-panel {
   box-shadow: var(--shadows);
 }
 
-.content .sticker {
-  box-shadow: none;
-  border: none;
-}
-
 .content a:link,
 .content a:visited {
   line-break: anywhere;

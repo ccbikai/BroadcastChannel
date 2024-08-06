@@ -13,8 +13,8 @@ const cache = new LRUCache({
 
 function getVideoStickers($, item, { staticProxy, index }) {
   return $(item).find('.js-videosticker_video')?.map((_index, video) => {
-    const url = $(video).attr('src')
-    const imgurl = $(video).find('img').attr('src')
+    const url = $(video)?.attr('src')
+    const imgurl = $(video).find('img')?.attr('src')
     return `
     <div style="background-image: none; width: 256px;">
       <video src="${staticProxy + url}" width="100%" height="100%" alt="Video Sticker" preload muted autoplay loop playsinline disablepictureinpicture >
@@ -27,7 +27,7 @@ function getVideoStickers($, item, { staticProxy, index }) {
 
 function getImageStickers($, item, { staticProxy, index }) {
   return $(item).find('.tgme_widget_message_sticker')?.map((_index, image) => {
-    const url = $(image).attr('data-webp')
+    const url = $(image)?.attr('data-webp')
     return `<img class="sticker" src="${staticProxy + url}" style="width: 256px;" alt="Sticker" loading="${index > 15 ? 'eager' : 'lazy'}" />`
   })?.get()?.join('')
 }
@@ -103,11 +103,11 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
     text: content?.text(),
     content: [
       $.html($(item).find('.tgme_widget_message_reply')?.wrapInner('<small></small>')?.wrapInner('<blockquote></blockquote>')),
-      getImageStickers($, item, { staticProxy, index }),
-      getVideoStickers($, item, { staticProxy, index }),
       getImages($, item, { staticProxy, id, index, title }),
       getVideo($, item, { staticProxy, id, index, title }),
       content?.html(),
+      getImageStickers($, item, { staticProxy, index }),
+      getVideoStickers($, item, { staticProxy, index }),
       // $(item).find('.tgme_widget_message_sticker_wrap')?.html(),
       $(item).find('.tgme_widget_message_poll')?.html(),
       $.html($(item).find('.tgme_widget_message_document_wrap')),
