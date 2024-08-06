@@ -143,6 +143,7 @@
 
     tg-spoiler {
       color: #ccc;
+      background-color: #ccc;
       background: repeating-conic-gradient(#000 0 0.0001%, #0000 0 0.0002%) 60%
         60% / 3000px 3000px;
     }
