@@ -20,6 +20,7 @@
 - [Find Blog👁发现博客](https://broadcastchannel.pages.dev/)
 - [Memos 广场 🎪](https://now.memobbs.app/)
 - [APPDO 数字生活指南](https://mini.appdo.xyz/)
+- [85.60×53.98卡粉订阅/提醒](https://tg.docofcard.com/)
 
 ### 平台
 
@@ -50,11 +51,11 @@
 
 ```env
 ## Telegram 频道名称，必须配置
-CHANNEL=Broadcast_Channel_Blog
+CHANNEL=miantiao_me
 
 ## 语言和时区设置，语言选项见[dayjs](https://github.com/iamkun/dayjs/tree/dev/src/locale)
 LOCALE=zh-cn
-TIMEZONE="Asia/Shanghai"
+TIMEZONE=Asia/Shanghai
 
 ## 社交媒体用户名
 TELEGRAM=ccbikai
@@ -79,8 +80,8 @@ SENTRY_DSN=SENTRY_DSN
 SENTRY_PROJECT=SENTRY_PROJECT
 
 ## Telegram 主机名称和静态资源代理，不建议修改
-HOST="telegram.dog"
-STATIC_PROXY=""
+HOST=telegram.dog
+STATIC_PROXY=
 ```
 
 ## ☕ 赞助
