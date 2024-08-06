@@ -143,6 +143,8 @@
 
     tg-spoiler {
       color: transparent;
+      margin: auto 2px;
+      border-radius: var(--box-border-radius);
       background: #ccc 60% 60% / 3000px 3000px;
       background-image: repeating-conic-gradient(
         #999 0 0.0001%,
