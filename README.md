@@ -62,6 +62,8 @@ TIMEZONE=America/New_York
 TELEGRAM=ccbikai
 TWITTER=ccbikai
 GITHUB=ccbikai
+MASTODON=mastodon.social/@Mastodon
+BLUESKY=bsky.app
 
 ## The following two social media need to be URLs
 DISCORD=https://DISCORD.com
