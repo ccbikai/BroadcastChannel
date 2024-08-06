@@ -47,5 +47,8 @@
   },
   "lint-staged": {
     "*": "eslint --fix"
-  }
+  },
+  "browserslist": [
+    "defaults"
+  ]
 }

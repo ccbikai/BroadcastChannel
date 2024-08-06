@@ -76,17 +76,23 @@ function getLinkPreview($, item, { staticProxy, index }) {
   return $.html(link)
 }
 
-function modifyHTMLContent($, content) {
+function modifyHTMLContent($, content, { index } = {}) {
+  $(content).find('.emoji')?.attr('style', '')
   $(content).find('a')?.each((_index, a) => {
     $(a)?.attr('title', $(a)?.text())
   })
-  $(content).find('.emoji')?.attr('style', '')
+  $(content).find('tg-spoiler')?.each((_index, spoiler) => {
+    const id = `spoiler-${index}-${_index}`
+    $(spoiler)?.attr('id', id)
+      ?.wrap('<label class="spoiler-button"></label>')
+      ?.before(`<input type="checkbox" />`)
+  })
   return content
 }
 
 function getPost($, item, { channel, staticProxy, index = 0 }) {
   item = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
-  const content = modifyHTMLContent($, $(item).find('.tgme_widget_message_text'))
+  const content = modifyHTMLContent($, $(item).find('.tgme_widget_message_text'), { index })
   const title = content?.text()?.match(/[^。\n]*(?=[。\n]|http)/g)?.[0] ?? content?.text() ?? ''
   const id = $(item).attr('data-post')?.replace(`${channel}/`, '')
 
