@@ -11,6 +11,27 @@ const cache = new LRUCache({
   },
 })
 
+function getVideoStickers($, item, { staticProxy, index }) {
+  return $(item).find('.js-videosticker_video')?.map((_index, video) => {
+    const url = $(video).attr('src')
+    const imgurl = $(video).find('img').attr('src')
+    return `
+    <div style="background-image: none; width: 256px;">
+      <video src="${staticProxy + url}" width="100%" height="100%" alt="Video Sticker" preload muted autoplay loop playsinline disablepictureinpicture >
+        <img class="sticker" src="${staticProxy + imgurl}" alt="Video Sticker" loading="${index > 15 ? 'eager' : 'lazy'}" />
+      </video>
+    </div>
+    `
+  })?.get()?.join('')
+}
+
+function getImageStickers($, item, { staticProxy, index }) {
+  return $(item).find('.tgme_widget_message_sticker')?.map((_index, image) => {
+    const url = $(image).attr('data-webp')
+    return `<img class="sticker" src="${staticProxy + url}" style="width: 256px;" alt="Sticker" loading="${index > 15 ? 'eager' : 'lazy'}" />`
+  })?.get()?.join('')
+}
+
 function getImages($, item, { staticProxy, id, index, title }) {
   return $(item).find('.tgme_widget_message_photo_wrap')?.map((_index, photo) => {
     const url = $(photo).attr('style').match(/url\(["'](.*?)["']/)?.[1]
@@ -82,6 +103,8 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
     text: content?.text(),
     content: [
       $.html($(item).find('.tgme_widget_message_reply')?.wrapInner('<small></small>')?.wrapInner('<blockquote></blockquote>')),
+      getImageStickers($, item, { staticProxy, index }),
+      getVideoStickers($, item, { staticProxy, index }),
       getImages($, item, { staticProxy, id, index, title }),
       getVideo($, item, { staticProxy, id, index, title }),
       content?.html(),
