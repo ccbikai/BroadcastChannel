@@ -15,12 +15,19 @@ English | [简体中文](./README.zh-cn.md)
 
 ## 🪧 Demo
 
-BroadcastChannel supports deployment on serverless platforms like Cloudflare, Netlify, Vercel that support Node.js SSR, or on a VPS.
-For detailed tutorials, see [Deploy your Astro site](https://docs.astro.build/en/guides/deploy/).
+### Real users
+
+- [Memos 广场 🎪](https://now.memobbs.app/)
+- [APPDO 数字生活指南](https://mini.appdo.xyz/)
+
+### Platform
 
 1. [Cloudflare](https://broadcast-channel.pages.dev/)
 2. [Netlify](https://broadcast-channel.netlify.app/)
 3. [Vercel](https://broadcast-channel.vercel.app/)
+
+BroadcastChannel supports deployment on serverless platforms like Cloudflare, Netlify, Vercel that support Node.js SSR, or on a VPS.
+For detailed tutorials, see [Deploy your Astro site](https://docs.astro.build/en/guides/deploy/).
 
 ## 🧱 Tech Stack
 

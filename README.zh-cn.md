@@ -15,12 +15,19 @@
 
 ## 🪧 演示
 
-广播频道支持部署在 Cloudflare、Netlify、Vercel 等支持 Node.js SSR 的无服务器平台或者 VPS。
-具体教程见[部署你的 Astro 站点](https://docs.astro.build/zh-cn/guides/deploy/)。
+### 真实用户
+
+- [Memos 广场 🎪](https://now.memobbs.app/)
+- [APPDO 数字生活指南](https://mini.appdo.xyz/)
+
+### 平台
 
 1. [Cloudflare](https://broadcast-channel.pages.dev/)
 2. [Netlify](https://broadcast-channel.netlify.app/)
 3. [Vercel](https://broadcast-channel.vercel.app/)
+
+广播频道支持部署在 Cloudflare、Netlify、Vercel 等支持 Node.js SSR 的无服务器平台或者 VPS。
+具体教程见[部署你的 Astro 站点](https://docs.astro.build/zh-cn/guides/deploy/)。
 
 ## 🧱 技术栈
 
