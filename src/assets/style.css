@@ -1,14 +1,14 @@
 :root {
-  --background-color: #f4f1ec;
-  --foreground-color: #000000;
-  --highlight-color: orangered;
-  --box-border-radius: 3px;
+  --background-color: #fafafa;
+  --foreground-color: #212121;
+  --highlight-color: #212121;
+  --box-border-radius: 2px;
   --media-border-radius: 8px;
   --dot-size: 8px;
   --shadows: 0 1px 2px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02),
     0 4px 8px rgba(0, 0, 0, 0.02), 0 8px 16px rgba(0, 0, 0, 0.02);
   --box-margin: 10px;
-  --border-color: rgba(0, 0, 0, 0.05);
+  --border-color:#e0e0e0;
   --link-color: var(--highlight-color);
   --icon-hover-filter: invert(51%) sepia(0%) saturate(0%) hue-rotate(23deg)
     brightness(90%) contrast(90%);
@@ -17,6 +17,23 @@
   --cell-background-color: #fff;
   --code-background-color: #f9f9f9;
   --secondary-color: #999;
+  --card-background-color: #fff;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+      --background-color: #121212;
+      --foreground-color: #e0e0e0;
+      --highlight-color: #bb86fc;
+      --shadows: 0 1px 3px rgba(255,255,255,0.1), 0 1px 2px rgba(255,255,255,0.2);
+      --cell-background-color: #1e1e1e;
+      --secondary-color: #b0b0b0;
+      --border-color:#333;
+      --card-background-color: #1e1e1e;
+      --card-shadow: 0 1px 3px rgba(255,255,255,0.1), 0 1px 2px rgba(255,255,255,0.2);
+
+  }
 }
 
 body {
@@ -77,19 +94,19 @@ a:visited {
 }
 
 a:hover {
-  color: #4d5256;
+  color: var(--secondary-color);
   text-decoration: underline;
   text-underline-offset: 0.2rem;
 }
 
 a.site-title:link,
 a.site-title:visited {
-  color: #333;
+  color: var(--foreground-color);
   text-decoration: none;
 }
 
 a.site-title:hover {
-  color: #000;
+  color: var(--foreground-color);
   text-decoration: underline;
 }
 
@@ -207,12 +224,15 @@ hr {
 
 #site-intro {
   padding: 10px 20px 10px 20px;
-  background-color: #fff;
+  background-color: var(--card-background-color);
   font-size: 16px;
   line-height: 1.6;
   border-radius: var(--box-border-radius);
-  box-shadow: var(--shadows);
+  box-shadow: var(--card-shadow);
   margin-bottom: 20px;
+}
+#site-intro.text-box {
+  border-left: none;
 }
 
 .section-title {

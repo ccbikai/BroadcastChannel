@@ -84,13 +84,13 @@
 .search-form {
   display: none;
   background: rgba(255, 255, 255, 0.75);
-  padding: 8px;
+  /* padding: 8px; */
   position: sticky;
   top: 60px;
   border-radius: var(--box-border-radius);
 
   > input {
-    border: 1px solid var(--background-color);
+    border: 1px solid var(--border-color);
     border-radius: var(--box-border-radius);
     outline: none;
     font-size: 12px;
@@ -104,7 +104,7 @@
 .copyright-wrap {
   position: sticky;
   top: 120px;
-  color: #666;
+  color: var(--secondary-color);
   line-height: 1.5;
   font-size: 14px;
   display: none;
