@@ -37,12 +37,25 @@ const afterCursor = posts[0]?.id
 
     <div class="pages-info"></div>
     {
+      (before && beforeCursor < 0) || after > 0 ? (
+        <a href="#top" title="Back top" class="page">
+          Back top
+        </a>
+      ) : (
+        <span class="page-placeholder">&nbsp;</span>
+      )
+    }
+
+    <div class="pages-info"></div>
+    {
       after && afterCursor ? (
         <a href={`${SITE_URL}after/${afterCursor}`} title="After" class="page">
           After
         </a>
       ) : (
-        <span class="page-placeholder">&nbsp;</span>
+        <a href="#top" title="Back top" class="page">
+          Back top
+        </a>
       )
     }
   </div>
