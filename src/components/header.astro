@@ -7,6 +7,8 @@ import twitter from '../assets/twitter.svg'
 import github from '../assets/github.svg'
 import discord from '../assets/discord.svg'
 import telegram from '../assets/telegram.svg'
+import mastodon from '../assets/mastodon.svg'
+import bluesky from '../assets/bluesky.svg'
 
 const { SITE_URL } = Astro.locals
 const { channel } = Astro.props
@@ -16,6 +18,8 @@ const TWITTER = getEnv(import.meta.env, Astro, 'TWITTER')
 const GITHUB = getEnv(import.meta.env, Astro, 'GITHUB')
 const TELEGRAM = getEnv(import.meta.env, Astro, 'TELEGRAM')
 const DISCORD = getEnv(import.meta.env, Astro, 'DISCORD')
+const MASTODON = getEnv(import.meta.env, Astro, 'MASTODON')
+const BLUESKY = getEnv(import.meta.env, Astro, 'BLUESKY')
 
 const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
 ---
@@ -104,6 +108,36 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
           <img
             {...discord}
             alt="Discord Invite"
+            class="social-icon"
+            width="1em"
+          />
+        </a>
+      )
+    }
+
+    {
+      MASTODON && MASTODON.length > 0 && (
+        <a href={`https://${MASTODON}`} title="Mastodon" target="_blank">
+          <img
+            {...mastodon}
+            alt={`@${MASTODON}`}
+            class="social-icon"
+            width="1em"
+          />
+        </a>
+      )
+    }
+
+    {
+      BLUESKY && BLUESKY.length > 0 && (
+        <a
+          href={`https://bsky.app/profile/${BLUESKY}`}
+          title="BlueSky"
+          target="_blank"
+        >
+          <img
+            {...bluesky}
+            alt={`@${BLUESKY}`}
             class="social-icon"
             width="1em"
           />
