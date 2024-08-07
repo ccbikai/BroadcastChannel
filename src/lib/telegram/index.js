@@ -146,7 +146,7 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
   const cachedResult = cache.get(cacheKey)
 
   if (cachedResult) {
-    console.info('Macth Cache', { before, after, q, type, id })
+    console.info('Match Cache', { before, after, q, type, id })
     return JSON.parse(JSON.stringify(cachedResult))
   }
 
