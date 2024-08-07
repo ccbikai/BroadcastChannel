@@ -11,6 +11,27 @@ const cache = new LRUCache({
   },
 })
 
+function getVideoStickers($, item, { staticProxy, index }) {
+  return $(item).find('.js-videosticker_video')?.map((_index, video) => {
+    const url = $(video)?.attr('src')
+    const imgurl = $(video).find('img')?.attr('src')
+    return `
+    <div style="background-image: none; width: 256px;">
+      <video src="${staticProxy + url}" width="100%" height="100%" alt="Video Sticker" preload muted autoplay loop playsinline disablepictureinpicture >
+        <img class="sticker" src="${staticProxy + imgurl}" alt="Video Sticker" loading="${index > 15 ? 'eager' : 'lazy'}" />
+      </video>
+    </div>
+    `
+  })?.get()?.join('')
+}
+
+function getImageStickers($, item, { staticProxy, index }) {
+  return $(item).find('.tgme_widget_message_sticker')?.map((_index, image) => {
+    const url = $(image)?.attr('data-webp')
+    return `<img class="sticker" src="${staticProxy + url}" style="width: 256px;" alt="Sticker" loading="${index > 15 ? 'eager' : 'lazy'}" />`
+  })?.get()?.join('')
+}
+
 function getImages($, item, { staticProxy, id, index, title }) {
   return $(item).find('.tgme_widget_message_photo_wrap')?.map((_index, photo) => {
     const url = $(photo).attr('style').match(/url\(["'](.*?)["']/)?.[1]
@@ -28,8 +49,17 @@ function getImages($, item, { staticProxy, id, index, title }) {
 
 function getVideo($, item, { staticProxy, index }) {
   const video = $(item).find('.tgme_widget_message_video_wrap video')
-  video?.attr('src', staticProxy + video?.attr('src'))?.attr('controls', true)?.attr('preload', index > 15 ? 'auto' : 'metadata')
-  return $.html(video)
+  video?.attr('src', staticProxy + video?.attr('src'))
+    ?.attr('controls', true)
+    ?.attr('preload', index > 15 ? 'auto' : 'metadata')
+    ?.attr('playsinline', true).attr('webkit-playsinline', true)
+
+  const roundVideo = $(item).find('.tgme_widget_message_roundvideo_wrap video')
+  roundVideo?.attr('src', staticProxy + roundVideo?.attr('src'))
+    ?.attr('controls', true)
+    ?.attr('preload', index > 15 ? 'auto' : 'metadata')
+    ?.attr('playsinline', true).attr('webkit-playsinline', true)
+  return $.html(video) + $.html(roundVideo)
 }
 
 function getLinkPreview($, item, { staticProxy, index }) {
@@ -46,16 +76,26 @@ function getLinkPreview($, item, { staticProxy, index }) {
   return $.html(link)
 }
 
+function modifyHTMLContent($, content, { index } = {}) {
+  $(content).find('.emoji')?.attr('style', '')
+  $(content).find('a')?.each((_index, a) => {
+    $(a)?.attr('title', $(a)?.text())
+  })
+  $(content).find('tg-spoiler')?.each((_index, spoiler) => {
+    const id = `spoiler-${index}-${_index}`
+    $(spoiler)?.attr('id', id)
+      ?.wrap('<label class="spoiler-button"></label>')
+      ?.before(`<input type="checkbox" />`)
+  })
+  return content
+}
+
 function getPost($, item, { channel, staticProxy, index = 0 }) {
   item = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
-  const content = $(item).find('.tgme_widget_message_bubble > .tgme_widget_message_text')
+  const content = modifyHTMLContent($, $(item).find('.tgme_widget_message_text'), { index })
   const title = content?.text()?.match(/[^。\n]*(?=[。\n]|http)/g)?.[0] ?? content?.text() ?? ''
   const id = $(item).attr('data-post')?.replace(`${channel}/`, '')
 
-  $(content).find('a').each((_index, a) => {
-    $(a).attr('title', $(a).text())
-  })
-  $(content).find('.emoji').attr('style', '')
   const tags = $(content).find('a[href^="?q="]')?.each((_index, a) => {
     $(a)?.attr('href', `/search/${encodeURIComponent($(a)?.text())}`)
   })?.map((_index, a) => $(a)?.text()?.replace('#', ''))?.get()
@@ -68,16 +108,17 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
     tags,
     text: content?.text(),
     content: [
+      $.html($(item).find('.tgme_widget_message_reply')?.wrapInner('<small></small>')?.wrapInner('<blockquote></blockquote>')),
       getImages($, item, { staticProxy, id, index, title }),
       getVideo($, item, { staticProxy, id, index, title }),
       content?.html(),
+      getImageStickers($, item, { staticProxy, index }),
+      getVideoStickers($, item, { staticProxy, index }),
       // $(item).find('.tgme_widget_message_sticker_wrap')?.html(),
       $(item).find('.tgme_widget_message_poll')?.html(),
       $.html($(item).find('.tgme_widget_message_document_wrap')),
-      $.html($(item).find('.tgme_widget_message_roundvideo')?.attr('controls', true)),
       $.html($(item).find('.tgme_widget_message_voice')?.attr('controls', true)),
       $.html($(item).find('.tgme_widget_message_location_wrap')),
-      $.html($(item).find('.tgme_widget_message_reply .tgme_widget_message_text')?.wrapInner('<blockquote></blockquote>')),
       getLinkPreview($, item, { staticProxy, index }),
     ].filter(Boolean).join('').replace(/(url\(["'])((https?:)?\/\/)/g, (match, p1, p2, _p3) => {
       if (p2 === '//') {
@@ -98,7 +139,7 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
   const cachedResult = cache.get(cacheKey)
 
   if (cachedResult) {
-    console.info('Macth Cache', { before, after, q, type, id })
+    console.info('Match Cache', { before, after, q, type, id })
     return JSON.parse(JSON.stringify(cachedResult))
   }
 
@@ -142,6 +183,7 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
     posts,
     title: $('.tgme_channel_info_header_title')?.text(),
     description: $('.tgme_channel_info_description')?.text(),
+    descriptionHTML: modifyHTMLContent($, $('.tgme_channel_info_description'))?.html(),
     avatar: $('.tgme_page_photo_image img')?.attr('src'),
   }
 

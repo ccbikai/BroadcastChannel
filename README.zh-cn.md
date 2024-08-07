@@ -15,12 +15,32 @@
 
 ## 🪧 演示
 
-广播频道支持部署在 Cloudflare、Netlify、Vercel 等支持 Node.js SSR 的无服务器平台或者 VPS。
-具体教程见[部署你的 Astro 站点](https://docs.astro.build/zh-cn/guides/deploy/)。
+### 真实用户
+
+- [面条实验室](https://memo.miantiao.me/)
+- [Find Blog👁发现博客](https://broadcastchannel.pages.dev/)
+- [Memos 广场 🎪](https://now.memobbs.app/)
+- [APPDO 数字生活指南](https://mini.appdo.xyz/)
+- [85.60×53.98卡粉订阅/提醒](https://tg.docofcard.com/)
+- [新闻在花频道](https://tg.istore.app/)
+- [Charles Chin's Whisper](https://memo.eallion.com/)
+- [PlayStation 新闻转发](https://playstationnews.pages.dev)
+- [Yu's Life](https://daily.pseudoyu.com/)
+- [Leslie 和朋友们](https://tg.imlg.co/)
+- [OKHK 分享](https://tg.okhk.net/)
+- [gledos 的微型博客](https://microblogging.gledos.science)
+- [Steve Studio](https://tgc.surgeee.me/)
+- [LiFePO4:沙雕吐槽](https://lifepo4.top)
+- [Hotspot Hourly](https://hourly.top/)
+
+### 平台
 
 1. [Cloudflare](https://broadcast-channel.pages.dev/)
 2. [Netlify](https://broadcast-channel.netlify.app/)
 3. [Vercel](https://broadcast-channel.vercel.app/)
+
+广播频道支持部署在 Cloudflare、Netlify、Vercel 等支持 Node.js SSR 的无服务器平台或者 VPS。
+具体教程见[部署你的 Astro 站点](https://docs.astro.build/zh-cn/guides/deploy/)。
 
 ## 🧱 技术栈
 
@@ -42,11 +62,11 @@
 
 ```env
 ## Telegram 频道名称，必须配置
-CHANNEL=Broadcast_Channel_Blog
+CHANNEL=miantiao_me
 
 ## 语言和时区设置，语言选项见[dayjs](https://github.com/iamkun/dayjs/tree/dev/src/locale)
 LOCALE=zh-cn
-TIMEZONE="Asia/Shanghai"
+TIMEZONE=Asia/Shanghai
 
 ## 社交媒体用户名
 TELEGRAM=ccbikai
@@ -71,8 +91,8 @@ SENTRY_DSN=SENTRY_DSN
 SENTRY_PROJECT=SENTRY_PROJECT
 
 ## Telegram 主机名称和静态资源代理，不建议修改
-HOST="telegram.dog"
-STATIC_PROXY=""
+HOST=telegram.dog
+STATIC_PROXY=
 ```
 
 ## ☕ 赞助

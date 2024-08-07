@@ -6,15 +6,18 @@ import { getChannelInfo } from '../../lib/telegram'
 
 const { SITE_URL } = Astro.locals
 
-const channel = JSON.parse(JSON.stringify(await getChannelInfo(Astro)))
+const channelInfo = await getChannelInfo(Astro)
 
 const post = await getChannelInfo(Astro, {
   type: 'post',
   id: Astro.params.id,
 })
 
-channel.posts = [post]
-channel.seo = post
+const channel = {
+  ...(channelInfo || {}),
+  posts: [post],
+  seo: post,
+}
 
 const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
 
