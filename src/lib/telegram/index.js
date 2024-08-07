@@ -90,7 +90,15 @@ function modifyHTMLContent($, content, { index } = {}) {
   return content
 }
 
-function getPost($, item, { channel, staticProxy, index = 0 }) {
+function modifyLocalLinks($, content, Astro) {
+  const findStr = `t.me/${getEnv(import.meta.env, Astro, 'CHANNEL')}`
+  if ($(content)?.attr('href') && $(content)?.attr('href').includes(findStr)) {
+    $(content)?.attr('href', `/posts${$(content)?.attr('href').substring($(content)?.attr('href').indexOf(findStr) + findStr.length)}`)
+  }
+  return content
+}
+
+function getPost($, item, { channel, staticProxy, index = 0 }, Astro) {
   item = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
   const content = modifyHTMLContent($, $(item).find('.tgme_widget_message_text'), { index })
   const title = content?.text()?.match(/[^。\n]*(?=[。\n]|http)/g)?.[0] ?? content?.text() ?? ''
@@ -108,7 +116,7 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
     tags,
     text: content?.text(),
     content: [
-      $.html($(item).find('.tgme_widget_message_reply')?.wrapInner('<small></small>')?.wrapInner('<blockquote></blockquote>')),
+      $.html(modifyLocalLinks($, $(item).find('.tgme_widget_message_reply'), Astro)?.wrapInner('<small></small>')?.wrapInner('<blockquote></blockquote>')),
       getImages($, item, { staticProxy, id, index, title }),
       getVideo($, item, { staticProxy, id, index, title }),
       content?.html(),
@@ -171,12 +179,12 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
 
   const $ = cheerio.load(html, {}, false)
   if (id) {
-    const post = getPost($, null, { channel, staticProxy })
+    const post = getPost($, null, { channel, staticProxy }, Astro)
     cache.set(cacheKey, post)
     return post
   }
   const posts = $('.tgme_channel_history  .tgme_widget_message_wrap')?.map((index, item) => {
-    return getPost($, item, { channel, staticProxy, index })
+    return getPost($, item, { channel, staticProxy, index }, Astro)
   })?.get()?.reverse().filter(post => ['text'].includes(post.type) && post.id && post.content)
 
   const channelInfo = {
