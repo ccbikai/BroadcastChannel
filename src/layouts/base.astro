@@ -42,6 +42,8 @@ const seoParams = {
 
 const HEADER_INJECT = getEnv(import.meta.env, Astro, 'HEADER_INJECT')
 const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
+
+const backToTopIcon = 'src/assets/back-to-top.svg'
 ---
 
 <!doctype html>
@@ -124,22 +126,8 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
         </div>
       </div>
     </div>
-    <a
-      href="#wrapper"
-      id="back-to-top"
-      aria-label="Back to top"
-      title="Back to top"
-    >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <polyline points="18 15 12 9 6 15"></polyline>
-      </svg>
+    <a href="#wrapper" id="back-to-top" aria-label="Back to top">
+      <img src={backToTopIcon} alt="Back to Top" />
     </a>
     <Fragment set:html={FOOTER_INJECT} />
   </body>
