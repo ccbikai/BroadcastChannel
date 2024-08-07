@@ -32,6 +32,9 @@ importers:
       ofetch:
         specifier: ^1.3.4
         version: 1.3.4
+      sanitize-html:
+        specifier: ^2.13.0
+        version: 2.13.0
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^2.24.1
@@ -2261,6 +2264,10 @@ packages:
   deep-is@0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
 
+  deepmerge@4.3.1:
+    resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
+    engines: {node: '>=0.10.0'}
+
   defu@6.1.4:
     resolution: {integrity: sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg==}
 
@@ -2407,11 +2414,11 @@ packages:
     engines: {node: '>=0.8.0'}
 
   escape-string-regexp@4.0.0:
-    resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
+    resolution: {integrity: sha1-FLqDpdNz49MR5a/KKc9b+tllvzQ=}
     engines: {node: '>=10'}
 
   escape-string-regexp@5.0.0:
-    resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
+    resolution: {integrity: sha1-RoMSa1ALYXYvLb66zhgG6L4xscg=}
     engines: {node: '>=12'}
 
   eslint-compat-utils@0.5.1:
@@ -3020,6 +3027,10 @@ packages:
     resolution: {integrity: sha512-+Pgi+vMuUNkJyExiMBt5IlFoMyKnr5zhJ4Uspz58WOhBF5QoIZkFyNHIbBAtHwzVAgk5RtndVNsDRN61/mmDqg==}
     engines: {node: '>=12'}
 
+  is-plain-object@5.0.0:
+    resolution: {integrity: sha1-RCf1CrNCnpAl6n1S6QQ6nvQVk0Q=}
+    engines: {node: '>=0.10.0'}
+
   is-stream@3.0.0:
     resolution: {integrity: sha512-LnQR4bZ9IADDRSkvpqMGvt/tEJWclzklNgSw48V5EAaAeDd6qGvN8ei6k5p0tvxSR171VmGyHuTiAOfxAbr8kA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
@@ -3592,6 +3603,9 @@ packages:
   parse-latin@7.0.0:
     resolution: {integrity: sha512-mhHgobPPua5kZ98EF4HWiH167JWBfl4pvAIXXdbaVohtK7a6YBOy56kvhCqduqyo/f3yrHFWmqmiMg/BkBkYYQ==}
 
+  parse-srcset@1.0.2:
+    resolution: {integrity: sha1-8r0iH2zJcKk42IVWq8WJyqqiveE=}
+
   parse5-htmlparser2-tree-adapter@7.0.0:
     resolution: {integrity: sha512-B77tOZrqqfUfnVcOrUvfdLbz4pu4RopLD/4vmu3HUPswwTA8OH0EMW9BlWR2B0RCoiZRAHEUu7IxeP1Pd1UU+g==}
 
@@ -4068,6 +4082,9 @@ packages:
 
   safe-buffer@5.2.1:
     resolution: {integrity: sha1-Hq+fqb2x/dTsdfWPnNtOa3gn7sY=}
+
+  sanitize-html@2.13.0:
+    resolution: {integrity: sha512-Xff91Z+4Mz5QiNSLdLWwjgBDm5b1RU6xBT0+12rapjiaR7SwfRdjw8f+6Rir2MXKLrDicRFHdb51hGOAxmsUIA==}
 
   sass-formatter@0.7.9:
     resolution: {integrity: sha512-CWZ8XiSim+fJVG0cFLStwDvft1VI7uvXdCNJYXhDvowiv+DsbD1nXLiQ4zrE5UBvj5DWZJ93cwN0NX5PMsr1Pw==}
@@ -7019,6 +7036,8 @@ snapshots:
 
   deep-is@0.1.4: {}
 
+  deepmerge@4.3.1: {}
+
   defu@6.1.4: {}
 
   delegates@1.0.0: {}
@@ -7978,6 +7997,8 @@ snapshots:
 
   is-plain-obj@4.1.0: {}
 
+  is-plain-object@5.0.0: {}
+
   is-stream@3.0.0: {}
 
   is-unicode-supported@1.3.0: {}
@@ -8740,6 +8761,8 @@ snapshots:
       unist-util-visit-children: 3.0.0
       vfile: 6.0.2
 
+  parse-srcset@1.0.2: {}
+
   parse5-htmlparser2-tree-adapter@7.0.0:
     dependencies:
       domhandler: 5.0.3
@@ -9242,6 +9265,15 @@ snapshots:
   s.color@0.0.15: {}
 
   safe-buffer@5.2.1: {}
+
+  sanitize-html@2.13.0:
+    dependencies:
+      deepmerge: 4.3.1
+      escape-string-regexp: 4.0.0
+      htmlparser2: 8.0.2
+      is-plain-object: 5.0.0
+      parse-srcset: 1.0.2
+      postcss: 8.4.40
 
   sass-formatter@0.7.9:
     dependencies:

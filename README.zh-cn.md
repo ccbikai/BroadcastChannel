@@ -17,10 +17,21 @@
 
 ### 真实用户
 
+- [面条实验室](https://memo.miantiao.me/)
 - [Find Blog👁发现博客](https://broadcastchannel.pages.dev/)
 - [Memos 广场 🎪](https://now.memobbs.app/)
 - [APPDO 数字生活指南](https://mini.appdo.xyz/)
 - [85.60×53.98卡粉订阅/提醒](https://tg.docofcard.com/)
+- [新闻在花频道](https://tg.istore.app/)
+- [Charles Chin's Whisper](https://memo.eallion.com/)
+- [PlayStation 新闻转发](https://playstationnews.pages.dev)
+- [Yu's Life](https://daily.pseudoyu.com/)
+- [Leslie 和朋友们](https://tg.imlg.co/)
+- [OKHK 分享](https://tg.okhk.net/)
+- [gledos 的微型博客](https://microblogging.gledos.science)
+- [Steve Studio](https://tgc.surgeee.me/)
+- [LiFePO4:沙雕吐槽](https://lifepo4.top)
+- [Hotspot Hourly](https://hourly.top/)
 
 ### 平台
 

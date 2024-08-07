@@ -47,6 +47,7 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
 <!doctype html>
 <html lang={locale ?? 'en'}>
   <head>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f4f1ec" />
     <link
@@ -61,7 +62,6 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
       }
     </style>
     <SEO
-      charset="utf-8"
       titleTemplate={`%s | ${channel?.title}`}
       titleDefault={[channel?.title, seoParams.description]
         .filter(Boolean)
