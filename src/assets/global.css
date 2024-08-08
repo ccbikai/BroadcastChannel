@@ -2,6 +2,10 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .site-title {
   view-transition-name: site-title;
   transition: 0.2s ease;
@@ -79,5 +83,59 @@
 
   .copyright-wrap {
     display: block;
+  }
+}
+
+#back-to-top {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fff;
+  color: var(--secondary-color);
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  border: none;
+  font-size: 24px;
+  text-decoration: none;
+  opacity: 0;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+  z-index: 1000;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  img {
+    filter: var(--icon-secondary-filter);
+  }
+}
+
+/* Use @scroll-timeline to control the display of the button */
+@supports (animation-timeline: view()) {
+  #back-to-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.5s linear both;
+    animation-timeline: view(block 0 100vh);
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      pointer-events: none;
+    }
+    to {
+      opacity: 0.9;
+      pointer-events: auto;
+    }
   }
 }
