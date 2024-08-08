@@ -97,7 +97,7 @@ HOST=telegram.dog
 STATIC_PROXY=
 ```
 
-## Frequently Asked Questions
+## 🙋🏻 FAQs
 
 1. Why is the content empty after deployment?
    - Check if the channel is public, it must be public
