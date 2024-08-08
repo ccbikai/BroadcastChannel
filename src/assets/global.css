@@ -81,3 +81,70 @@
     display: block;
   }
 }
+
+#back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #dfd3c3;
+  color: #333;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  text-decoration: none;
+  opacity: 0;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* 使用 @scroll-timeline 控制按钮的显示 */
+@supports (animation-timeline: scroll()) {
+  @scroll-timeline buttonVisibility {
+    source: auto;
+    orientation: vertical;
+    scroll-offsets: 0%, 100px;
+  }
+
+  #back-to-top {
+    animation: fadeIn 0.5s linear both;
+    animation-timeline: buttonVisibility;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+#back-to-top:hover {
+  background-color: #b0a295;
+  transform: translateY(-3px);
+}
+
+#back-to-top:active {
+  transform: translateY(1px);
+}
+
+/* 为不支持 @scroll-timeline 的浏览器提供的回退样式 */
+@supports not (animation-timeline: scroll()) {
+  #back-to-top {
+    display: none;
+  }
+}
+
+/* CSS Scroll Behavior 实现返回顶部的平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
