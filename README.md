@@ -9,9 +9,9 @@ English | [简体中文](./README.zh-cn.md)
 ## ✨ Features
 
 - **Turn your Telegram Channel into a MicroBlog**
-- **SEO friendly**
+- **SEO friendly** `/sitemap.xml`
 - **0 JS on the browser side**
-- **RSS and RSS JSON**
+- **RSS and RSS JSON** `/rss.xml` `/rss.json`
 
 ## 🪧 Demo
 
@@ -61,7 +61,7 @@ For detailed tutorials, see [Deploy your Astro site](https://docs.astro.build/en
 ## ⚒️ Configuration
 
 ```env
-## Telegram channel name, required
+## Telegram Channel Username, must be configured. The string of characters following t.me/
 CHANNEL=miantiao_me
 
 ## Language and timezone settings, language options see [dayjs](https://github.com/iamkun/dayjs/tree/dev/src/locale)
@@ -96,6 +96,15 @@ SENTRY_PROJECT=SENTRY_PROJECT
 HOST=telegram.dog
 STATIC_PROXY=
 ```
+
+## 🙋🏻 FAQs
+
+1. Why is the content empty after deployment?
+   - Check if the channel is public, it must be public
+   - The channel username is a string, not a number
+   - Turn off the "Restricting Saving Content" setting in the channel
+   - Redeploy after modifying environment variables
+   - Telegram blocks public display of some sensitive channels, you can verify by visiting `https://t.me/s/channelusername`.
 
 ## ☕ Sponsor
 

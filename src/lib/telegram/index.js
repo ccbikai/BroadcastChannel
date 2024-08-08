@@ -62,6 +62,13 @@ function getVideo($, item, { staticProxy, index }) {
   return $.html(video) + $.html(roundVideo)
 }
 
+function getAudio($, item, { staticProxy }) {
+  const audio = $(item).find('.tgme_widget_message_voice')
+  audio?.attr('src', staticProxy + audio?.attr('src'))
+    ?.attr('controls', true)
+  return $.html(audio)
+}
+
 function getLinkPreview($, item, { staticProxy, index }) {
   const link = $(item).find('.tgme_widget_message_link_preview')
   const title = $(item).find('.link_preview_title')?.text() || $(item).find('.link_preview_site_name')?.text()
@@ -74,6 +81,19 @@ function getLinkPreview($, item, { staticProxy, index }) {
   const imageSrc = src ? staticProxy + src : ''
   image?.replaceWith(`<img class="link_preview_image" alt="${title}" src="${imageSrc}" loading="${index > 15 ? 'eager' : 'lazy'}" />`)
   return $.html(link)
+}
+
+function getReply($, item, { channel }) {
+  const reply = $(item).find('.tgme_widget_message_reply')
+  reply?.wrapInner('<small></small>')?.wrapInner('<blockquote></blockquote>')
+
+  const href = reply?.attr('href')
+  if (href) {
+    const url = new URL(href)
+    reply?.attr('href', `${url.pathname}`.replace(channel, 'posts'))
+  }
+
+  return $.html(reply)
 }
 
 function modifyHTMLContent($, content, { index } = {}) {
@@ -92,8 +112,10 @@ function modifyHTMLContent($, content, { index } = {}) {
 
 function getPost($, item, { channel, staticProxy, index = 0 }) {
   item = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
-  const content = modifyHTMLContent($, $(item).find('.tgme_widget_message_text'), { index })
-  const title = content?.text()?.match(/[^。\n]*(?=[。\n]|http)/g)?.[0] ?? content?.text() ?? ''
+  const content = $(item).find('.js-message_reply_text')?.length > 0
+    ? modifyHTMLContent($, $(item).find('.tgme_widget_message_text.js-message_text'), { index })
+    : modifyHTMLContent($, $(item).find('.tgme_widget_message_text'), { index })
+  const title = content?.text()?.match(/^.*?(?=[。：:]|http\S)/g)?.[0] ?? content?.text() ?? ''
   const id = $(item).attr('data-post')?.replace(`${channel}/`, '')
 
   const tags = $(content).find('a[href^="?q="]')?.each((_index, a) => {
@@ -108,16 +130,16 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
     tags,
     text: content?.text(),
     content: [
-      $.html($(item).find('.tgme_widget_message_reply')?.wrapInner('<small></small>')?.wrapInner('<blockquote></blockquote>')),
+      getReply($, item, { channel }),
       getImages($, item, { staticProxy, id, index, title }),
       getVideo($, item, { staticProxy, id, index, title }),
+      getAudio($, item, { staticProxy, id, index, title }),
       content?.html(),
       getImageStickers($, item, { staticProxy, index }),
       getVideoStickers($, item, { staticProxy, index }),
       // $(item).find('.tgme_widget_message_sticker_wrap')?.html(),
       $(item).find('.tgme_widget_message_poll')?.html(),
       $.html($(item).find('.tgme_widget_message_document_wrap')),
-      $.html($(item).find('.tgme_widget_message_voice')?.attr('controls', true)),
       $.html($(item).find('.tgme_widget_message_location_wrap')),
       getLinkPreview($, item, { staticProxy, index }),
     ].filter(Boolean).join('').replace(/(url\(["'])((https?:)?\/\/)/g, (match, p1, p2, _p3) => {
