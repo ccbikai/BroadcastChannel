@@ -2,6 +2,10 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .site-title {
   view-transition-name: site-title;
   transition: 0.2s ease;
@@ -83,68 +87,55 @@
 }
 
 #back-to-top {
+  display: none;
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #dfd3c3;
-  color: #333;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  background-color: #fff;
+  color: var(--secondary-color);
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
   border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-size: 24px;
   text-decoration: none;
   opacity: 0;
   transition:
     opacity 0.3s,
     transform 0.3s;
-  cursor: pointer;
   z-index: 1000;
-}
 
-/* 使用 @scroll-timeline 控制按钮的显示 */
-@supports (animation-timeline: scroll()) {
-  @scroll-timeline buttonVisibility {
-    source: auto;
-    orientation: vertical;
-    scroll-offsets: 0%, 100px;
+  &:hover {
+    transform: translateY(-3px);
   }
 
+  &:active {
+    transform: translateY(1px);
+  }
+
+  img {
+    filter: var(--icon-secondary-filter);
+  }
+}
+
+/* Use @scroll-timeline to control the display of the button */
+@supports (animation-timeline: view()) {
   #back-to-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     animation: fadeIn 0.5s linear both;
-    animation-timeline: buttonVisibility;
+    animation-timeline: view(block 0 100vh);
   }
 
   @keyframes fadeIn {
     from {
       opacity: 0;
+      pointer-events: none;
     }
     to {
-      opacity: 1;
+      opacity: 0.9;
+      pointer-events: auto;
     }
   }
-}
-
-#back-to-top:hover {
-  background-color: #b0a295;
-  transform: translateY(-3px);
-}
-
-#back-to-top:active {
-  transform: translateY(1px);
-}
-
-/* 为不支持 @scroll-timeline 的浏览器提供的回退样式 */
-@supports not (animation-timeline: scroll()) {
-  #back-to-top {
-    display: none;
-  }
-}
-
-/* CSS Scroll Behavior 实现返回顶部的平滑滚动 */
-html {
-  scroll-behavior: smooth;
 }
