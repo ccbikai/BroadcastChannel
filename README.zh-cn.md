@@ -9,9 +9,9 @@
 ## ✨ 特性
 
 - **将 Telegram Channel 转为微博客**
-- **SEO 友好**
+- **SEO 友好** `/sitemap.xml`
 - **浏览器端 0 JS**
-- **提供 RSS 和 RSS JSON**
+- **提供 RSS 和 RSS JSON** `/rss.xml` `/rss.json`
 
 ## 🪧 演示
 

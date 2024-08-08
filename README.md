@@ -9,9 +9,9 @@ English | [简体中文](./README.zh-cn.md)
 ## ✨ Features
 
 - **Turn your Telegram Channel into a MicroBlog**
-- **SEO friendly**
+- **SEO friendly** `/sitemap.xml`
 - **0 JS on the browser side**
-- **RSS and RSS JSON**
+- **RSS and RSS JSON** `/rss.xml` `/rss.json`
 
 ## 🪧 Demo
 
