@@ -32,6 +32,7 @@
 - [Steve Studio](https://tgc.surgeee.me/)
 - [LiFePO4:沙雕吐槽](https://lifepo4.top)
 - [Hotspot Hourly](https://hourly.top/)
+- [大河马中文财经新闻分享](https://a.xiaomi318.com/)
 
 ### 平台
 
