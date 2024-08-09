@@ -118,6 +118,10 @@
     display: block !important;
   }
 
+  .tgme_widget_message_video_wrap {
+    display: none;
+  }
+
   .tgme_widget_message_poll_options {
     display: block;
 
