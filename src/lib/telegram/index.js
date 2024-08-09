@@ -1,7 +1,11 @@
 import { $fetch } from 'ofetch'
 import * as cheerio from 'cheerio'
 import { LRUCache } from 'lru-cache'
+import Prism from 'prismjs'
+import loadLanguages from 'prismjs/components/'
 import { getEnv } from '../env'
+
+loadLanguages(['javascript', 'python', 'css', 'html'])
 
 const cache = new LRUCache({
   ttl: 1000 * 60 * 5, // 5 minutes
@@ -108,7 +112,31 @@ function modifyHTMLContent($, content, { index } = {}) {
       ?.wrap('<label class="spoiler-button"></label>')
       ?.before(`<input type="checkbox" />`)
   })
+  $(content).find('pre').each((_index, pre) => {
+    const code = $(pre).text()
+    const language = detectLanguage(code) // You'll need to implement this function
+    const highlightedCode = Prism.highlight(code, Prism.languages[language], language)
+    $(pre).html(`<code class="language-${language}">${highlightedCode}</code>`)
+  })
   return content
+}
+
+function detectLanguage(code) {
+  // Implement a simple language detection logic
+  // This is a basic example and might need refinement
+  if (code.includes('function') || code.includes('const') || code.includes('let')) {
+    return 'javascript'
+  }
+  else if (code.includes('def ') || code.includes('import ')) {
+    return 'python'
+  }
+  else if (code.includes('<html>') || code.includes('<!DOCTYPE html>')) {
+    return 'html'
+  }
+  else if (code.includes('{') && code.includes('}') && code.includes(':')) {
+    return 'css'
+  }
+  return 'clike' // default to C-like syntax
 }
 
 function getPost($, item, { channel, staticProxy, index = 0 }) {
