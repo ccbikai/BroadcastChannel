@@ -33,6 +33,8 @@
 - [LiFePO4:沙雕吐槽](https://lifepo4.top)
 - [Hotspot Hourly](https://hourly.top/)
 - [大河马中文财经新闻分享](https://a.xiaomi318.com/)
+- [小报童专栏精选](https://xiaobaotong.genaiprism.site/)
+- [Fake news](https://fake-news.csgo.ovh/)
 
 ### 平台
 
