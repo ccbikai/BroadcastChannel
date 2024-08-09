@@ -45,7 +45,7 @@ function getImages($, item, { staticProxy, id, index, title }) {
       </button>
     `
   })?.get()
-  return `<div class="image-list-container ${images.length % 2 === 0 ? 'image-list-even' : 'image-list-odd'}">${images?.join('')}</div>`
+  return images.length ? `<div class="image-list-container ${images.length % 2 === 0 ? 'image-list-even' : 'image-list-odd'}">${images?.join('')}</div>` : ''
 }
 
 function getVideo($, item, { staticProxy, index }) {
@@ -100,7 +100,7 @@ function getReply($, item, { channel }) {
 function modifyHTMLContent($, content, { index } = {}) {
   $(content).find('.emoji')?.attr('style', '')
   $(content).find('a')?.each((_index, a) => {
-    $(a)?.attr('title', $(a)?.text())
+    $(a)?.attr('title', $(a)?.text())?.attr('onclick', '')
   })
   $(content).find('tg-spoiler')?.each((_index, spoiler) => {
     const id = `spoiler-${index}-${_index}`
@@ -141,6 +141,7 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
       // $(item).find('.tgme_widget_message_sticker_wrap')?.html(),
       $(item).find('.tgme_widget_message_poll')?.html(),
       $.html($(item).find('.tgme_widget_message_document_wrap')),
+      $.html($(item).find('.tgme_widget_message_video_player.not_supported')),
       $.html($(item).find('.tgme_widget_message_location_wrap')),
       getLinkPreview($, item, { staticProxy, index }),
     ].filter(Boolean).join('').replace(/(url\(["'])((https?:)?\/\/)/g, (match, p1, p2, _p3) => {
