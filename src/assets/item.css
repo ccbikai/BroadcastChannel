@@ -1,6 +1,18 @@
 .content {
   word-break: break-word;
 
+  .image-list-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: masonry;
+
+    &.image-list-odd {
+      :first-child {
+        grid-column: 1 / 3;
+      }
+    }
+  }
+
   img {
     width: calc(100% - var(--box-margin));
   }

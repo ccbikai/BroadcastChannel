@@ -33,7 +33,7 @@ function getImageStickers($, item, { staticProxy, index }) {
 }
 
 function getImages($, item, { staticProxy, id, index, title }) {
-  return $(item).find('.tgme_widget_message_photo_wrap')?.map((_index, photo) => {
+  const images = $(item).find('.tgme_widget_message_photo_wrap')?.map((_index, photo) => {
     const url = $(photo).attr('style').match(/url\(["'](.*?)["']/)?.[1]
     const popoverId = `modal-${id}-${_index}`
     return `
@@ -44,7 +44,8 @@ function getImages($, item, { staticProxy, id, index, title }) {
         <img class="modal-img" src="${staticProxy + url}" alt="${title}" loading="${index > 15 ? 'eager' : 'lazy'}" />
       </button>
     `
-  })?.get()?.join('')
+  })?.get()
+  return `<div class="image-list-container ${images.length % 2 === 0 ? 'image-list-even' : 'image-list-odd'}">${images?.join('')}</div>`
 }
 
 function getVideo($, item, { staticProxy, index }) {

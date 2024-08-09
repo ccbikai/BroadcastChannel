@@ -4,6 +4,7 @@ const targetWhitelist = [
   'telegram.me',
   'telegram.dog',
   'cdn-telegram.org',
+  'telesco.pe',
 ]
 
 export const prerender = false
