@@ -34,6 +34,8 @@ English | [简体中文](./README.zh-cn.md)
 - [Hotspot Hourly](https://hourly.top/)
 - [大河马中文财经新闻分享](https://a.xiaomi318.com/)
 - [_My. Tricks 🎩 Collection](https://channel.mykeyvans.com)
+- [小报童专栏精选](https://xiaobaotong.genaiprism.site/)
+- [Fake news](https://fake-news.csgo.ovh/)
 
 ### Platform
 
