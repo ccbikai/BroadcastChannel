@@ -33,6 +33,7 @@ English | [简体中文](./README.zh-cn.md)
 - [LiFePO4:沙雕吐槽](https://lifepo4.top)
 - [Hotspot Hourly](https://hourly.top/)
 - [大河马中文财经新闻分享](https://a.xiaomi318.com/)
+- [_My. Tricks 🎩 Collection](https://channel.mykeyvans.com)
 
 ### Platform
 
