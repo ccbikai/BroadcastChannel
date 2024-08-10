@@ -41,7 +41,7 @@ function getImages($, item, { staticProxy, id, index, title }) {
         <img src="${staticProxy + url}" alt="${title}" loading="${index > 15 ? 'eager' : 'lazy'}" />
       </button>
       <button class="image-preview-button modal" id="${popoverId}" popovertarget="${popoverId}" popovertargetaction="hide" popover>
-        <img class="modal-img" src="${staticProxy + url}" alt="${title}" loading="${index > 15 ? 'eager' : 'lazy'}" />
+        <img class="modal-img" src="${staticProxy + url}" alt="${title}" loading="lazy" />
       </button>
     `
   })?.get()
