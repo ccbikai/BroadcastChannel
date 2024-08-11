@@ -1,6 +1,8 @@
 import { $fetch } from 'ofetch'
 import * as cheerio from 'cheerio'
 import { LRUCache } from 'lru-cache'
+import flourite from 'flourite'
+import prism from '../prism'
 import { getEnv } from '../env'
 
 const cache = new LRUCache({
@@ -107,6 +109,17 @@ function modifyHTMLContent($, content, { index } = {}) {
     $(spoiler)?.attr('id', id)
       ?.wrap('<label class="spoiler-button"></label>')
       ?.before(`<input type="checkbox" />`)
+  })
+  $(content).find('pre').each((_index, pre) => {
+    try {
+      const code = $(pre).text()
+      const language = flourite(code, { shiki: true })?.language
+      const highlightedCode = prism.highlight(code, prism.languages[language], language)
+      $(pre).html(`<code class="language-${language}">${highlightedCode}</code>`)
+    }
+    catch (error) {
+      console.error(error)
+    }
   })
   return content
 }

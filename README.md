@@ -33,9 +33,10 @@ English | [简体中文](./README.zh-cn.md)
 - [LiFePO4:沙雕吐槽](https://lifepo4.top)
 - [Hotspot Hourly](https://hourly.top/)
 - [大河马中文财经新闻分享](https://a.xiaomi318.com/)
-- [_My. Tricks 🎩 Collection](https://channel.mykeyvans.com)
+- [\_My. Tricks 🎩 Collection](https://channel.mykeyvans.com)
 - [小报童专栏精选](https://xiaobaotong.genaiprism.site/)
 - [Fake news](https://fake-news.csgo.ovh/)
+- [miyi23's Geekhub资源分享](https://gh.miyi23.top/)
 
 ### Platform
 

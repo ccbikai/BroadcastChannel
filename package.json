@@ -1,7 +1,7 @@
 {
   "name": "broadcast-channel",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "packageManager": "pnpm@9.5.0",
   "scripts": {
@@ -21,8 +21,11 @@
     "astro-seo": "^0.8.4",
     "cheerio": "1.0.0-rc.12",
     "dayjs": "^1.11.12",
+    "flourite": "^1.3.0",
     "lru-cache": "^11.0.0",
     "ofetch": "^1.3.4",
+    "prismjs": "^1.29.0",
+    "prismjs-components-importer": "^0.2.0",
     "sanitize-html": "^2.13.0"
   },
   "devDependencies": {
@@ -31,6 +34,7 @@
     "@astrojs/netlify": "^5.4.0",
     "@astrojs/node": "^8.3.2",
     "@astrojs/vercel": "^7.7.2",
+    "@types/prismjs": "^1.26.4",
     "astro-eslint-parser": "^1.0.2",
     "autoprefixer": "^10.4.20",
     "cssnano": "^7.0.4",
