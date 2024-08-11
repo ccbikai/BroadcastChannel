@@ -1,6 +1,18 @@
 .content {
   word-break: break-word;
 
+  .image-list-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: masonry;
+
+    &.image-list-odd {
+      :first-child {
+        grid-column: 1 / 3;
+      }
+    }
+  }
+
   img {
     width: calc(100% - var(--box-margin));
   }
@@ -104,6 +116,10 @@
 
   .tgme_widget_message_voice {
     display: block !important;
+  }
+
+  .tgme_widget_message_video_wrap {
+    display: none;
   }
 
   .tgme_widget_message_poll_options {
