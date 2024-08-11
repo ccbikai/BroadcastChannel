@@ -57,6 +57,10 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
       title={channel?.title}
       href={origin + '/rss.xml'}
     />
+    <link
+       href="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-atom-dark.min.css" 
+       rel="stylesheet"
+    />
     <style is:inline>
       @view-transition {
         navigation: auto; /* enabled */
