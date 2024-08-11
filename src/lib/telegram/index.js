@@ -1,11 +1,12 @@
 import { $fetch } from 'ofetch'
 import * as cheerio from 'cheerio'
 import { LRUCache } from 'lru-cache'
-import Prism from 'prismjs'
+import prism from 'prismjs'
 import loadLanguages from 'prismjs/components/'
+import flourite from 'flourite'
 import { getEnv } from '../env'
 
-loadLanguages(['javascript', 'python', 'css', 'html'])
+loadLanguages(['c', 'clojure', 'cpp', 'cs', 'css', 'dart', 'dockerfile', 'elixir', 'go', 'html', 'java', 'javascript', 'json', 'julia', 'kotlin', 'lua', 'markdown', 'pascal', 'php', 'python', 'ruby', 'rust', 'sql', 'typescript', 'yaml'])
 
 const cache = new LRUCache({
   ttl: 1000 * 60 * 5, // 5 minutes
@@ -113,30 +114,17 @@ function modifyHTMLContent($, content, { index } = {}) {
       ?.before(`<input type="checkbox" />`)
   })
   $(content).find('pre').each((_index, pre) => {
-    const code = $(pre).text()
-    const language = detectLanguage(code) // You'll need to implement this function
-    const highlightedCode = Prism.highlight(code, Prism.languages[language], language)
-    $(pre).html(`<code class="language-${language}">${highlightedCode}</code>`)
+    try {
+      const code = $(pre).text()
+      const language = flourite(code, { shiki: true })?.language
+      const highlightedCode = prism.highlight(code, prism.languages[language], language)
+      $(pre).html(`<code class="language-${language}">${highlightedCode}</code>`)
+    }
+    catch (error) {
+      console.error(error)
+    }
   })
   return content
-}
-
-function detectLanguage(code) {
-  // Implement a simple language detection logic
-  // This is a basic example and might need refinement
-  if (code.includes('function') || code.includes('const') || code.includes('let')) {
-    return 'javascript'
-  }
-  else if (code.includes('def ') || code.includes('import ')) {
-    return 'python'
-  }
-  else if (code.includes('<html>') || code.includes('<!DOCTYPE html>')) {
-    return 'html'
-  }
-  else if (code.includes('{') && code.includes('}') && code.includes(':')) {
-    return 'css'
-  }
-  return 'clike' // default to C-like syntax
 }
 
 function getPost($, item, { channel, staticProxy, index = 0 }) {
