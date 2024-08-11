@@ -23,6 +23,6 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-.vercel/
-.netlify/
 .vercel
+.netlify
+.wrangler

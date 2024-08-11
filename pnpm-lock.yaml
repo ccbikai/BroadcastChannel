@@ -57,6 +57,9 @@ importers:
       '@astrojs/vercel':
         specifier: ^7.7.2
         version: 7.7.2(astro@4.12.3(@types/node@22.0.0)(typescript@5.5.4))
+      '@types/prismjs':
+        specifier: ^1.26.4
+        version: 1.26.4
       astro-eslint-parser:
         specifier: ^1.0.2
         version: 1.0.2(typescript@5.5.4)
@@ -1652,6 +1655,9 @@ packages:
 
   '@types/pg@8.6.1':
     resolution: {integrity: sha1-CZRQuNyXfoGXpE9SKc7e+VyHR/k=}
+
+  '@types/prismjs@1.26.4':
+    resolution: {integrity: sha512-rlAnzkW2sZOjbqZ743IHUhFcvzaGbqijwOu8QZnZCjfQzBqFE3s4lOTJEsxikImav9uzz/42I+O7YUs1mWgMlg==}
 
   '@types/shimmer@1.2.0':
     resolution: {integrity: sha512-UE7oxhQLLd9gub6JKIAhDq06T0F6FnztwMNRvYgjeQSBeMc1ZG/tA47EwfduvkuQS8apbkM/lpLpWsaCeYsXVg==}
@@ -6255,6 +6261,8 @@ snapshots:
       '@types/node': 22.0.0
       pg-protocol: 1.6.1
       pg-types: 2.2.0
+
+  '@types/prismjs@1.26.4': {}
 
   '@types/shimmer@1.2.0': {}
 

@@ -1,12 +1,9 @@
 import { $fetch } from 'ofetch'
 import * as cheerio from 'cheerio'
 import { LRUCache } from 'lru-cache'
-import prism from 'prismjs'
-import loadLanguages from 'prismjs/components/'
 import flourite from 'flourite'
+import prism from '../prism'
 import { getEnv } from '../env'
-
-loadLanguages(['c', 'clojure', 'cpp', 'cs', 'css', 'dart', 'dockerfile', 'elixir', 'go', 'html', 'java', 'javascript', 'json', 'julia', 'kotlin', 'lua', 'markdown', 'pascal', 'php', 'python', 'ruby', 'rust', 'sql', 'typescript', 'yaml'])
 
 const cache = new LRUCache({
   ttl: 1000 * 60 * 5, // 5 minutes

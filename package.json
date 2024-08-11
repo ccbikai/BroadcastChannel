@@ -33,6 +33,7 @@
     "@astrojs/netlify": "^5.4.0",
     "@astrojs/node": "^8.3.2",
     "@astrojs/vercel": "^7.7.2",
+    "@types/prismjs": "^1.26.4",
     "astro-eslint-parser": "^1.0.2",
     "autoprefixer": "^10.4.20",
     "cssnano": "^7.0.4",
