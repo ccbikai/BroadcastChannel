@@ -23,6 +23,7 @@
 - [APPDO 数字生活指南](https://mini.appdo.xyz/)
 - [85.60×53.98卡粉订阅/提醒](https://tg.docofcard.com/)
 - [新闻在花频道](https://tg.istore.app/)
+- [ALL About RSS](https://blog.rss.tips/)
 - [Charles Chin's Whisper](https://memo.eallion.com/)
 - [PlayStation 新闻转发](https://playstationnews.pages.dev)
 - [Yu's Life](https://daily.pseudoyu.com/)
@@ -37,6 +38,7 @@
 - [小报童专栏精选](https://xiaobaotong.genaiprism.site/)
 - [Fake news](https://fake-news.csgo.ovh/)
 - [miyi23's Geekhub资源分享](https://gh.miyi23.top/)
+- [Magazine｜期刊杂志｜财新周刊](https://themagazine.top)
 
 ### 平台
 
