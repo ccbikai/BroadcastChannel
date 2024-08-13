@@ -5,6 +5,7 @@ import '../assets/global.css'
 import { SEO } from 'astro-seo'
 import { getEnv } from '../lib/env'
 import backToTopIcon from '../assets/back-to-top.svg'
+import { ViewTransitions } from 'astro:transitions'
 
 const { SITE_URL } = Astro.locals
 const { channel } = Astro.props
@@ -74,6 +75,7 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
       {...seoParams}
     />
     <Fragment set:html={HEADER_INJECT} />
+   <ViewTransitions />
   </head>
 
   <body>
