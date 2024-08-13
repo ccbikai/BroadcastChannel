@@ -38,6 +38,7 @@
 - [小报童专栏精选](https://xiaobaotong.genaiprism.site/)
 - [Fake news](https://fake-news.csgo.ovh/)
 - [miyi23's Geekhub资源分享](https://gh.miyi23.top/)
+- [Magazine｜期刊杂志｜财新周刊](https://themagazine.top)
 
 ### 平台
 
