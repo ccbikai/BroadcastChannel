@@ -112,8 +112,10 @@ function modifyHTMLContent($, content, { index } = {}) {
   })
   $(content).find('pre').each((_index, pre) => {
     try {
+      $(pre).find('br')?.replaceWith('\n')
+
       const code = $(pre).text()
-      const language = flourite(code, { shiki: true })?.language
+      const language = flourite(code, { shiki: true, noUnknown: true })?.language || 'text'
       const highlightedCode = prism.highlight(code, prism.languages[language], language)
       $(pre).html(`<code class="language-${language}">${highlightedCode}</code>`)
     }

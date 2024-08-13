@@ -17,6 +17,12 @@
     width: calc(100% - var(--box-margin));
   }
 
+  > pre {
+    width: calc(100% - var(--box-margin));
+    max-width: 456px;
+    overflow-x: auto;
+  }
+
   .tgme_widget_message_link_preview {
     margin-top: 16px;
     display: none;
