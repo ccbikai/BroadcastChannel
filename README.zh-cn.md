@@ -39,6 +39,7 @@
 - [Fake news](https://fake-news.csgo.ovh/)
 - [miyi23's Geekhub资源分享](https://gh.miyi23.top/)
 - [Magazine｜期刊杂志｜财新周刊](https://themagazine.top)
+- [Fugoou.log](https://fugoou.xyz)
 
 ### 平台
 
