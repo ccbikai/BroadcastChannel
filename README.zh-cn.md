@@ -40,6 +40,7 @@
 - [miyi23's Geekhub资源分享](https://gh.miyi23.top/)
 - [Magazine｜期刊杂志｜财新周刊](https://themagazine.top)
 - [Remote Jobs & Cooperation](https://share-remote-jobs.vercel.app/)
+- [甬哥侃侃侃--频道发布](https://ygkkktg.pages.dev)
 
 ### 平台
 
