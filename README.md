@@ -40,6 +40,7 @@ English | [简体中文](./README.zh-cn.md)
 - [miyi23's Geekhub资源分享](https://gh.miyi23.top/)
 - [Magazine｜期刊杂志｜财新周刊](https://themagazine.top)
 - [Remote Jobs & Cooperation](https://share-remote-jobs.vercel.app/)
+- [Fugoou.log](https://fugoou.xyz)
 
 ### Platform
 
