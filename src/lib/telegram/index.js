@@ -1,6 +1,8 @@
 import { $fetch } from 'ofetch'
 import * as cheerio from 'cheerio'
 import { LRUCache } from 'lru-cache'
+import flourite from 'flourite'
+import prism from '../prism'
 import { getEnv } from '../env'
 
 const cache = new LRUCache({
@@ -41,7 +43,7 @@ function getImages($, item, { staticProxy, id, index, title }) {
         <img src="${staticProxy + url}" alt="${title}" loading="${index > 15 ? 'eager' : 'lazy'}" />
       </button>
       <button class="image-preview-button modal" id="${popoverId}" popovertarget="${popoverId}" popovertargetaction="hide" popover>
-        <img class="modal-img" src="${staticProxy + url}" alt="${title}" loading="${index > 15 ? 'eager' : 'lazy'}" />
+        <img class="modal-img" src="${staticProxy + url}" alt="${title}" loading="lazy" />
       </button>
     `
   })?.get()
@@ -91,7 +93,7 @@ function getReply($, item, { channel }) {
   const href = reply?.attr('href')
   if (href) {
     const url = new URL(href)
-    reply?.attr('href', `${url.pathname}`.replace(channel, 'posts'))
+    reply?.attr('href', `${url.pathname}`.replace(new RegExp(`/${channel}/`, 'i'), '/posts/'))
   }
 
   return $.html(reply)
@@ -108,6 +110,19 @@ function modifyHTMLContent($, content, { index } = {}) {
       ?.wrap('<label class="spoiler-button"></label>')
       ?.before(`<input type="checkbox" />`)
   })
+  $(content).find('pre').each((_index, pre) => {
+    try {
+      $(pre).find('br')?.replaceWith('\n')
+
+      const code = $(pre).text()
+      const language = flourite(code, { shiki: true, noUnknown: true })?.language || 'text'
+      const highlightedCode = prism.highlight(code, prism.languages[language], language)
+      $(pre).html(`<code class="language-${language}">${highlightedCode}</code>`)
+    }
+    catch (error) {
+      console.error(error)
+    }
+  })
   return content
 }
 
@@ -117,7 +132,7 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
     ? modifyHTMLContent($, $(item).find('.tgme_widget_message_text.js-message_text'), { index })
     : modifyHTMLContent($, $(item).find('.tgme_widget_message_text'), { index })
   const title = content?.text()?.match(/^.*?(?=[。：:]|http\S)/g)?.[0] ?? content?.text() ?? ''
-  const id = $(item).attr('data-post')?.replace(`${channel}/`, '')
+  const id = $(item).attr('data-post')?.replace(new RegExp(`${channel}/`, 'i'), '')
 
   const tags = $(content).find('a[href^="?q="]')?.each((_index, a) => {
     $(a)?.attr('href', `/search/${encodeURIComponent($(a)?.text())}`)
