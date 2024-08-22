@@ -8,7 +8,7 @@ import backToTopIcon from '../assets/back-to-top.svg'
 
 const { SITE_URL } = Astro.locals
 const { channel } = Astro.props
-
+const HOMEPAGE = getEnv(import.meta.env, Astro, 'HOMEPAGE')
 const locale = getEnv(import.meta.env, Astro, 'LOCALE')
 
 const seo = channel?.seo
@@ -83,7 +83,7 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
           <slot name="aside">
             <div class="nav">
               <div class="nav-item">
-                <a href={SITE_URL} title={channel?.title} class={`nav-link current`}>Home</a>
+                <a href={HOMEPAGE} title={channel?.title} class={`nav-link current`}>Home</a>
               </div>
             </div>
             <input class="search-icon" name="icon" type="checkbox" placeholder="Search" />
