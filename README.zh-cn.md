@@ -41,6 +41,7 @@
 - [Magazine｜期刊杂志｜财新周刊](https://themagazine.top)
 - [Remote Jobs & Cooperation](https://share-remote-jobs.vercel.app/)
 - [Fugoou.log](https://fugoou.xyz)
+- [Bboysoul的博客](https://tg.bboy.app/)
 
 ### 平台
 
