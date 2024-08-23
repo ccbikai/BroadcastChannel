@@ -41,6 +41,8 @@ English | [简体中文](./README.zh-cn.md)
 - [Magazine｜期刊杂志｜财新周刊](https://themagazine.top)
 - [Remote Jobs & Cooperation](https://share-remote-jobs.vercel.app/)
 - [甬哥侃侃侃ygkkk--频道发布](https://ygkkktg.pages.dev)
+- [Fugoou.log](https://fugoou.xyz)
+- [Bboysoul的博客](https://tg.bboy.app/)
 
 ### Platform
 
