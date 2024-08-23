@@ -37,7 +37,7 @@ const seoParams = {
     },
   },
   extend: {
-    link: [{ rel: 'icon', href: '/favicon.svg' }],
+    link: [{ rel: 'icon', href: channel?.avatar ? channel?.avatar : '/favicon.svg' }],
   },
 }
 
@@ -51,12 +51,7 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f4f1ec" />
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title={channel?.title}
-      href={origin + '/rss.xml'}
-    />
+    <link rel="alternate" type="application/rss+xml" title={channel?.title} href={origin + '/rss.xml'} />
     <style is:inline>
       @view-transition {
         navigation: auto; /* enabled */
@@ -64,9 +59,7 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
     </style>
     <SEO
       titleTemplate={`%s | ${channel?.title}`}
-      titleDefault={[channel?.title, seoParams.description]
-        .filter(Boolean)
-        .join(' - ')}
+      titleDefault={[channel?.title, seoParams.description].filter(Boolean).join(' - ')}
       twitter={{
         card: 'summary_large_image',
         creator: twitter ? `@${twitter}` : undefined,
@@ -86,19 +79,10 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
           <slot name="aside">
             <div class="nav">
               <div class="nav-item">
-                <a
-                  href={SITE_URL}
-                  title={channel?.title}
-                  class={`nav-link current`}>Home</a
-                >
+                <a href={SITE_URL} title={channel?.title} class={`nav-link current`}>Home</a>
               </div>
             </div>
-            <input
-              class="search-icon"
-              name="icon"
-              type="checkbox"
-              placeholder="Search"
-            />
+            <input class="search-icon" name="icon" type="checkbox" placeholder="Search" />
             <form class="search-form" action="/search/result" method="get">
               <input type="text" name="q" placeholder="Search" />
             </form>
@@ -112,12 +96,7 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
               >
                 BroadcastChannel
               </a> &
-              <a
-                href="https://github.com/Planetable/SiteTemplateSepia"
-                title="Sepia"
-                target="_blank"
-                rel="noopener"
-              >
+              <a href="https://github.com/Planetable/SiteTemplateSepia" title="Sepia" target="_blank" rel="noopener">
                 Sepia
               </a>
             </div>
