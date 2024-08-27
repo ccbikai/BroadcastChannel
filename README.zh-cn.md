@@ -43,6 +43,7 @@
 - [甬哥侃侃侃--频道发布](https://ygkkktg.pages.dev)
 - [Fugoou.log](https://fugoou.xyz)
 - [Bboysoul的博客](https://tg.bboy.app/)
+- [MakerHunter](https://share.makerhunter.com/)
 
 ### 平台
 
