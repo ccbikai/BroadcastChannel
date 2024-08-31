@@ -13,33 +13,20 @@ const { SITE_URL } = Astro.locals
 const { post } = Astro.props
 
 const datetime = dayjs(post.datetime).tz(timezone)
-const timeago = datetime.isBefore(dayjs().subtract(1, 'w'))
-  ? datetime.format('HH:mm · ll · ddd')
-  : datetime.fromNow()
+const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('HH:mm · ll · ddd') : datetime.fromNow()
 ---
 
 <div class="item" style={{ 'view-transition-name': `post-${post.id}` }}>
   <div class="time-box">
     <div class="dot"></div>
     <div class="time">
-      <a
-        href={`${SITE_URL}posts/${post.id}`}
-        title={post.datetime}
-        class="item-link">{timeago}</a
-      >
+      <a href={`${SITE_URL}posts/${post.id}`} title={post.datetime} class="item-link">{timeago}</a>
     </div>
   </div>
-  {
-    post.content.length > 0 && (
-      <div class={`text-box content`} set:html={post.content} />
-    )
-  }
+  {post.content.length > 0 && <div class={`text-box content`} set:html={post.content} />}
   {
     post.tags.length > 0 && (
-      <div
-        class="tag-box"
-        style={post.content.length === 0 ? 'padding-top: 30px;' : ''}
-      >
+      <div class="tag-box" style={post.content.length === 0 ? 'padding-top: 30px;' : ''}>
         <div class="tag-icon" />
         {post.tags.map((tag) => (
           <a href={`/search/%23${tag}`} title={tag} class="tag">

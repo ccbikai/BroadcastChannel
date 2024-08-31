@@ -27,9 +27,7 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
 <div id="header">
   <a href={SITE_URL} title={channel?.title}>
     <img
-      src={channel?.avatar?.startsWith('http')
-        ? staticProxy + channel?.avatar
-        : voidFile.src}
+      src={channel?.avatar?.startsWith('http') ? staticProxy + channel?.avatar : voidFile.src}
       alt={channel?.title}
       loading="eager"
       class="header-avatar"
@@ -41,13 +39,7 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
     </a>
   </div>
   <div class="header-icons">
-    <a
-      href={`${SITE_URL}rss.xml`}
-      target="_blank"
-      rel="alternate"
-      type="application/rss+xml"
-      title="RSS Feed"
-    >
+    <a href={`${SITE_URL}rss.xml`} target="_blank" rel="alternate" type="application/rss+xml" title="RSS Feed">
       <img {...rss} alt="RSS" class="social-icon" width="1em" />
     </a>
 
@@ -61,17 +53,8 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
 
     {
       TWITTER && TWITTER.length > 0 && (
-        <a
-          href={`https://twitter.com/${TWITTER}`}
-          title="Twitter"
-          target="_blank"
-        >
-          <img
-            {...twitter}
-            alt={`twitter.com/${TWITTER}`}
-            class="social-icon"
-            width="1em"
-          />
+        <a href={`https://twitter.com/${TWITTER}`} title="Twitter" target="_blank">
+          <img {...twitter} alt={`twitter.com/${TWITTER}`} class="social-icon" width="1em" />
         </a>
       )
     }
@@ -79,12 +62,7 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
     {
       GITHUB && GITHUB.length > 0 && (
         <a href={`https://github.com/${GITHUB}`} title="GitHub" target="_blank">
-          <img
-            {...github}
-            alt={`github.com/${GITHUB}`}
-            class="social-icon"
-            width="1em"
-          />
+          <img {...github} alt={`github.com/${GITHUB}`} class="social-icon" width="1em" />
         </a>
       )
     }
@@ -92,12 +70,7 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
     {
       TELEGRAM && TELEGRAM.length > 0 && (
         <a href={`https://t.me/${TELEGRAM}`} title="Telegram" target="_blank">
-          <img
-            {...telegram}
-            alt={`t.me/${TELEGRAM}`}
-            class="social-icon"
-            width="1em"
-          />
+          <img {...telegram} alt={`t.me/${TELEGRAM}`} class="social-icon" width="1em" />
         </a>
       )
     }
@@ -105,12 +78,7 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
     {
       DISCORD && DISCORD.length > 0 && (
         <a href={DISCORD} title="Discord" target="_blank">
-          <img
-            {...discord}
-            alt="Discord Invite"
-            class="social-icon"
-            width="1em"
-          />
+          <img {...discord} alt="Discord Invite" class="social-icon" width="1em" />
         </a>
       )
     }
@@ -118,29 +86,15 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
     {
       MASTODON && MASTODON.length > 0 && (
         <a href={`https://${MASTODON}`} title="Mastodon" target="_blank">
-          <img
-            {...mastodon}
-            alt={`@${MASTODON}`}
-            class="social-icon"
-            width="1em"
-          />
+          <img {...mastodon} alt={`@${MASTODON}`} class="social-icon" width="1em" />
         </a>
       )
     }
 
     {
       BLUESKY && BLUESKY.length > 0 && (
-        <a
-          href={`https://bsky.app/profile/${BLUESKY}`}
-          title="BlueSky"
-          target="_blank"
-        >
-          <img
-            {...bluesky}
-            alt={`@${BLUESKY}`}
-            class="social-icon"
-            width="1em"
-          />
+        <a href={`https://bsky.app/profile/${BLUESKY}`} title="BlueSky" target="_blank">
+          <img {...bluesky} alt={`@${BLUESKY}`} class="social-icon" width="1em" />
         </a>
       )
     }

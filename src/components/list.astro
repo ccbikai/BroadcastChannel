@@ -23,11 +23,7 @@ const afterCursor = posts[0]?.id
   <div class="pages-container">
     {
       before && beforeCursor > 1 ? (
-        <a
-          href={`${SITE_URL}before/${beforeCursor}`}
-          title="Before"
-          class="page"
-        >
+        <a href={`${SITE_URL}before/${beforeCursor}`} title="Before" class="page">
           Before
         </a>
       ) : (
