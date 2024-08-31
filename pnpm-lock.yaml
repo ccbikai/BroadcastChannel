@@ -14,12 +14,6 @@ importers:
       '@sentry/astro':
         specifier: ^8.26.0
         version: 8.26.0(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
-      astro:
-        specifier: ^4.14.5
-        version: 4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
-      astro-seo:
-        specifier: ^0.8.4
-        version: 0.8.4(prettier-plugin-astro@0.14.1)(prettier@3.3.3)(typescript@5.5.4)
       cheerio:
         specifier: 1.0.0-rc.12
         version: 1.0.0-rc.12
@@ -63,9 +57,15 @@ importers:
       '@types/prismjs':
         specifier: ^1.26.4
         version: 1.26.4
+      astro:
+        specifier: ^4.14.5
+        version: 4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
       astro-eslint-parser:
         specifier: ^1.0.2
         version: 1.0.2(typescript@5.5.4)
+      astro-seo:
+        specifier: ^0.8.4
+        version: 0.8.4(prettier-plugin-astro@0.14.1)(prettier@3.3.3)(typescript@5.5.4)
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.41)
@@ -3251,7 +3251,7 @@ packages:
     hasBin: true
 
   mime@3.0.0:
-    resolution: {integrity: sha512-jSCU7/VB1loIWBZe14aEYHU/+1UMEHoaO7qxCOVJOw9GgH72VAWppxNcjU+x9a2k3GSIBXNKxXQFqRvvZ7vr3A==}
+    resolution: {integrity: sha1-s3RVDco6DBhEOwyVCmpY8ZMc96c=}
     engines: {node: '>=10.0.0'}
     hasBin: true
 
