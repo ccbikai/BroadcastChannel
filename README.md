@@ -62,6 +62,13 @@ For detailed tutorials, see [Deploy your Astro site](https://docs.astro.build/en
 
 ## 🏗️ Deployment
 
+### Docker
+
+1. `docker pull ghcr.io/ccbikai/broadcastchannel:main`
+2. `docker run -d --name broadcastchannel -p 4321:4321 -e CHANNEL=miantiao_me ghcr.io/ccbikai/broadcastchannel:main`
+
+### Serverless
+
 1. [Fork](https://github.com/ccbikai/BroadcastChannel/fork) this project to your GitHub
 2. Create a project on Cloudflare/Netlify/Vercel
 3. Select the `BroadcastChannel` project and the `Astro` framework

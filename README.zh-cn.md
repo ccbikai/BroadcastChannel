@@ -62,6 +62,13 @@
 
 ## 🏗️ 部署
 
+### Docker
+
+1. `docker pull ghcr.io/ccbikai/broadcastchannel:main`
+2. `docker run -d --name broadcastchannel -p 4321:4321 -e CHANNEL=miantiao_me ghcr.io/ccbikai/broadcastchannel:main`
+
+### Serverless
+
 1. [Fork](https://github.com/ccbikai/BroadcastChannel/fork) 此项目到你 GitHub
 2. 在 Cloudflare/Netlify/Vercel 创建项目
 3. 选择 `BroadcastChannel` 项目和 `Astro` 框架
