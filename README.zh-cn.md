@@ -44,6 +44,7 @@
 - [Fugoou.log](https://fugoou.xyz)
 - [Bboysoul的博客](https://tg.bboy.app/)
 - [MakerHunter](https://share.makerhunter.com/)
+- [ChatGPT/AI新闻聚合](https://g4f.icu/)
 
 ### 平台
 
