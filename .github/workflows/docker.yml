@@ -1,8 +1,11 @@
 # Docker build and push workflow
 name: Create and publish a Docker image
 
-# Triggered by workflow_dispatch
 on:
+  push:
+    branches:
+      - main
+  # Triggered by workflow_dispatch
   workflow_dispatch:
 
 # Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
