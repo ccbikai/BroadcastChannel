@@ -100,9 +100,9 @@ function getReply($, item, { channel }) {
 }
 
 function modifyHTMLContent($, content, { index } = {}) {
-  $(content).find('.emoji')?.attr('style', '')
+  $(content).find('.emoji')?.removeAttr('style')
   $(content).find('a')?.each((_index, a) => {
-    $(a)?.attr('title', $(a)?.text())?.attr('onclick', '')
+    $(a)?.attr('title', $(a)?.text())?.removeAttr('onclick')
   })
   $(content).find('tg-spoiler')?.each((_index, spoiler) => {
     const id = `spoiler-${index}-${_index}`
