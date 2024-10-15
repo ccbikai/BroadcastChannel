@@ -29,7 +29,7 @@ export default defineConfig({
   output: 'hybrid',
   adapter: providers[adapterProvider] || providers.node,
   integrations: [
-    ...(process.env.SENTRY_DSN || process.env.SENTRY_AUTH_TOKEN
+    ...(process.env.SENTRY_DSN
       ? [
           sentry({
             enabled: {
