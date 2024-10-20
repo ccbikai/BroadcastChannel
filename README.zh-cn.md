@@ -45,6 +45,7 @@
 - [Bboysoul的博客](https://tg.bboy.app/)
 - [MakerHunter](https://share.makerhunter.com/)
 - [ChatGPT/AI新闻聚合](https://g4f.icu/)
+- [Abner's memos](https://memos.abnerz6.top/)
 
 ### 平台
 
