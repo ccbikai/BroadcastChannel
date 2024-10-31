@@ -46,6 +46,7 @@ English | [简体中文](./README.zh-cn.md)
 - [MakerHunter](https://share.makerhunter.com/)
 - [ChatGPT/AI新闻聚合](https://g4f.icu/)
 - [Abner's memos](https://memos.abnerz6.top/)
+- [Appinn Talk](https://talk.appinn.net/)
 
 ### Platform
 
