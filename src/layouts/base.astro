@@ -41,6 +41,9 @@ const seoParams = {
   },
 }
 
+const GOOGLE_SEARCH_SITE = getEnv(import.meta.env, Astro, 'GOOGLE_SEARCH_SITE')
+const searchAction = GOOGLE_SEARCH_SITE ? 'https://www.google.com/search' : '/search/result'
+
 const HEADER_INJECT = getEnv(import.meta.env, Astro, 'HEADER_INJECT')
 const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
 ---
@@ -83,7 +86,8 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
               </div>
             </div>
             <input class="search-icon" name="icon" type="checkbox" placeholder="Search" />
-            <form class="search-form" action="/search/result" method="get">
+            <form class="search-form" action={searchAction} method="get">
+              {GOOGLE_SEARCH_SITE ? <input type="hidden" name="as_sitesearch" value={GOOGLE_SEARCH_SITE} /> : null}
               <input type="text" name="q" placeholder="Search" />
             </form>
             <div class="copyright-wrap">

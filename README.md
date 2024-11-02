@@ -117,6 +117,9 @@ SENTRY_PROJECT=SENTRY_PROJECT
 ## Telegram host name and static resource proxy, not recommended to modify
 HOST=telegram.dog
 STATIC_PROXY=
+
+## Enable Google Site Search
+GOOGLE_SEARCH_SITE=memo.miantiao.me
 ```
 
 ## 🙋🏻 FAQs
