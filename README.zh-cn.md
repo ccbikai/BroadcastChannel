@@ -115,6 +115,9 @@ SENTRY_PROJECT=SENTRY_PROJECT
 ## Telegram 主机名称和静态资源代理，不建议修改
 HOST=telegram.dog
 STATIC_PROXY=
+
+## 启用谷歌站内搜索
+GOOGLE_SEARCH_SITE=memo.miantiao.me
 ```
 
 ## 🙋🏻 常问问题
