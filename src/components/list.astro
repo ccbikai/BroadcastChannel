@@ -4,7 +4,7 @@ import Header from '../components/header.astro'
 import Item from '../components/item.astro'
 
 const { SITE_URL } = Astro.locals
-const { channel, before = true, after = true } = Astro.props
+const { channel, before = true, after = true, isItem = false } = Astro.props
 const posts = channel.posts ?? []
 
 const beforeCursor = posts[posts.length - 1]?.id
@@ -17,7 +17,7 @@ const afterCursor = posts[0]?.id
     <Header channel={channel} />
   </slot>
   <div class="items">
-    {posts.map((post) => <Item post={post} />)}
+    {posts.map((post) => <Item post={post} isItem={isItem} />)}
   </div>
 
   <div class="pages-container">
