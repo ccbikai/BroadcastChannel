@@ -15,6 +15,16 @@ html {
   transition: 0.2s ease;
 }
 
+#aside-container {
+  position: sticky;
+  top: 0;
+}
+
+#aside-container .nav {
+  position: static;
+  top: unset;
+}
+
 .search-icon {
   position: absolute;
   top: 20px;
@@ -45,15 +55,16 @@ html {
 
 .search-form {
   display: none;
-  background: rgba(255, 255, 255, 0.75);
+  background: var(--code-background-color);
+  color: var(--secondary-color);
   padding: 8px;
-  position: sticky;
-  top: 60px;
   border-radius: var(--box-border-radius);
 
   > input {
     border: 1px solid var(--background-color);
     border-radius: var(--box-border-radius);
+    background: var(--code-background-color);
+    color: var(--secondary-color);
     outline: none;
     font-size: 12px;
     line-height: 2.4;
@@ -64,15 +75,20 @@ html {
 }
 
 .copyright-wrap {
-  position: sticky;
-  top: 120px;
   color: #666;
   line-height: 1.5;
   font-size: 14px;
   display: none;
+  padding: 8px;
 }
 
 @media screen and (min-width: 600px) {
+  #aside-container {
+    height: 100vh;
+    height: 100svh;
+    overflow-y: auto;
+  }
+
   .search-form {
     display: block;
   }
@@ -91,7 +107,7 @@ html {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #fff;
+  background: var(--code-background-color);
   color: var(--secondary-color);
   width: 32px;
   height: 32px;
