@@ -118,6 +118,12 @@ STATIC_PROXY=
 
 ## 启用谷歌站内搜索
 GOOGLE_SEARCH_SITE=memo.miantiao.me
+
+## 启用标签页, 标签使用英文逗号分割
+TAGS=标签A,标签B,标签C
+
+## 展示评论
+COMMENTS=true
 ```
 
 ## 🙋🏻 常问问题

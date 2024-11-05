@@ -2,6 +2,7 @@
 import '../assets/normalize.css'
 import '../assets/style.css'
 import '../assets/global.css'
+import '../assets/item.css'
 import { SEO } from 'astro-seo'
 import { getEnv } from '../lib/env'
 import backToTopIcon from '../assets/back-to-top.svg'
@@ -15,7 +16,7 @@ const seo = channel?.seo
 const canonical = SITE_URL.startsWith('http')
   ? new URL(SITE_URL).origin + Astro.url.pathname
   : Astro.url.origin + Astro.url.pathname
-const origin = new URL(canonical).origin
+const { origin, pathname } = new URL(canonical)
 const twitter = getEnv(import.meta.env, Astro, 'TWITTER')
 
 const seoParams = {
@@ -46,6 +47,7 @@ const searchAction = GOOGLE_SEARCH_SITE ? 'https://www.google.com/search' : '/se
 
 const HEADER_INJECT = getEnv(import.meta.env, Astro, 'HEADER_INJECT')
 const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
+const TAGS = getEnv(import.meta.env, Astro, 'TAGS')
 ---
 
 <!doctype html>
@@ -82,8 +84,23 @@ const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
           <slot name="aside">
             <div class="nav">
               <div class="nav-item">
-                <a href={SITE_URL} title={channel?.title} class={`nav-link current`}>Home</a>
+                <a href={SITE_URL} title={channel?.title} class={`nav-link ${pathname === '/' ? 'current' : ''}`}>
+                  Home
+                </a>
               </div>
+              {
+                TAGS ? (
+                  <div class="nav-item">
+                    <a
+                      href={`${SITE_URL}tags`}
+                      title="Tags"
+                      class={`nav-link ${pathname === '/tags' ? 'current' : ''}`}
+                    >
+                      Tags
+                    </a>
+                  </div>
+                ) : null
+              }
             </div>
             <input class="search-icon" name="icon" type="checkbox" placeholder="Search" />
             <form class="search-form" action={searchAction} method="get">
