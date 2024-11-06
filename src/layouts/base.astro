@@ -48,6 +48,17 @@ const searchAction = GOOGLE_SEARCH_SITE ? 'https://www.google.com/search' : '/se
 const HEADER_INJECT = getEnv(import.meta.env, Astro, 'HEADER_INJECT')
 const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
 const TAGS = getEnv(import.meta.env, Astro, 'TAGS')
+const LINKS = getEnv(import.meta.env, Astro, 'LINKS')
+const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
+  .split(';')
+  .filter(Boolean)
+  .map((link) => {
+    link = link.split(',')
+    return {
+      title: link[0],
+      href: link[1],
+    }
+  })
 ---
 
 <!doctype html>
@@ -100,6 +111,28 @@ const TAGS = getEnv(import.meta.env, Astro, 'TAGS')
                     </a>
                   </div>
                 ) : null
+              }
+              {
+                LINKS ? (
+                  <div class="nav-item">
+                    <a
+                      href={`${SITE_URL}links`}
+                      title="Links"
+                      class={`nav-link ${pathname === '/links' ? 'current' : ''}`}
+                    >
+                      Links
+                    </a>
+                  </div>
+                ) : null
+              }
+              {
+                navs.map((nav) => (
+                  <div class="nav-item">
+                    <a href={nav.href} title={nav.title} target="_blank" rel="noopener" class="nav-link">
+                      {nav.title}
+                    </a>
+                  </div>
+                ))
               }
             </div>
             <input class="search-icon" name="icon" type="checkbox" placeholder="Search" />
