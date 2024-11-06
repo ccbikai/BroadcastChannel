@@ -5,8 +5,6 @@ import { getChannelInfo } from '../../lib/telegram'
 const channel = await getChannelInfo(Astro, {
   q: Astro.url.searchParams.get('q') || Astro.params.q,
 })
-
-export const prerender = false
 ---
 
 <List channel={channel} before={false} after={false} />

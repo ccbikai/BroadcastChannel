@@ -4,7 +4,6 @@ import Header from '../components/header.astro'
 import { getChannelInfo } from '../lib/telegram'
 import { getEnv } from '../lib/env'
 
-export const prerender = false
 const channel = await getChannelInfo(Astro)
 
 const tags = (getEnv(import.meta.env, Astro, 'TAGS') || '').split(',')

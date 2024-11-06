@@ -2,8 +2,6 @@ import rss from '@astrojs/rss'
 import sanitizeHtml from 'sanitize-html'
 import { getChannelInfo } from '../lib/telegram'
 
-export const prerender = false
-
 export async function GET(Astro) {
   const request = Astro.request
   const { SITE_URL } = Astro.locals

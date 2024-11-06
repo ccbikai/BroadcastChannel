@@ -20,8 +20,6 @@ const channel = {
 }
 
 const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
-
-export const prerender = false
 ---
 
 <List channel={channel} before={false} after={false} isItem={true}>
