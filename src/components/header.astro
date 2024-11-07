@@ -10,7 +10,7 @@ import telegram from '../assets/telegram.svg'
 import mastodon from '../assets/mastodon.svg'
 import bluesky from '../assets/bluesky.svg'
 
-const { SITE_URL } = Astro.locals
+const { SITE_URL, RSS_URL } = Astro.locals
 const { channel } = Astro.props
 
 const PODCASRT = getEnv(import.meta.env, Astro, 'PODCASRT')
@@ -39,7 +39,7 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
     </a>
   </div>
   <div class="header-icons">
-    <a href={`${SITE_URL}rss.xml`} target="_blank" rel="alternate" type="application/rss+xml" title="RSS Feed">
+    <a href={RSS_URL} target="_blank" rel="alternate" type="application/rss+xml" title="RSS Feed">
       <img {...rss} alt="RSS" class="social-icon" width="1em" />
     </a>
 
