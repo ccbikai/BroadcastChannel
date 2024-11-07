@@ -126,6 +126,12 @@ TAGS=tag1,tag2,tag3
 
 ## Show comments
 COMMENTS=true
+
+## List of links in the Links page, Separate using commas and semicolons
+LINKS=Title1,URL1;Title2,URL3;Title3,URL3;
+
+## Sidebar Navigation Item, Separate using commas and semicolons
+NAVS=Title1,URL1;Title2,URL3;Title3,URL3;
 ```
 
 ## 🙋🏻 FAQs

@@ -6,7 +6,20 @@ import { getEnv } from '../lib/env'
 
 const channel = await getChannelInfo(Astro)
 
-const tags = (getEnv(import.meta.env, Astro, 'TAGS') || '').split(',')
+const links = (getEnv(import.meta.env, Astro, 'LINKS') || '')
+  .split(';')
+  .filter(Boolean)
+  .map((link) => {
+    link = link.split(',')
+    return {
+      title: link[0],
+      href: link[1],
+    }
+  })
+
+if (!links.length) {
+  return Astro.redirect('/')
+}
 ---
 
 <Layout channel={channel} id="main-container">
@@ -14,16 +27,15 @@ const tags = (getEnv(import.meta.env, Astro, 'TAGS') || '').split(',')
     <Header channel={channel} />
   </slot>
 
-  <div class="section-title">Tags</div>
+  <div class="section-title">Links</div>
 
   <div class="tag-cloud">
     {
-      tags.map((tag: string) => (
+      links.map((link) => (
         <div class="tag-cloud-item">
-          <a href={`/search/%23${tag}`} class="tag">
-            {tag}
+          <a href={link.href} class="tag" target="_blank" rel="noopener" title={link.title}>
+            {link.title}
           </a>
-          {/* <span class="tag-cloud-item-count">0</span> */}
         </div>
       ))
     }
