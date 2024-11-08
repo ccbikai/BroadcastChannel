@@ -2,12 +2,11 @@
 import '../assets/normalize.css'
 import '../assets/style.css'
 import '../assets/global.css'
-import '../assets/item.css'
 import { SEO } from 'astro-seo'
 import { getEnv } from '../lib/env'
 import backToTopIcon from '../assets/back-to-top.svg'
 
-const { SITE_URL } = Astro.locals
+const { SITE_URL, RSS_URL, RSS_PREFIX } = Astro.locals
 const { channel } = Astro.props
 
 const locale = getEnv(import.meta.env, Astro, 'LOCALE')
@@ -67,7 +66,7 @@ const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f4f1ec" />
-    <link rel="alternate" type="application/rss+xml" title={channel?.title} href={origin + '/rss.xml'} />
+    <link rel="alternate" type="application/rss+xml" title={`${RSS_PREFIX}${channel?.title}`} href={RSS_URL} />
     <style is:inline>
       @view-transition {
         navigation: auto; /* enabled */
