@@ -12,9 +12,9 @@ const { channel } = Astro.props
 const locale = getEnv(import.meta.env, Astro, 'LOCALE')
 
 const seo = channel?.seo
-const canonical = SITE_URL.startsWith('http')
-  ? new URL(SITE_URL).origin + Astro.url.pathname
-  : Astro.url.origin + Astro.url.pathname
+const reqPathname = Astro.url.pathname.replace(/\/$/, '')
+const canonical = SITE_URL.startsWith('http') ? new URL(SITE_URL).origin + reqPathname : Astro.url.origin + reqPathname
+
 const { origin, pathname } = new URL(canonical)
 const twitter = getEnv(import.meta.env, Astro, 'TWITTER')
 
