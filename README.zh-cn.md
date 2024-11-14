@@ -47,6 +47,7 @@
 - [ChatGPT/AI新闻聚合](https://g4f.icu/)
 - [Abner's memos](https://memos.abnerz6.top/)
 - [小众软件的发现](https://talk.appinn.net/)
+- [小报童优惠与排行榜](https://youhui.xiaobaoto.com/)
 
 ### 平台
 
