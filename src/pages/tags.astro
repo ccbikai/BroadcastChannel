@@ -6,6 +6,10 @@ import { getEnv } from '../lib/env'
 
 const channel = await getChannelInfo(Astro)
 
+channel.seo = {
+  title: 'Tags',
+}
+
 const tags = (getEnv(import.meta.env, Astro, 'TAGS') || '').split(',')
 ---
 
