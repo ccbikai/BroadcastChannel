@@ -131,7 +131,7 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
   const content = $(item).find('.js-message_reply_text')?.length > 0
     ? modifyHTMLContent($, $(item).find('.tgme_widget_message_text.js-message_text'), { index })
     : modifyHTMLContent($, $(item).find('.tgme_widget_message_text'), { index })
-  const title = content?.text()?.match(/^.*?(?=[。：:]|http\S)/g)?.[0] ?? content?.text() ?? ''
+  const title = content?.text()?.match(/^.*?(?=[。\n]|http\S)/g)?.[0] ?? content?.text() ?? ''
   const id = $(item).attr('data-post')?.replace(new RegExp(`${channel}/`, 'i'), '')
 
   const tags = $(content).find('a[href^="?q="]')?.each((_index, a) => {

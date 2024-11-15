@@ -5,6 +5,10 @@ import { getChannelInfo } from '../../lib/telegram'
 const channel = await getChannelInfo(Astro, {
   before: Astro.params.cursor,
 })
+
+channel.seo = {
+  noindex: true,
+}
 ---
 
 <List channel={channel} />
