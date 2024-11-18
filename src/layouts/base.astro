@@ -134,7 +134,7 @@ const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
                 ))
               }
             </div>
-            <input class="search-icon" name="icon" type="checkbox" placeholder="Search" />
+            <input class="search-icon" name="icon" type="checkbox" placeholder="Search(回车键确认搜索)" />
             <form class="search-form" action={searchAction} method="get">
               {GOOGLE_SEARCH_SITE ? <input type="hidden" name="as_sitesearch" value={GOOGLE_SEARCH_SITE} /> : null}
               <input type="text" name="q" placeholder="Search" />
