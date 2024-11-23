@@ -4,3 +4,4 @@ dist
 .git
 .gitignore
 *.md
+.env
