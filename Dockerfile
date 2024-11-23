@@ -15,6 +15,11 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 FROM build-deps AS build
 COPY . .
+
+ARG SENTRY_DSN
+ARG SENTRY_AUTH_TOKEN
+ARG SENTRY_PROJECT
+
 RUN export $(cat .env.example) && \
     export DOCKER=true && \
     pnpm run build
