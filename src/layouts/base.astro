@@ -137,20 +137,20 @@ const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
             <input class="search-icon" name="icon" type="checkbox" placeholder="Search" />
             <form class="search-form" action={searchAction} method="get">
               {GOOGLE_SEARCH_SITE ? <input type="hidden" name="as_sitesearch" value={GOOGLE_SEARCH_SITE} /> : null}
-              <input type="text" name="q" placeholder="Search" />
+              <input type="text" name="q" placeholder="Search(回车键确认搜索)" />
             </form>
             <div class="copyright-wrap">
-              Powered by
+              防失联Ctrl＋D收藏以下链接
               <a
-                href="https://github.com/ccbikai/BroadcastChannel"
-                title="BroadcastChannel"
+                href="https://aaax.me/article/46"
+                title="故人博客🪄"
                 target="_blank"
                 rel="noopener"
               >
-                BroadcastChannel
-              </a> &
-              <a href="https://github.com/Planetable/SiteTemplateSepia" title="Sepia" target="_blank" rel="noopener">
-                Sepia
+                点此查看更多🪄
+              </a>  | 
+              <a href="https://home.aaax.me/gzh/index.html" title="公众号👋" target="_blank" rel="noopener">
+                公众号👋
               </a>
             </div>
           </slot>
