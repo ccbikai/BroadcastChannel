@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/base.astro'
+import Header from '../components/header.astro'
+import { getChannelInfo } from '../lib/telegram'
+import { getEnv } from '../lib/env'
+
+const channel = await getChannelInfo(Astro)
+
+channel.seo = {
+  title: 'Links',
+}
+
+const links = (getEnv(import.meta.env, Astro, 'LINKS') || '')
+  .split(';')
+  .filter(Boolean)
+  .map((link) => {
+    link = link.split(',')
+    return {
+      title: link[0],
+      href: link[1],
+    }
+  })
+
+if (!links.length) {
+  return Astro.redirect('/')
+}
+---
+
+<Layout channel={channel} id="main-container">
+  <slot name="header">
+    <Header channel={channel} />
+  </slot>
+
+  <div class="section-title">Links</div>
+
+  <div class="tag-cloud">
+    {
+      links.map((link) => (
+        <div class="tag-cloud-item">
+          <a href={link.href} class="tag" target="_blank" rel="noopener" title={link.title}>
+            {link.title}
+          </a>
+        </div>
+      ))
+    }
+  </div>
+</Layout>

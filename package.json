@@ -1,9 +1,9 @@
 {
   "name": "broadcast-channel",
   "type": "module",
-  "version": "0.1.1",
+  "version": "0.1.7",
   "private": true,
-  "packageManager": "pnpm@9.7.0",
+  "packageManager": "pnpm@9.9.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -12,15 +12,13 @@
     "astro": "astro",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "postinstall": "simple-git-hooks"
+    "postinstall": "test -d .git && simple-git-hooks || true"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.7",
-    "@sentry/astro": "^8.25.0",
-    "astro": "^4.13.3",
-    "astro-seo": "^0.8.4",
+    "@sentry/astro": "^8.27.0",
     "cheerio": "1.0.0-rc.12",
-    "dayjs": "^1.11.12",
+    "dayjs": "^1.11.13",
     "flourite": "^1.3.0",
     "lru-cache": "^11.0.0",
     "ofetch": "^1.3.4",
@@ -29,13 +27,15 @@
     "sanitize-html": "^2.13.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.25.1",
+    "@antfu/eslint-config": "^3.0.0",
     "@astrojs/cloudflare": "^11.0.4",
-    "@astrojs/netlify": "^5.5.0",
-    "@astrojs/node": "^8.3.2",
-    "@astrojs/vercel": "^7.7.2",
+    "@astrojs/netlify": "^5.5.1",
+    "@astrojs/node": "^8.3.3",
+    "@astrojs/vercel": "^7.8.0",
     "@types/prismjs": "^1.26.4",
+    "astro": "^4.15.1",
     "astro-eslint-parser": "^1.0.2",
+    "astro-seo": "^0.8.4",
     "autoprefixer": "^10.4.20",
     "cssnano": "^7.0.5",
     "eslint": "9.5.0",

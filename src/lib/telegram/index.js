@@ -100,9 +100,9 @@ function getReply($, item, { channel }) {
 }
 
 function modifyHTMLContent($, content, { index } = {}) {
-  $(content).find('.emoji')?.attr('style', '')
+  $(content).find('.emoji')?.removeAttr('style')
   $(content).find('a')?.each((_index, a) => {
-    $(a)?.attr('title', $(a)?.text())?.attr('onclick', '')
+    $(a)?.attr('title', $(a)?.text())?.removeAttr('onclick')
   })
   $(content).find('tg-spoiler')?.each((_index, spoiler) => {
     const id = `spoiler-${index}-${_index}`
@@ -131,7 +131,7 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
   const content = $(item).find('.js-message_reply_text')?.length > 0
     ? modifyHTMLContent($, $(item).find('.tgme_widget_message_text.js-message_text'), { index })
     : modifyHTMLContent($, $(item).find('.tgme_widget_message_text'), { index })
-  const title = content?.text()?.match(/^.*?(?=[。：:]|http\S)/g)?.[0] ?? content?.text() ?? ''
+  const title = content?.text()?.match(/^.*?(?=[。\n]|http\S)/g)?.[0] ?? content?.text() ?? ''
   const id = $(item).attr('data-post')?.replace(new RegExp(`${channel}/`, 'i'), '')
 
   const tags = $(content).find('a[href^="?q="]')?.each((_index, a) => {
@@ -183,7 +183,7 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
   }
 
   // Where t.me can also be telegram.me, telegram.dog
-  const host = getEnv(import.meta.env, Astro, 'HOST') ?? 't.me'
+  const host = getEnv(import.meta.env, Astro, 'TELEGRAM_HOST') ?? 't.me'
   const channel = getEnv(import.meta.env, Astro, 'CHANNEL')
   const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
 

@@ -20,16 +20,12 @@ const channel = {
 }
 
 const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
-
-export const prerender = false
 ---
 
-<List channel={channel} before={false} after={false}>
+<List channel={channel} before={false} after={false} isItem={true}>
   <div slot="header" id="breadcrumb">
     <img
-      src={channel?.avatar?.startsWith('http')
-        ? staticProxy + channel?.avatar
-        : voidFile.src}
+      src={channel?.avatar?.startsWith('http') ? staticProxy + channel?.avatar : voidFile.src}
       alt={channel?.title}
       loading="eager"
       class="breadcrumb-avatar"

@@ -2,11 +2,14 @@
 import List from '../../components/list.astro'
 import { getChannelInfo } from '../../lib/telegram'
 
+const q = Astro.url.searchParams.get('q') || Astro.params.q
 const channel = await getChannelInfo(Astro, {
-  q: Astro.url.searchParams.get('q') || Astro.params.q,
+  q,
 })
 
-export const prerender = false
+channel.seo = {
+  title: `${q}`,
+}
 ---
 
 <List channel={channel} before={false} after={false} />

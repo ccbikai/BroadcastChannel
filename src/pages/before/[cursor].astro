@@ -6,7 +6,9 @@ const channel = await getChannelInfo(Astro, {
   before: Astro.params.cursor,
 })
 
-export const prerender = false
+channel.seo = {
+  noindex: true,
+}
 ---
 
 <List channel={channel} />

@@ -3,8 +3,6 @@ import List from '../components/list.astro'
 import { getChannelInfo } from '../lib/telegram'
 
 const channel = await getChannelInfo(Astro)
-
-export const prerender = false
 ---
 
 <List channel={channel} after={false} />
