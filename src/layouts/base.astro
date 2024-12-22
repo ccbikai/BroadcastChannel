@@ -37,7 +37,14 @@ const seoParams = {
     },
   },
   extend: {
-    link: [{ rel: 'icon', href: channel?.avatar ? channel?.avatar : '/favicon.svg' }],
+    link: [
+      {
+        rel: 'icon',
+        href: channel?.avatar
+          ? `https://wsrv.nl/?w=64&h=64&fit=cover&mask=circle&url=ssl:${channel?.avatar?.replace(/^https?:\/\//, '')}`
+          : '/favicon.svg',
+      },
+    ],
   },
 }
 
