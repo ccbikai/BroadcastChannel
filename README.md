@@ -147,5 +147,5 @@ NAVS=Title1,URL1;Title2,URL3;Title3,URL3;
 ## ☕ Sponsor
 
 1. [Follow me on Telegram](https://t.me/miantiao_me)
-2. [Follow me on 𝕏](https://x.com/0xKaiBi)
+2. [Follow me on 𝕏](https://404.li/kai)
 3. [Sponsor me on GitHub](https://github.com/sponsors/ccbikai)
