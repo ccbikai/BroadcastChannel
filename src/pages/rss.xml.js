@@ -1,6 +1,8 @@
-import rss from '@astrojs/rss'
+import { getRssString } from '@astrojs/rss'
 import sanitizeHtml from 'sanitize-html'
 import { getChannelInfo } from '../lib/telegram'
+import { getEnv } from '../lib/env'
+import style from '../assets/rss.xsl?raw'
 
 export async function GET(Astro) {
   const { SITE_URL } = Astro.locals
@@ -15,7 +17,7 @@ export async function GET(Astro) {
   url.pathname = SITE_URL
   url.search = ''
 
-  return rss({
+  let rssString = await getRssString({
     title: `${tag ? `${tag} | ` : ''}${channel.title}`,
     description: channel.description,
     site: url.origin,
@@ -38,5 +40,17 @@ export async function GET(Astro) {
         },
       }),
     })),
+  })
+
+  const enableBeautify = getEnv(import.meta.env, Astro, 'RSS_BEAUTIFY')
+  if (enableBeautify) {
+    rssString = rssString.replace(/^(<\?xml .*\?>)/i, style)
+  }
+
+  return new Response(rssString, {
+    headers: {
+      'Content-Type': 'text/xml',
+      'Cache-Control': 'public, max-age=3600',
+    },
   })
 }
