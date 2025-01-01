@@ -1,8 +1,7 @@
-import { getRssString } from '@astrojs/rss'
+import rss from '@astrojs/rss'
 import sanitizeHtml from 'sanitize-html'
 import { getChannelInfo } from '../lib/telegram'
 import { getEnv } from '../lib/env'
-import style from '../assets/rss.xsl?raw'
 
 export async function GET(Astro) {
   const { SITE_URL } = Astro.locals
@@ -17,11 +16,12 @@ export async function GET(Astro) {
   url.pathname = SITE_URL
   url.search = ''
 
-  let rssString = await getRssString({
+  const response = await rss({
     title: `${tag ? `${tag} | ` : ''}${channel.title}`,
     description: channel.description,
     site: url.origin,
     trailingSlash: false,
+    stylesheet: getEnv(import.meta.env, Astro, 'RSS_BEAUTIFY') ? '/rss.xsl' : undefined,
     items: posts.map(item => ({
       link: `posts/${item.id}`,
       title: item.title,
@@ -42,15 +42,8 @@ export async function GET(Astro) {
     })),
   })
 
-  const enableBeautify = getEnv(import.meta.env, Astro, 'RSS_BEAUTIFY')
-  if (enableBeautify) {
-    rssString = rssString.replace(/^(<\?xml .*\?>)/i, style)
-  }
+  response.headers.set('Content-Type', 'text/xml')
+  response.headers.set('Cache-Control', 'public, max-age=3600')
 
-  return new Response(rssString, {
-    headers: {
-      'Content-Type': 'text/xml',
-      'Cache-Control': 'public, max-age=3600',
-    },
-  })
+  return response
 }
