@@ -1,4 +1,5 @@
 ---
+import Analytics from '@vercel/analytics/astro'
 import '../assets/normalize.css'
 import '../assets/style.css'
 import '../assets/global.css'
@@ -89,6 +90,7 @@ const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
       {...seoParams}
     />
     <Fragment set:html={HEADER_INJECT} />
+    <Analytics />
   </head>
 
   <body>
