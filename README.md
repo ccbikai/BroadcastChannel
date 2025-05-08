@@ -136,6 +136,13 @@ NAVS=Title1,URL1;Title2,URL3;Title3,URL3;
 
 ## Enable RSS beautify
 RSS_BEAUTIFY=true
+
+## To override the base info of the channel
+OVERRIDE_SITE_AVATAR_URL=""
+OVERRIDE_SITE_TITLE=""
+OVERRIDE_SITE_DESCRIPTION=""
+OVERRIDE_SITE_DESCRIPTION_HTML=""
+
 ```
 
 ## 🙋🏻 FAQs
