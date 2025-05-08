@@ -11,6 +11,11 @@ export async function onRequest(context, next) {
 
   const response = await next()
 
+  // Handle 3xx redirects in static/*
+  if (response.status >= 300 && response.status < 400) {
+    return response
+  }
+
   if (!response.bodyUsed) {
     if (response.headers.get('Content-type') === 'text/html') {
       response.headers.set('Speculation-Rules', '"/rules/prefetch.json"')
