@@ -6,6 +6,7 @@ import netlify from '@astrojs/netlify'
 import node from '@astrojs/node'
 import { provider } from 'std-env'
 import sentry from '@sentry/astro'
+import edgeOne from './adapters/edge-one'
 
 const providers = {
   vercel: vercel({
@@ -24,10 +25,12 @@ const providers = {
 
 const adapterProvider = process.env.SERVER_ADAPTER || provider
 
+console.debug('env', process.env)
+
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
-  adapter: providers[adapterProvider] || providers.node,
+  adapter: edgeOne(),
   integrations: [
     ...(process.env.SENTRY_DSN
       ? [
