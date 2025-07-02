@@ -134,6 +134,9 @@ NAVS=Title1,URL1;Title2,URL3;Title3,URL3;
 
 ## 启用 RSS 美化
 RSS_BEAUTIFY=true
+
+## 将文本内容显示在媒体资源（图片、视频等）上方
+TEXT_FIRST=false
 ```
 
 ## 🙋🏻 常问问题

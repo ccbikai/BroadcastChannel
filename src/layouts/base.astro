@@ -55,6 +55,8 @@ const HEADER_INJECT = getEnv(import.meta.env, Astro, 'HEADER_INJECT')
 const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
 const TAGS = getEnv(import.meta.env, Astro, 'TAGS')
 const LINKS = getEnv(import.meta.env, Astro, 'LINKS')
+
+const TEXT_FIRST_VALUE = getEnv(import.meta.env, Astro, 'TEXT_FIRST')
 const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
   .split(';')
   .filter(Boolean)
@@ -89,6 +91,8 @@ const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
       {...seoParams}
     />
     <Fragment set:html={HEADER_INJECT} />
+    
+
   </head>
 
   <body>
