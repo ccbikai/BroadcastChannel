@@ -126,7 +126,7 @@ function modifyHTMLContent($, content, { index } = {}) {
   return content
 }
 
-function getPost($, item, { channel, staticProxy, index = 0 }) {
+function getPost($, item, { channel, staticProxy, index = 0, textFirst = false }) {
   item = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
   const content = $(item).find('.js-message_reply_text')?.length > 0
     ? modifyHTMLContent($, $(item).find('.tgme_widget_message_text.js-message_text'), { index })
@@ -138,6 +138,37 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
     $(a)?.attr('href', `/search/${encodeURIComponent($(a)?.text())}`)
   })?.map((_index, a) => $(a)?.text()?.replace('#', ''))?.get()
 
+  // 媒体资源内容
+  const mediaContent = [
+    getImages($, item, { staticProxy, id, index, title }),
+    getVideo($, item, { staticProxy, id, index, title }),
+    getAudio($, item, { staticProxy, id, index, title }),
+    getImageStickers($, item, { staticProxy, index }),
+    getVideoStickers($, item, { staticProxy, index }),
+    // $(item).find('.tgme_widget_message_sticker_wrap')?.html(),
+    $(item).find('.tgme_widget_message_poll')?.html(),
+    $.html($(item).find('.tgme_widget_message_document_wrap')),
+    $.html($(item).find('.tgme_widget_message_video_player.not_supported')),
+    $.html($(item).find('.tgme_widget_message_location_wrap')),
+    getLinkPreview($, item, { staticProxy, index }),
+  ]
+
+  // 文本内容
+  const textContent = content?.html()
+
+  // 根据配置决定内容顺序
+  const contentArray = textFirst 
+    ? [
+        getReply($, item, { channel }),
+        textContent,
+        ...mediaContent,
+      ]
+    : [
+        getReply($, item, { channel }),
+        ...mediaContent,
+        textContent,
+      ]
+
   return {
     id,
     title,
@@ -145,21 +176,7 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
     datetime: $(item).find('.tgme_widget_message_date time')?.attr('datetime'),
     tags,
     text: content?.text(),
-    content: [
-      getReply($, item, { channel }),
-      getImages($, item, { staticProxy, id, index, title }),
-      getVideo($, item, { staticProxy, id, index, title }),
-      getAudio($, item, { staticProxy, id, index, title }),
-      content?.html(),
-      getImageStickers($, item, { staticProxy, index }),
-      getVideoStickers($, item, { staticProxy, index }),
-      // $(item).find('.tgme_widget_message_sticker_wrap')?.html(),
-      $(item).find('.tgme_widget_message_poll')?.html(),
-      $.html($(item).find('.tgme_widget_message_document_wrap')),
-      $.html($(item).find('.tgme_widget_message_video_player.not_supported')),
-      $.html($(item).find('.tgme_widget_message_location_wrap')),
-      getLinkPreview($, item, { staticProxy, index }),
-    ].filter(Boolean).join('').replace(/(url\(["'])((https?:)?\/\/)/g, (match, p1, p2, _p3) => {
+    content: contentArray.filter(Boolean).join('').replace(/(url\(["'])((https?:)?\/\/)/g, (match, p1, p2, _p3) => {
       if (p2 === '//') {
         p2 = 'https://'
       }
@@ -186,6 +203,7 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
   const host = getEnv(import.meta.env, Astro, 'TELEGRAM_HOST') ?? 't.me'
   const channel = getEnv(import.meta.env, Astro, 'CHANNEL')
   const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
+  const textFirst = getEnv(import.meta.env, Astro, 'TEXT_FIRST') === 'true'
 
   const url = id ? `https://${host}/${channel}/${id}?embed=1&mode=tme` : `https://${host}/s/${channel}`
   const headers = Object.fromEntries(Astro.request.headers)
@@ -210,12 +228,12 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
 
   const $ = cheerio.load(html, {}, false)
   if (id) {
-    const post = getPost($, null, { channel, staticProxy })
+    const post = getPost($, null, { channel, staticProxy, textFirst })
     cache.set(cacheKey, post)
     return post
   }
   const posts = $('.tgme_channel_history  .tgme_widget_message_wrap')?.map((index, item) => {
-    return getPost($, item, { channel, staticProxy, index })
+    return getPost($, item, { channel, staticProxy, index, textFirst })
   })?.get()?.reverse().filter(post => ['text'].includes(post.type) && post.id && post.content)
 
   const channelInfo = {
