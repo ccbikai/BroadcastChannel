@@ -139,6 +139,9 @@ RSS_BEAUTIFY=true
 
 ## Display text content above media resources (images, videos, etc.)
 TEXT_FIRST=false
+
+## Enable health information display (heart rate and location)
+HEALTH_INFO=false
 ```
 
 ## 🙋🏻 FAQs
