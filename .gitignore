@@ -26,3 +26,10 @@ pnpm-debug.log*
 .vercel
 .netlify
 .wrangler
+
+# Tencent Cloud EdgeOne
+.env
+.edgeone/*
+!.edgeone/project.json
+.tef_dist/*
+  
