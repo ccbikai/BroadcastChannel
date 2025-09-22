@@ -155,3 +155,22 @@ html {
     }
   }
 }
+
+#load-more-trigger {
+  text-align: center;
+  display: block;
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--box-border-radius);
+  cursor: pointer;
+  background-color: var(--background-color);
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: background-color 0.2s;
+  width: fit-content;
+}
+
+#load-more-trigger:hover {
+  background-color: var(--code-background-color);
+}

@@ -16,14 +16,14 @@ const afterCursor = posts[0]?.id
   <slot name="header">
     <Header channel={channel} />
   </slot>
-  <div class="items">
+  <div class="items" id="posts-container">
     {posts.map((post) => <Item post={post} isItem={isItem} />)}
   </div>
 
   <div class="pages-container">
     {
       before && beforeCursor > 1 ? (
-        <a href={`${SITE_URL}before/${beforeCursor}`} title="Before" class="page">
+        <a href={`${SITE_URL}before/${beforeCursor}`} title="Before" class="page" id="load-more-trigger">
           Before
         </a>
       ) : (
