@@ -168,5 +168,6 @@ const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
       <img {...backToTopIcon} alt="Back to Top" />
     </a>
     <Fragment set:html={FOOTER_INJECT} />
+    <script defer src="/js/infinite-scroll.js"></script>
   </body>
 </html>
