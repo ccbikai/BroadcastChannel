@@ -45,5 +45,9 @@
     "scss",
     "pcss",
     "postcss"
-  ]
+  ],
+  "chat.checkpoints.showFileChanges": true,
+  "chat.edits2.enabled": true,
+  "chat.emptyState.history.enabled": true,
+  "chat.mcp.assisted.nuget.enabled": true
 }
