@@ -1,22 +1,20 @@
 :root {
-  --background-color: #1e1e1e;
-  --foreground-color: #d4d4d4;
-  --highlight-color: #569cd6;
+  --background-color: #f4f1ec;
+  --foreground-color: #000000;
+  --highlight-color: orangered;
   --box-border-radius: 3px;
   --media-border-radius: 8px;
   --dot-size: 8px;
-  --shadows: 0 1px 2px rgba(0, 0, 0, 0.5),
-    0 2px 4px rgba(0, 0, 0, 0.4),
-    0 4px 8px rgba(0, 0, 0, 0.3),
-    0 8px 16px rgba(0, 0, 0, 0.3);
+  --shadows: 0 1px 2px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02), 0 4px 8px rgba(0, 0, 0, 0.02),
+    0 8px 16px rgba(0, 0, 0, 0.02);
   --box-margin: 10px;
-  --border-color: rgba(255, 255, 255, 0.08);
+  --border-color: rgba(0, 0, 0, 0.05);
   --link-color: var(--highlight-color);
-  --icon-hover-filter: invert(85%) saturate(120%);
-  --icon-secondary-filter: invert(70%) saturate(90%) brightness(90%);
-  --cell-background-color: #252526;
-  --code-background-color: #1f2428;
-  --secondary-color: #9aa0a6;
+  --icon-hover-filter: invert(51%) sepia(0%) saturate(0%) hue-rotate(23deg) brightness(90%) contrast(90%);
+  --icon-secondary-filter: invert(97%) sepia(0%) saturate(0%) hue-rotate(129deg) brightness(86%) contrast(88%);
+  --cell-background-color: #fff;
+  --code-background-color: #f9f9f9;
+  --secondary-color: #999;
 }
 
 body {
@@ -71,24 +69,25 @@ body {
 
 a:link,
 a:visited {
-  color: var(--link-color);
+  color: #778087;
   text-decoration: none;
   line-break: loose;
 }
 
 a:hover {
+  color: #4d5256;
   text-decoration: underline;
   text-underline-offset: 0.2rem;
 }
 
 a.site-title:link,
 a.site-title:visited {
-  color: var(--foreground-color);
+  color: #333;
   text-decoration: none;
 }
 
 a.site-title:hover {
-  color: var(--highlight-color);
+  color: #000;
   text-decoration: underline;
 }
 
@@ -130,7 +129,7 @@ a.item-link:hover {
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  border: 3px solid var(--background-color);
+  border: 3px solid #fff;
   box-shadow: var(--shadows);
   display: block;
 }
@@ -171,7 +170,7 @@ a.item-link:hover {
   width: 20px;
   height: 20px;
   border-radius: 100%;
-  border: 2px solid var(--foreground-color);
+  border: 2px solid #fff;
   box-shadow: var(--shadows);
   display: block;
 }
