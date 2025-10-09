@@ -134,9 +134,10 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
   const title = content?.text()?.match(/^.*?(?=[。\n]|http\S)/g)?.[0] ?? content?.text() ?? ''
   const id = $(item).attr('data-post')?.replace(new RegExp(`${channel}/`, 'i'), '')
 
-  const tags = $(content).find('a[href^="?q="]')?.each((_index, a) => {
-    $(a)?.attr('href', `/search/${encodeURIComponent($(a)?.text())}`)
-  })?.map((_index, a) => $(a)?.text()?.replace('#', ''))?.get()
+  const tags = $(content)
+    .find('a[href^="?q="]')
+    ?.map((_index, a) => $(a)?.text()?.replace('#', ''))
+    ?.get()
 
   return {
     id,

@@ -21,6 +21,9 @@
     width: calc(100% - var(--box-margin));
     max-width: 456px;
     overflow-x: auto;
+    background: var(--code-background-color);
+    border: 1px solid var(--border-color);
+    padding: 12px;
   }
 
   .tgme_widget_message_link_preview {
@@ -38,21 +41,21 @@
     display: block;
     background: var(--cell-background-color);
     border-left: 3px solid var(--highlight-color);
-    padding: 6px;
-    padding-left: 10px;
-    border-radius: var(--box-border-radius);
+    padding: 10px 14px;
 
     .link_preview_title {
       display: block;
       font-size: 1em;
-      font-weight: bolder;
-      line-height: 2;
+      font-weight: 600;
+      line-height: 1.6;
+      color: var(--foreground-color);
     }
 
     .link_preview_description {
       display: block;
-      font-size: 0.8em;
+      font-size: 0.9em;
       line-height: 1.5;
+      color: var(--secondary-color);
     }
   }
 
@@ -71,6 +74,7 @@
     .link_preview_image {
       aspect-ratio: 1200 / 630;
       object-fit: cover;
+      border: 1px solid var(--border-color);
     }
 
     .link_preview_site_name {
@@ -78,17 +82,15 @@
       position: absolute;
       bottom: var(--box-margin);
       left: var(--box-margin);
-      padding-left: 4px;
-      padding-right: 4px;
-      background-color: rgba(0, 0, 0, 0.66);
+      padding: 2px 6px;
+      background-color: rgba(0, 0, 0, 0.7);
       font-size: 14px;
       color: #fff;
-      line-height: 1.5;
-      border-radius: var(--box-border-radius);
-      text-overflow: ellipsis;
+      line-height: 1.4;
       max-width: calc(100% - 28px);
       white-space: nowrap;
       overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .link_preview_title,
@@ -99,12 +101,10 @@
 
   blockquote {
     margin: 16px 0;
-    font-size: 0.8em;
+    font-size: 0.9em;
     background: var(--cell-background-color);
     border-left: 3px solid var(--highlight-color);
-    padding: 6px;
-    padding-left: 10px;
-    border-radius: var(--box-border-radius);
+    padding: 10px 14px;
   }
 
   .tgme_widget_message_sticker {
@@ -117,6 +117,7 @@
     .tgme_widget_message_user_photo {
       width: 60px;
       height: 60px;
+      border-radius: 0 !important;
     }
   }
 
@@ -166,9 +167,8 @@
     tg-spoiler {
       color: transparent;
       margin: auto 2px;
-      border-radius: var(--box-border-radius);
-      background: #ccc 60% 60% / 3000px 3000px;
-      background-image: repeating-conic-gradient(#999 0 0.0001%, #0000 0 0.0002%);
+      background: #555;
+      background-image: repeating-conic-gradient(#777 0 0.0001%, #0000 0 0.0002%);
     }
 
     input:checked + tg-spoiler {
@@ -198,35 +198,12 @@
   outline: none;
   border: none;
   background: transparent;
-  padding: 0;
-  margin-bottom: 16px;
-}
-
-.modal {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  z-index: 1000;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(20px);
-}
-
-.modal-img {
-  margin: auto;
-  max-width: calc(100% - 40px) !important;
-  max-height: calc(100% - 40px) !important;
-  border-radius: var(--media-border-radius);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadows);
   cursor: pointer;
-  object-fit: scale-down;
+  padding: 0;
 }
 
-@media screen and (min-width: 600px) {
-  .modal-img {
-    max-width: calc(100% - 80px) !important;
-    max-height: calc(100% - 80px) !important;
-  }
+.image-preview-button img {
+  cursor: pointer;
+  border-radius: 0;
+  border: 1px solid var(--border-color);
 }
