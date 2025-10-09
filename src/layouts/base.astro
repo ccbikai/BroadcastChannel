@@ -15,7 +15,7 @@ const seo = channel?.seo
 const reqPathname = Astro.url.pathname.replace(/\/$/, '')
 const canonical = SITE_URL.startsWith('http') ? new URL(SITE_URL).origin + reqPathname : Astro.url.origin + reqPathname
 
-const { origin, pathname } = new URL(canonical)
+const { origin } = new URL(canonical)
 const twitter = getEnv(import.meta.env, Astro, 'TWITTER')
 
 const seoParams = {
@@ -48,23 +48,10 @@ const seoParams = {
   },
 }
 
-const GOOGLE_SEARCH_SITE = getEnv(import.meta.env, Astro, 'GOOGLE_SEARCH_SITE')
-const searchAction = GOOGLE_SEARCH_SITE ? 'https://www.google.com/search' : '/search/result'
-
 const HEADER_INJECT = getEnv(import.meta.env, Astro, 'HEADER_INJECT')
 const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
-const TAGS = getEnv(import.meta.env, Astro, 'TAGS')
-const LINKS = getEnv(import.meta.env, Astro, 'LINKS')
-const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
-  .split(';')
-  .filter(Boolean)
-  .map((link) => {
-    link = link.split(',')
-    return {
-      title: link[0],
-      href: link[1],
-    }
-  })
+
+const hasHeader = Astro.slots.has('header')
 ---
 
 <!doctype html>
@@ -72,11 +59,11 @@ const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f4f1ec" />
+    <meta name="theme-color" content="#0d0d0d" />
     <link rel="alternate" type="application/rss+xml" title={`${RSS_PREFIX}${channel?.title}`} href={RSS_URL} />
     <style is:inline>
       @view-transition {
-        navigation: auto; /* enabled */
+        navigation: auto;
       }
     </style>
     <SEO
@@ -93,76 +80,16 @@ const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
 
   <body>
     <div id="wrapper">
-      <div id="container">
-        <div id="main-container">
-          <slot />
-        </div>
-        <div id="aside-container">
-          <slot name="aside">
-            <div class="nav">
-              <div class="nav-item">
-                <a href={SITE_URL} title={channel?.title} class={`nav-link ${pathname === '/' ? 'current' : ''}`}>
-                  Home
-                </a>
-              </div>
-              {
-                TAGS ? (
-                  <div class="nav-item">
-                    <a
-                      href={`${SITE_URL}tags`}
-                      title="Tags"
-                      class={`nav-link ${pathname === '/tags' ? 'current' : ''}`}
-                    >
-                      Tags
-                    </a>
-                  </div>
-                ) : null
-              }
-              {
-                LINKS ? (
-                  <div class="nav-item">
-                    <a
-                      href={`${SITE_URL}links`}
-                      title="Links"
-                      class={`nav-link ${pathname === '/links' ? 'current' : ''}`}
-                    >
-                      Links
-                    </a>
-                  </div>
-                ) : null
-              }
-              {
-                navs.map((nav) => (
-                  <div class="nav-item">
-                    <a href={nav.href} title={nav.title} target="_blank" rel="noopener" class="nav-link">
-                      {nav.title}
-                    </a>
-                  </div>
-                ))
-              }
-            </div>
-            <input class="search-icon" name="icon" type="checkbox" placeholder="Search" />
-            <form class="search-form" action={searchAction} method="get">
-              {GOOGLE_SEARCH_SITE ? <input type="hidden" name="as_sitesearch" value={GOOGLE_SEARCH_SITE} /> : null}
-              <input type="text" name="q" placeholder="Search" />
-            </form>
-            <div class="copyright-wrap">
-              Powered by
-              <a
-                href="https://github.com/ccbikai/BroadcastChannel"
-                title="BroadcastChannel"
-                target="_blank"
-                rel="noopener"
-              >
-                BroadcastChannel
-              </a> &
-              <a href="https://github.com/Planetable/SiteTemplateSepia" title="Sepia" target="_blank" rel="noopener">
-                Sepia
-              </a>
-            </div>
-          </slot>
-        </div>
-      </div>
+      {
+        hasHeader && (
+          <header id="header-container">
+            <slot name="header" />
+          </header>
+        )
+      }
+      <main id="main-container">
+        <slot />
+      </main>
     </div>
     <a href="#wrapper" id="back-to-top" aria-label="Back to top">
       <img {...backToTopIcon} alt="Back to Top" />
