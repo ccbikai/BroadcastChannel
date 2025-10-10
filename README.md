@@ -48,12 +48,8 @@ TIMEZONE=America/New_York
 TELEGRAM=ccbikai
 TWITTER=ccbikai
 GITHUB=ccbikai
-MASTODON=mastodon.social/@Mastodon
-BLUESKY=bsky.app
 
 ## The following social media need to be URLs
-DISCORD=https://DISCORD.com
-PODCAST=https://PODCAST.com
 YOUTUBE=https://youtube.com/@username
 SOUNDCLOUD=https://soundcloud.com/artist
 BANDCAMP=https://artist.bandcamp.com
@@ -80,17 +76,8 @@ STATIC_PROXY=
 ## Enable Google Site Search
 GOOGLE_SEARCH_SITE=memo.miantiao.me
 
-## Enable tags page, separate tags with commas
-TAGS=tag1,tag2,tag3
-
 ## Show comments
 COMMENTS=true
-
-## List of links in the Links page, Separate using commas and semicolons
-LINKS=Title1,URL1;Title2,URL3;Title3,URL3;
-
-## Sidebar Navigation Item, Separate using commas and semicolons
-NAVS=Title1,URL1;Title2,URL3;Title3,URL3;
 
 ## Enable RSS beautify
 RSS_BEAUTIFY=true
