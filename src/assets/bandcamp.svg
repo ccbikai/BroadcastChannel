@@ -1,30 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   viewBox="0 0 840.41333 275.17334"
-   height="275.17334"
-   width="840.41333"
-   xml:space="preserve"
-   id="svg2"
-   version="1.1"><metadata
-     id="metadata8"><rdf:RDF><cc:Work
-         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
-     id="defs6" /><g
-     transform="matrix(1.3333333,0,0,-1.3333333,0,275.17333)"
-     id="g10"><g
-       transform="scale(0.1)"
-       id="g12"><path
-         id="path14"
-         style="fill:#201d1c;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         d="m 4134.17,1289.93 c -262.99,0 -397.37,-207 -397.37,-518.821 0,-294.769 145.31,-516.019 397.37,-516.019 285.05,0 391.93,260.851 391.93,516.019 -0.2,266.421 -134.51,518.821 -392.01,518.821 m -698.72,773.89 h 312.39 v -748.37 h 5.53 c 84.96,141.71 263.06,229.62 422.03,229.62 446.64,0 663.2,-351.64 663.2,-779.75 C 4838.52,371.398 4646.72,0 4227.35,0 4035.53,0 3829.99,48.1016 3736.76,240.93 h -5.41 V 39.5508 H 3435.34 V 2063.78 l 0.03,0.04" /><path
-         id="path16"
-         style="fill:#201d1c;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         d="m 5990.69,1014.84 c -24.69,178.61 -150.72,275.06 -323.38,275.06 -161.76,0 -389.18,-87.93 -389.18,-533.029 0,-243.832 104.1,-501.871 375.47,-501.871 180.84,0 306.85,124.898 337.09,334.699 h 312.38 C 6245.49,209.809 6018.09,0 5653.6,0 c -443.99,0 -687.87,325.961 -687.87,756.871 0,442.229 232.95,788.109 698.83,788.109 328.84,0 608.45,-170.08 638.51,-530.14 h -311.89 -0.49" /><path
-         id="path18"
-         style="fill:#201d1c;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         d="M 2343.16,43.9688 H 0 L 1094.21,2063.82 H 3437.4 L 2343.16,43.9688" /></g></g></svg>
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 width="800px" height="800px" viewBox="0 0 97.75 97.75" xml:space="preserve"
+	>
+<g>
+	<path d="M48.875,0C21.882,0,0,21.882,0,48.875S21.882,97.75,48.875,97.75S97.75,75.868,97.75,48.875S75.868,0,48.875,0z
+		 M64.835,70.857H12.593l20.32-43.965h52.244L64.835,70.857z"/>
+</g>
+</svg>
