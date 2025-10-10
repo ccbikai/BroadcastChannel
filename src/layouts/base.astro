@@ -98,6 +98,23 @@ const hasHeader = Astro.slots.has('header')
       const backToTop = document.getElementById('back-to-top')
 
       if (backToTop) {
+        let supportsViewTimeline = false
+
+        if (typeof CSS !== 'undefined' && typeof CSS.supports === 'function') {
+          supportsViewTimeline = CSS.supports('animation-timeline: view(block 0 100vh)')
+        }
+
+        if (!supportsViewTimeline) {
+          const toggleBackToTopVisibility = () => {
+            const shouldShow = window.scrollY > window.innerHeight * 0.5
+            backToTop.classList.toggle('is-visible', shouldShow)
+          }
+
+          toggleBackToTopVisibility()
+          window.addEventListener('scroll', toggleBackToTopVisibility, { passive: true })
+          window.addEventListener('resize', toggleBackToTopVisibility)
+        }
+
         backToTop.addEventListener('click', (event) => {
           if (event.defaultPrevented) {
             return
