@@ -52,8 +52,8 @@
     display: none;
     border-radius: var(--radius-md);
     overflow: hidden;
-    background: rgba(15, 23, 42, 0.86);
-    border: 1px solid rgba(56, 189, 248, 0.22);
+    background: rgba(32, 32, 40, 0.86);
+    border: 1px solid rgba(180, 180, 192, 0.22);
     box-shadow: var(--shadow-sm);
 
     .link_preview_site_name,
@@ -65,7 +65,7 @@
 
   .tgme_widget_message_link_preview:has(.link_preview_site_name) {
     display: block;
-    border-left: 3px solid rgba(56, 189, 248, 0.6);
+    border-left: 3px solid rgba(180, 180, 192, 0.6);
     padding: var(--space-sm) var(--space-md);
 
     .link_preview_title {
@@ -91,7 +91,7 @@
     max-width: 100%;
     height: auto;
     margin-bottom: var(--space-sm);
-    border: 1px solid rgba(56, 189, 248, 0.18);
+    border: 1px solid rgba(180, 180, 192, 0.18);
     border-radius: 0;
     background-color: var(--cell-background-color);
     aspect-ratio: auto;
@@ -119,7 +119,7 @@
       inset-inline-start: var(--box-margin);
       inset-block-end: var(--box-margin);
       padding: var(--space-3xs) var(--space-xs);
-      background-color: rgba(2, 6, 23, 0.75);
+      background-color: rgba(15, 15, 18, 0.75);
       border-radius: var(--radius-pill);
       font-size: var(--font-size-xs);
       color: #fff;
@@ -140,8 +140,8 @@
   blockquote {
     margin: 0;
     font-size: var(--font-size-sm);
-    background: rgba(56, 189, 248, 0.1);
-    border-left: 3px solid rgba(56, 189, 248, 0.65);
+    background: rgba(180, 180, 192, 0.1);
+    border-left: 3px solid rgba(180, 180, 192, 0.65);
     padding: var(--space-sm) var(--space-md);
     border-radius: 0 var(--radius-md) var(--radius-md) 0;
     color: var(--secondary-color);
@@ -177,9 +177,9 @@
   .tgme_widget_message_poll_options {
     display: block;
     border-radius: var(--radius-md);
-    background: rgba(15, 23, 42, 0.75);
+    background: rgba(32, 32, 40, 0.75);
     padding: var(--space-sm);
-    border: 1px solid rgba(56, 189, 248, 0.18);
+    border: 1px solid rgba(180, 180, 192, 0.18);
 
     .tgme_widget_message_poll_option_percent {
       float: left;
@@ -227,8 +227,8 @@
     tg-spoiler {
       color: transparent;
       margin: auto var(--space-3xs);
-      background: rgba(148, 163, 184, 0.3);
-      background-image: repeating-conic-gradient(#94a3b8 0 0.0001%, #0000 0 0.0002%);
+      background: rgba(156, 163, 175, 0.3);
+      background-image: repeating-conic-gradient(#a1a1aa 0 0.0001%, #0000 0 0.0002%);
       border-radius: var(--radius-pill);
       padding: var(--space-3xs) var(--space-xs);
       transition:
@@ -237,14 +237,14 @@
     }
 
     input:checked + tg-spoiler {
-      background: rgba(56, 189, 248, 0.2);
+      background: rgba(180, 180, 192, 0.2);
       color: inherit;
     }
 
     &:hover,
     &:focus-visible {
-      border-color: rgba(56, 189, 248, 0.45);
-      background: rgba(56, 189, 248, 0.08);
+      border-color: rgba(180, 180, 192, 0.45);
+      background: rgba(180, 180, 192, 0.08);
     }
   }
 }
@@ -288,7 +288,7 @@
   padding: clamp(var(--space-sm), 4vw, var(--space-lg));
   align-items: center;
   justify-content: center;
-  background-color: rgba(2, 6, 23, 0.75);
+  background-color: rgba(15, 15, 18, 0.75);
   backdrop-filter: blur(24px) saturate(140%);
 }
 
@@ -316,7 +316,7 @@
   padding: clamp(var(--space-2xs), 3vw, var(--space-sm));
   border: 1px solid rgba(148, 163, 184, 0.25);
   border-radius: var(--radius-lg);
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(34, 34, 42, 0.85);
   box-shadow: var(--shadow-lg);
   overflow: auto;
   cursor: default;
@@ -334,7 +334,7 @@
   padding: 0;
   border: 1px solid rgba(148, 163, 184, 0.3);
   border-radius: var(--radius-sm);
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(34, 34, 42, 0.85);
   color: var(--foreground-color);
   font-size: clamp(1.25rem, 1.1rem + 0.4vw, 1.5rem);
   line-height: 1;
