@@ -150,7 +150,10 @@ const hasSocialLinks = socialLinks.some((link) => typeof link.href === 'string' 
 
   #site-intro {
     color: var(--secondary-color);
-    background-color: var(--code-background-color);
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
     word-break: break-word;
 
     & :global(.emoji) {
