@@ -54,6 +54,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: var(--space-3xs);
+  pointer-events: none;
   transition:
     opacity var(--transition-slow),
     transform var(--transition-base),
@@ -86,6 +87,7 @@ body {
 
   &.is-visible {
     opacity: 1;
+    pointer-events: auto;
   }
 }
 
