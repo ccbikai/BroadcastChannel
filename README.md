@@ -51,9 +51,14 @@ GITHUB=ccbikai
 MASTODON=mastodon.social/@Mastodon
 BLUESKY=bsky.app
 
-## The following two social media need to be URLs
+## The following social media need to be URLs
 DISCORD=https://DISCORD.com
 PODCAST=https://PODCAST.com
+YOUTUBE=https://youtube.com/@username
+SOUNDCLOUD=https://soundcloud.com/artist
+BANDCAMP=https://artist.bandcamp.com
+SPOTIFY=https://open.spotify.com/artist/artist-id
+APPLEMUSIC=https://music.apple.com/profile
 
 ## Header and footer code injection, supports HTML
 FOOTER_INJECT=FOOTER_INJECT
