@@ -22,13 +22,10 @@ body {
 }
 
 .item {
-  transition:
-    transform var(--transition-base),
-    box-shadow var(--transition-base);
+  transition: box-shadow var(--transition-base);
 }
 
 .item:hover {
-  transform: translateY(calc(-1 * var(--space-2xs)));
   box-shadow: var(--shadow-md);
 }
 
