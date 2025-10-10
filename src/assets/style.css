@@ -95,8 +95,8 @@ a.item-link:hover {
 }
 
 .social-icon {
-  width: 1em;
-  height: 1em;
+  width: 1.5em;
+  height: 1.5em;
   vertical-align: bottom;
   filter: var(--icon-secondary-filter);
   transition: filter 0.2s ease;
