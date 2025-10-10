@@ -57,3 +57,114 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
     )
   }
 </div>
+
+<script>
+  function enhanceImageModals() {
+    const modals = document.querySelectorAll('.modal[popover]')
+    modals.forEach((modal) => {
+      if (modal.dataset.modalEnhanced === 'true') {
+        return
+      }
+
+      const backdrop = modal.querySelector('.modal-backdrop')
+      const content = modal.querySelector('.modal-content')
+      const image = modal.querySelector('.modal-img')
+
+      if (!content || !image) {
+        return
+      }
+
+      modal.dataset.modalEnhanced = 'true'
+
+      let scale = 1
+      const maxScale = 6
+
+      const updateZoom = () => {
+        if (scale <= 1) {
+          scale = 1
+          image.dataset.zoomed = 'false'
+          image.style.transform = ''
+          content.classList.remove('is-zoomed')
+          return
+        }
+
+        image.dataset.zoomed = 'true'
+        image.style.transform = `scale(${scale})`
+        content.classList.add('is-zoomed')
+      }
+
+      const resetZoom = () => {
+        scale = 1
+        updateZoom()
+        content.scrollTop = 0
+        content.scrollLeft = 0
+      }
+
+      const toggleZoom = () => {
+        if (image.dataset.zoomed === 'true') {
+          resetZoom()
+          return
+        }
+
+        const naturalScale = image.naturalWidth && image.clientWidth ? image.naturalWidth / image.clientWidth : 1
+        scale = Math.max(1.5, naturalScale)
+        scale = Math.min(maxScale, scale)
+        updateZoom()
+      }
+
+      image.addEventListener('click', (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+        toggleZoom()
+      })
+
+      image.addEventListener('load', () => {
+        scale = 1
+        updateZoom()
+      })
+
+      content.addEventListener(
+        'wheel',
+        (event) => {
+          if (!event.ctrlKey && image.dataset.zoomed !== 'true') {
+            return
+          }
+
+          event.preventDefault()
+          const delta = event.deltaY > 0 ? -1 : 1
+          scale += delta * 0.2 * Math.max(scale, 1)
+          scale = Math.min(maxScale, Math.max(1, scale))
+          updateZoom()
+        },
+        { passive: false },
+      )
+
+      backdrop?.addEventListener('click', () => {
+        modal.hidePopover?.()
+      })
+
+      modal.addEventListener('beforetoggle', (event) => {
+        if (event.newState === 'closed') {
+          resetZoom()
+        }
+      })
+    })
+  }
+
+  function scheduleImageModalEnhancement() {
+    window.requestAnimationFrame(enhanceImageModals)
+  }
+
+  if (typeof window !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', scheduleImageModalEnhancement, { once: true })
+    }
+
+    if (document.readyState !== 'loading') {
+      scheduleImageModalEnhancement()
+    }
+
+    document.addEventListener('astro:page-load', scheduleImageModalEnhancement)
+    document.addEventListener('astro:after-swap', scheduleImageModalEnhancement)
+  }
+</script>

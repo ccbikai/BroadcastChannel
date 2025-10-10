@@ -39,12 +39,15 @@ function getImages($, item, { staticProxy, id, index, title }) {
     const url = $(photo).attr('style').match(/url\(["'](.*?)["']/)?.[1]
     const popoverId = `modal-${id}-${_index}`
     return `
-      <button class="image-preview-button image-preview-wrap" popovertarget="${popoverId}" popovertargetaction="show">
+      <button class="image-preview-button image-preview-wrap" type="button" popovertarget="${popoverId}" popovertargetaction="show">
         <img src="${staticProxy + url}" alt="${title}" loading="${index > 15 ? 'eager' : 'lazy'}" />
       </button>
-      <button class="image-preview-button modal" id="${popoverId}" popovertarget="${popoverId}" popovertargetaction="hide" popover>
-        <img class="modal-img" src="${staticProxy + url}" alt="${title}" loading="lazy" />
-      </button>
+      <div class="modal" id="${popoverId}" popover role="dialog" aria-modal="true">
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-content">
+          <img class="modal-img" src="${staticProxy + url}" alt="${title}" loading="lazy" />
+        </div>
+      </div>
     `
   })?.get()
   return images.length ? `<div class="image-list-container ${images.length % 2 === 0 ? 'image-list-even' : 'image-list-odd'}">${images?.join('')}</div>` : ''
