@@ -30,66 +30,110 @@ const BANDCAMP = getEnv(import.meta.env, Astro, 'BANDCAMP')
 const SPOTIFY = getEnv(import.meta.env, Astro, 'SPOTIFY')
 const APPLEMUSIC = getEnv(import.meta.env, Astro, 'APPLEMUSIC')
 const TELEGRAM = getEnv(import.meta.env, Astro, 'TELEGRAM')
+
+const socialLinks = [
+  {
+    href: BANDCAMP,
+    icon: bandcamp,
+    alt: 'Bandcamp',
+  },
+  {
+    href: SOUNDCLOUD,
+    icon: soundcloud,
+    alt: 'SoundCloud',
+  },
+  {
+    href: APPLEMUSIC,
+    icon: applemusic,
+    alt: 'Apple Music',
+  },
+  {
+    href: SPOTIFY,
+    icon: spotify,
+    alt: 'Spotify',
+  },
+  {
+    href: TELEGRAM ? `https://t.me/${TELEGRAM}` : undefined,
+    icon: telegram,
+    alt: 'Telegram',
+  },
+]
+
+const hasSocialLinks = socialLinks.some((link) => typeof link.href === 'string' && link.href.length > 0)
 ---
 
 <List channel={channel} before={false} after={false} isItem={true}>
-  <div slot="header" id="breadcrumb">
-    <img
-      src={channel?.avatar?.startsWith('http') ? staticProxy + channel?.avatar : voidFile.src}
-      alt={channel?.title}
-      loading="eager"
-      class="breadcrumb-avatar"
-    />
-    <div class="breadcrumb-title">
-      <a
-        href={SITE_URL}
-        class="site-title"
-        title={channel?.title}
-        onclick={`event.preventDefault(); if (history.length > 1) { history.back(); } else { window.location.assign('${SITE_URL}'); }`}
-      >
-        {channel.title}
-      </a>
+  <div slot="header" class="header-wrapper">
+    <div id="breadcrumb-section">
+      <div id="breadcrumb">
+        <img
+          src={channel?.avatar?.startsWith('http') ? staticProxy + channel?.avatar : voidFile.src}
+          alt={channel?.title}
+          loading="eager"
+          class="breadcrumb-avatar"
+        />
+        <div class="breadcrumb-title">
+          <a
+            href={SITE_URL}
+            class="site-title"
+            title={channel?.title}
+            onclick={`event.preventDefault(); if (history.length > 1) { history.back(); } else { window.location.assign('${SITE_URL}'); }`}
+          >
+            {channel.title}
+          </a>
+        </div>
+      </div>
     </div>
-    <div class="header-icons">
-      {
-        BANDCAMP && BANDCAMP.length > 0 && (
-          <a href={BANDCAMP} title="Bandcamp" target="_blank">
-            <img {...bandcamp} alt="Bandcamp" class="social-icon" width="1.5em" />
-          </a>
-        )
-      }
 
-      {
-        SOUNDCLOUD && SOUNDCLOUD.length > 0 && (
-          <a href={SOUNDCLOUD} title="SoundCloud" target="_blank">
-            <img {...soundcloud} alt="SoundCloud" class="social-icon" width="1.5em" />
-          </a>
-        )
-      }
-
-      {
-        APPLEMUSIC && APPLEMUSIC.length > 0 && (
-          <a href={APPLEMUSIC} title="Apple Music" target="_blank">
-            <img {...applemusic} alt="Apple Music" class="social-icon" width="1.5em" />
-          </a>
-        )
-      }
-
-      {
-        SPOTIFY && SPOTIFY.length > 0 && (
-          <a href={SPOTIFY} title="Spotify" target="_blank">
-            <img {...spotify} alt="Spotify" class="social-icon" width="1.5em" />
-          </a>
-        )
-      }
-
-      {
-        TELEGRAM && TELEGRAM.length > 0 && (
-          <a href={`https://t.me/${TELEGRAM}`} title="Telegram" target="_blank">
-            <img {...telegram} alt="Telegram" class="social-icon" width="1.5em" />
-          </a>
-        )
-      }
-    </div>
+    {
+      hasSocialLinks && (
+        <footer class="footer-icons">
+          {socialLinks.map((link) =>
+            link.href ? (
+              <a href={link.href} title={link.alt} target="_blank" rel="noopener noreferrer">
+                <img {...link.icon} alt={link.alt} class="social-icon" width="1.5em" />
+              </a>
+            ) : null,
+          )}
+        </footer>
+      )
+    }
   </div>
 </List>
+
+<style>
+  :global(#wrapper) {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  :global(#header-container) {
+    display: contents;
+  }
+
+  .header-wrapper {
+    display: contents;
+  }
+
+  #breadcrumb-section {
+    order: 0;
+    margin-bottom: 36px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 24px;
+  }
+
+  :global(#main-container) {
+    order: 1;
+    flex: 1;
+  }
+
+  .footer-icons {
+    order: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 48px;
+  }
+</style>
