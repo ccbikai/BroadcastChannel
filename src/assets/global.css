@@ -88,6 +88,15 @@ body {
   }
 }
 
+#back-to-top[data-fallback='true'] {
+  animation: none;
+}
+
+#back-to-top[data-fallback='true'].is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 @supports (animation-timeline: view()) {
   #back-to-top {
     animation: fade-in var(--transition-slow) linear both;

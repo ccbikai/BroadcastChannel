@@ -98,22 +98,52 @@ const hasHeader = Astro.slots.has('header')
       const backToTop = document.getElementById('back-to-top')
 
       if (backToTop) {
-        let supportsViewTimeline = false
+        const prefersReducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
 
-        if (typeof CSS !== 'undefined' && typeof CSS.supports === 'function') {
-          supportsViewTimeline = CSS.supports('animation-timeline: view(block 0 100vh)')
+        const toggleBackToTopVisibility = () => {
+          const shouldShow = window.scrollY > window.innerHeight * 0.5
+
+          backToTop.classList.toggle('is-visible', shouldShow)
+
+          if (shouldShow && backToTop.dataset.fallback !== 'true') {
+            const computed = getComputedStyle(backToTop)
+            const isInteractive = computed.pointerEvents !== 'none' && Number.parseFloat(computed.opacity) > 0
+
+            if (!isInteractive) {
+              backToTop.dataset.fallback = 'true'
+              requestAnimationFrame(() => {
+                toggleBackToTopVisibility()
+              })
+            }
+          }
         }
 
-        if (!supportsViewTimeline) {
-          const toggleBackToTopVisibility = () => {
-            const shouldShow = window.scrollY > window.innerHeight * 0.5
-            backToTop.classList.toggle('is-visible', shouldShow)
+        const shouldDisableAnimation = [
+          typeof CSS === 'undefined',
+          typeof CSS.supports !== 'function',
+          !CSS.supports('animation-timeline: view(block 0 100vh)'),
+          prefersReducedMotionQuery.matches,
+        ].some(Boolean)
+
+        if (shouldDisableAnimation) {
+          backToTop.dataset.fallback = 'true'
+        }
+
+        if (!shouldDisableAnimation) {
+          const handlePreferenceChange = (event) => {
+            if (event.matches) {
+              backToTop.dataset.fallback = 'true'
+              prefersReducedMotionQuery.removeEventListener('change', handlePreferenceChange)
+              toggleBackToTopVisibility()
+            }
           }
 
-          toggleBackToTopVisibility()
-          window.addEventListener('scroll', toggleBackToTopVisibility, { passive: true })
-          window.addEventListener('resize', toggleBackToTopVisibility)
+          prefersReducedMotionQuery.addEventListener('change', handlePreferenceChange)
         }
+
+        toggleBackToTopVisibility()
+        window.addEventListener('scroll', toggleBackToTopVisibility, { passive: true })
+        window.addEventListener('resize', toggleBackToTopVisibility)
 
         backToTop.addEventListener('click', (event) => {
           if (event.defaultPrevented) {
