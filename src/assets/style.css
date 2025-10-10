@@ -40,7 +40,7 @@
   --border-color: rgba(156, 163, 175, 0.24);
   --focus-ring-color: rgba(161, 161, 170, 0.45);
   --icon-hover-filter: brightness(1.1) saturate(1.05);
-  --icon-secondary-filter: brightness(0.85) saturate(0.85);
+  --icon-secondary-filter: invert(0.64) sepia(6%) saturate(210%) hue-rotate(210deg) brightness(0.95) contrast(0.92);
   --box-border-radius: var(--radius-md);
   --media-border-radius: 0;
   --box-margin: var(--space-sm);
@@ -153,16 +153,16 @@ a.item-link:focus-visible {
 .header-icons {
   display: flex;
   align-items: center;
-  gap: var(--space-2xs);
+  gap: var(--space-xs);
 }
 
 .social-icon {
-  width: 1.65em;
-  height: 1.65em;
+  width: 3.3em;
+  height: 3.3em;
   vertical-align: bottom;
   filter: var(--icon-secondary-filter);
   transition: filter var(--transition-fast), transform var(--transition-fast);
-  padding: var(--space-3xs);
+  padding: var(--space-2xs);
   border-radius: var(--radius-sm);
 }
 
