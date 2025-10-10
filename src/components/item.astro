@@ -59,14 +59,85 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
 </div>
 
 <script>
+  const modalState = {
+    activeModal: null,
+    previousOverflow: '',
+  }
+  let keyHandlerAttached = false
+
+  function closeModal(modal) {
+    if (!modal) {
+      return
+    }
+
+    modal.classList.remove('is-open')
+    modal.setAttribute('aria-hidden', 'true')
+    modal.hidden = true
+
+    if (typeof modal.__resetZoom === 'function') {
+      modal.__resetZoom()
+    }
+
+    if (modalState.activeModal === modal) {
+      modalState.activeModal = null
+    }
+
+    if (!document.querySelector('.modal.is-open')) {
+      if (document.body) {
+        document.body.style.overflow = modalState.previousOverflow || ''
+      }
+      modalState.previousOverflow = ''
+    }
+
+    const trigger = modal.__triggerElement
+    if (trigger && typeof trigger.focus === 'function') {
+      trigger.focus({ preventScroll: true })
+    }
+    if (trigger && trigger.hasAttribute('aria-expanded')) {
+      trigger.setAttribute('aria-expanded', 'false')
+    }
+    modal.__triggerElement = null
+  }
+
+  function openModal(modal, trigger) {
+    if (!modal) {
+      return
+    }
+
+    if (modalState.activeModal && modalState.activeModal !== modal) {
+      closeModal(modalState.activeModal)
+    }
+
+    modal.__triggerElement = trigger || null
+    if (trigger && trigger.hasAttribute('aria-expanded')) {
+      trigger.setAttribute('aria-expanded', 'true')
+    }
+    modal.hidden = false
+    modal.classList.add('is-open')
+    modal.setAttribute('aria-hidden', 'false')
+    modalState.activeModal = modal
+    if (document.body) {
+      modalState.previousOverflow = document.body.style.overflow || ''
+      document.body.style.overflow = 'hidden'
+    }
+
+    const focusTarget = modal.querySelector('[data-modal-close]')
+    focusTarget?.focus({ preventScroll: true })
+  }
+
+  function handleKeydown(event) {
+    if (event.key === 'Escape' && modalState.activeModal) {
+      closeModal(modalState.activeModal)
+    }
+  }
+
   function enhanceImageModals() {
-    const modals = document.querySelectorAll('.modal[popover]')
+    const modals = document.querySelectorAll('.modal')
     modals.forEach((modal) => {
       if (modal.dataset.modalEnhanced === 'true') {
         return
       }
 
-      const backdrop = modal.querySelector('.modal-backdrop')
       const content = modal.querySelector('.modal-content')
       const image = modal.querySelector('.modal-img')
 
@@ -139,16 +210,52 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
         { passive: false },
       )
 
-      backdrop?.addEventListener('click', () => {
-        modal.hidePopover?.()
+      const closeElements = modal.querySelectorAll('[data-close], [data-modal-close]')
+      closeElements.forEach((element) => {
+        element.addEventListener('click', () => {
+          closeModal(modal)
+        })
       })
 
-      modal.addEventListener('beforetoggle', (event) => {
-        if (event.newState === 'closed') {
-          resetZoom()
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+          closeModal(modal)
         }
       })
+
+      modal.__resetZoom = resetZoom
     })
+
+    document.querySelectorAll('[data-modal-open]').forEach((trigger) => {
+      if (trigger.dataset.modalTriggerEnhanced === 'true') {
+        return
+      }
+
+      const modalId = trigger.getAttribute('data-modal-open')
+      if (!modalId) {
+        return
+      }
+
+      const modal = document.getElementById(modalId)
+      if (!modal) {
+        return
+      }
+
+      if (!trigger.hasAttribute('aria-expanded')) {
+        trigger.setAttribute('aria-expanded', 'false')
+      }
+
+      trigger.dataset.modalTriggerEnhanced = 'true'
+      trigger.addEventListener('click', (event) => {
+        event.preventDefault()
+        openModal(modal, trigger)
+      })
+    })
+
+    if (!keyHandlerAttached) {
+      window.addEventListener('keydown', handleKeydown)
+      keyHandlerAttached = true
+    }
   }
 
   function scheduleImageModalEnhancement() {
