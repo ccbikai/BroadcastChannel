@@ -19,7 +19,7 @@
 
   img {
     width: calc(100% - var(--box-margin));
-    border-radius: var(--radius-md);
+    border-radius: 0;
     border: 1px solid rgba(148, 163, 184, 0.2);
     box-shadow: var(--shadow-sm);
   }
@@ -83,7 +83,7 @@
     height: auto;
     margin-bottom: var(--space-sm);
     border: 1px solid rgba(56, 189, 248, 0.18);
-    border-radius: var(--media-border-radius);
+    border-radius: 0;
     background-color: var(--cell-background-color);
     aspect-ratio: auto;
     box-shadow: var(--shadow-md);
@@ -100,7 +100,7 @@
       aspect-ratio: 1200 / 630;
       object-fit: cover;
       border: 1px solid rgba(148, 163, 184, 0.2);
-      border-radius: var(--radius-md);
+      border-radius: 0;
       width: 100%;
     }
 
@@ -140,7 +140,7 @@
 
   .tgme_widget_message_sticker {
     display: block;
-    border-radius: var(--radius-md);
+    border-radius: 0;
     overflow: hidden;
   }
 
@@ -187,7 +187,7 @@
       padding-top: 50%;
       background: no-repeat center;
       background-size: cover;
-      border-radius: var(--radius-md);
+      border-radius: 0;
       overflow: hidden;
       border: 1px solid rgba(148, 163, 184, 0.2);
     }
@@ -264,7 +264,7 @@
 
 .image-preview-button img {
   cursor: pointer;
-  border-radius: var(--media-border-radius);
+  border-radius: 0;
   border: 1px solid rgba(148, 163, 184, 0.2);
   box-shadow: var(--shadow-sm);
 }
@@ -295,7 +295,7 @@
   margin: auto;
   max-width: min(80vw, 70rem) !important;
   max-height: calc(100% - 2 * clamp(var(--space-md), 6vw, var(--space-xl))) !important;
-  border-radius: var(--media-border-radius);
+  border-radius: 0;
   border: 1px solid rgba(148, 163, 184, 0.25);
   box-shadow: var(--shadow-lg);
   cursor: pointer;
