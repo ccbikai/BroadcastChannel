@@ -240,12 +240,12 @@
   }
 }
 
-[popover]:not(:popover-open) {
+[popover] {
   display: none;
+}
 
-  &:popover-open {
-    display: block;
-  }
+[popover]:popover-open {
+  display: block;
 }
 
 .image-preview-wrap {
