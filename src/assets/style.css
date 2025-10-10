@@ -1,18 +1,15 @@
 :root {
   --background-color: #1e1e1e;
   --foreground-color: #d4d4d4;
-  --highlight-color: #24A1DE;
+  --highlight-color: #3ca1eb;
   --box-border-radius: 0;
   --media-border-radius: 0;
   --dot-size: 8px;
-   --shadows: 0 1px 2px rgba(0, 0, 0, 0.5),
-    0 2px 4px rgba(0, 0, 0, 0.4),
-    0 4px 8px rgba(0, 0, 0, 0.3),
-    0 8px 16px rgba(0, 0, 0, 0.3);
+  --shadows: 0 1px 2px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.3);
   --box-margin: 10px;
   --border-color: rgba(255, 255, 255, 0.08);
   --link-color: var(--highlight-color);
-   --icon-hover-filter: invert(85%) saturate(120%);
+  --icon-hover-filter: invert(85%) saturate(120%);
   --icon-secondary-filter: invert(70%) saturate(90%) brightness(90%);
   --cell-background-color: #252526;
   --code-background-color: #1f2428;
@@ -22,12 +19,13 @@
 body {
   background-color: var(--background-color);
   color: var(--foreground-color);
-  font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   margin: 0;
 }
 
 a:link,
 a:visited {
+  color: var(--link-color);
   text-decoration: none;
   line-break: loose;
 }
@@ -43,7 +41,7 @@ a.site-title:visited {
 }
 
 a.site-title:hover {
-  color: var(--secondary-color);
+  color: var(--foreground-color);
 }
 
 a.item-link:link,
@@ -131,7 +129,6 @@ a.item-link:hover {
 }
 
 #site-intro {
-  margin-top: 24px;
   color: var(--secondary-color);
   background-color: var(--cell-background-color);
   word-break: break-word;
@@ -370,16 +367,7 @@ hr {
 
 @media screen and (max-width: 640px) {
   #wrapper {
-    padding: 32px 18px 72px;
-  }
-
-  #header {
-    align-items: flex-start;
-  }
-
-  .header-icons {
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    padding: 48px 24px 96px;
   }
 
   .attachment-box {
