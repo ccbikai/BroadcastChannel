@@ -296,19 +296,43 @@ audio::-webkit-media-controls-panel {
   font-size: 12px;
 }
 
-a.page:link,
-a.page:visited {
+.pages-container .page {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--secondary-color);
-  padding: 6px 18px;
+  background: var(--cell-background-color);
+  padding: 8px 20px;
   font-size: 14px;
   font-weight: 500;
-  border: 1px solid var(--secondary-color);
+  border-radius: 0;
+  border: 1px solid var(--border-color);
+  text-decoration: none;
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease;
 }
 
-a.page:hover {
+.pages-container .page:hover,
+.pages-container .page:focus-visible {
   color: var(--link-color);
   border-color: var(--link-color);
   text-decoration: none;
+}
+
+.pages-container .page:hover {
+  transform: translateY(-3px);
+}
+
+.pages-container .page:active {
+  transform: translateY(1px);
+}
+
+.pages-container .page:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--link-color);
 }
 
 .page-placeholder {
