@@ -168,7 +168,7 @@ a.item-link:focus-visible {
 
 .social-icon:hover,
 .social-icon:focus-visible {
-  filter: var(--icon-hover-filter);
+  filter: var(--icon-secondary-filter);
   transform: translateY(calc(-1 * var(--space-3xs)));
 }
 
