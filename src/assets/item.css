@@ -242,6 +242,10 @@
 
 [popover]:not(:popover-open) {
   display: none;
+
+  &:popover-open {
+    display: block;
+  }
 }
 
 .image-preview-wrap {
@@ -279,6 +283,12 @@
 
 .modal:popover-open {
   display: flex;
+  background-color: rgba(2, 6, 23, 0.75);
+  backdrop-filter: blur(24px) saturate(140%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(var(--space-md), 6vw, var(--space-xl));
 }
 
 .modal-img {
