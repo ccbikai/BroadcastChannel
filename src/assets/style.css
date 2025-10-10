@@ -91,7 +91,7 @@ a.item-link:hover {
 .header-icons {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 2px;
 }
 
 .social-icon {
@@ -100,6 +100,7 @@ a.item-link:hover {
   vertical-align: bottom;
   filter: var(--icon-secondary-filter);
   transition: filter 0.2s ease;
+  padding: 4px;
 }
 
 .social-icon:hover {
