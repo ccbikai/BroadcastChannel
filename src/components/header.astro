@@ -65,23 +65,24 @@ const hasSocialLinks = socialLinks.some((link) => typeof link.href === 'string' 
       </a>
     </div>
   </div>
-
-  {
-    channel?.descriptionHTML && channel?.descriptionHTML.length > 0 && (
-      <div class="text-box" id="site-intro" set:html={channel?.descriptionHTML} />
-    )
-  }
 </div>
 
 {
-  hasSocialLinks && (
-    <footer class="footer-icons">
-      {socialLinks.map((link) =>
-        link.href ? (
-          <a href={link.href} title={link.alt} target="_blank" rel="noopener noreferrer">
-            <img {...link.icon} alt={link.alt} class="social-icon" width="1.5em" />
-          </a>
-        ) : null,
+  ((channel?.descriptionHTML && channel?.descriptionHTML.length > 0) || hasSocialLinks) && (
+    <footer id="site-footer">
+      {channel?.descriptionHTML && channel?.descriptionHTML.length > 0 && (
+        <div class="text-box" id="site-intro" set:html={channel?.descriptionHTML} />
+      )}
+      {hasSocialLinks && (
+        <div class="footer-icons">
+          {socialLinks.map((link) =>
+            link.href ? (
+              <a href={link.href} title={link.alt} target="_blank" rel="noopener noreferrer">
+                <img {...link.icon} alt={link.alt} class="social-icon" width="1.5em" />
+              </a>
+            ) : null,
+          )}
+        </div>
       )}
     </footer>
   )
@@ -113,21 +114,26 @@ const hasSocialLinks = socialLinks.some((link) => typeof link.href === 'string' 
     flex: 1;
   }
 
-  .footer-icons {
+  #site-footer {
     order: 2;
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .footer-icons {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 8px;
-    margin-top: 48px;
   }
 
   #site-intro {
     color: var(--secondary-color);
     background-color: var(--code-background-color);
     word-break: break-word;
-
-    order: 1;
 
     & :global(.emoji) {
       font-style: normal;
