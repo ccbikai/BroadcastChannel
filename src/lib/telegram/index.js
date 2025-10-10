@@ -37,14 +37,17 @@ function getImageStickers($, item, { staticProxy, index }) {
 function getImages($, item, { staticProxy, id, index, title }) {
   const images = $(item).find('.tgme_widget_message_photo_wrap')?.map((_index, photo) => {
     const url = $(photo).attr('style').match(/url\(["'](.*?)["']/)?.[1]
-    const popoverId = `modal-${id}-${_index}`
+    const modalId = `modal-${id}-${_index}`
     return `
-      <button class="image-preview-button image-preview-wrap" type="button" popovertarget="${popoverId}" popovertargetaction="show">
+      <button class="image-preview-button image-preview-wrap" type="button" data-modal-open="${modalId}" aria-haspopup="dialog" aria-controls="${modalId}" aria-expanded="false">
         <img src="${staticProxy + url}" alt="${title}" loading="${index > 15 ? 'eager' : 'lazy'}" />
       </button>
-      <div class="modal" id="${popoverId}" popover role="dialog" aria-modal="true">
+      <div class="modal" id="${modalId}" role="dialog" aria-modal="true" aria-hidden="true" hidden>
         <div class="modal-backdrop" data-close></div>
         <div class="modal-content">
+          <button type="button" class="modal-close" data-modal-close aria-label="Close image">
+            <span aria-hidden="true">&times;</span>
+          </button>
           <img class="modal-img" src="${staticProxy + url}" alt="${title}" loading="lazy" />
         </div>
       </div>

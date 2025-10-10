@@ -283,7 +283,7 @@
   backdrop-filter: blur(24px) saturate(140%);
 }
 
-.modal:popover-open {
+.modal.is-open {
   display: grid;
   place-items: center;
   padding: clamp(var(--space-md), 6vw, var(--space-xl));
@@ -311,6 +311,34 @@
   box-shadow: var(--shadow-lg);
   overflow: auto;
   cursor: default;
+}
+
+.modal-close {
+  position: absolute;
+  top: clamp(var(--space-2xs), 2vw, var(--space-sm));
+  right: clamp(var(--space-2xs), 2vw, var(--space-sm));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(2rem, 1.8rem + 0.5vw, 2.5rem);
+  height: clamp(2rem, 1.8rem + 0.5vw, 2.5rem);
+  padding: 0;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: var(--radius-sm);
+  background: rgba(15, 23, 42, 0.85);
+  color: var(--foreground-color);
+  font-size: clamp(1.25rem, 1.1rem + 0.4vw, 1.5rem);
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.modal-close:hover,
+.modal-close:focus-visible {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .modal-content.is-zoomed {
