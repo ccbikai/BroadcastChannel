@@ -156,7 +156,7 @@ a.item-link:hover {
 .time-box,
 .title-box,
 .tag-box {
-  background-color: var(--cell-background-color);
+  padding-top: 1px;
 }
 
 .image-box,
