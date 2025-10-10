@@ -2,7 +2,6 @@
 import { getEnv } from '../lib/env'
 import voidFile from '../assets/void.png'
 import rss from '../assets/rss.svg'
-import youtube from '../assets/youtube.svg'
 import soundcloud from '../assets/soundcloud.svg'
 import bandcamp from '../assets/bandcamp.svg'
 import spotify from '../assets/spotify.svg'
@@ -11,7 +10,6 @@ import applemusic from '../assets/applemusic.svg'
 const { SITE_URL, RSS_URL } = Astro.locals
 const { channel } = Astro.props
 
-const YOUTUBE = getEnv(import.meta.env, Astro, 'YOUTUBE')
 const SOUNDCLOUD = getEnv(import.meta.env, Astro, 'SOUNDCLOUD')
 const BANDCAMP = getEnv(import.meta.env, Astro, 'BANDCAMP')
 const SPOTIFY = getEnv(import.meta.env, Astro, 'SPOTIFY')
@@ -35,10 +33,6 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
     </a>
   </div>
   <div class="header-icons">
-    <a href={RSS_URL} target="_blank" rel="alternate" type="application/rss+xml" title="RSS Feed">
-      <img {...rss} alt="RSS" class="social-icon" width="1em" />
-    </a>
-
     {
       SOUNDCLOUD && SOUNDCLOUD.length > 0 && (
         <a href={SOUNDCLOUD} title="SoundCloud" target="_blank">
@@ -71,13 +65,9 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
       )
     }
 
-    {
-      YOUTUBE && YOUTUBE.length > 0 && (
-        <a href={YOUTUBE} title="YouTube" target="_blank">
-          <img {...youtube} alt="YouTube" class="social-icon" width="1em" />
-        </a>
-      )
-    }
+    <a href={RSS_URL} target="_blank" rel="alternate" type="application/rss+xml" title="RSS Feed">
+      <img {...rss} alt="RSS" class="social-icon" width="1em" />
+    </a>
   </div>
 </div>
 

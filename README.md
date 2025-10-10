@@ -50,7 +50,6 @@ TWITTER=ccbikai
 GITHUB=ccbikai
 
 ## The following social media need to be URLs
-YOUTUBE=https://youtube.com/@username
 SOUNDCLOUD=https://soundcloud.com/artist
 BANDCAMP=https://artist.bandcamp.com
 SPOTIFY=https://open.spotify.com/artist/artist-id
