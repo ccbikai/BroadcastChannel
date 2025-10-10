@@ -4,7 +4,6 @@
   --highlight-color: #3ca1eb;
   --box-border-radius: 0;
   --media-border-radius: 0;
-  --dot-size: 8px;
   --shadows: 0 1px 2px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.3);
   --box-margin: 10px;
   --border-color: rgba(255, 255, 255, 0.08);
@@ -262,12 +261,6 @@ audio::-webkit-media-controls-panel {
   display: flex;
   align-items: center;
   gap: 12px;
-}
-
-.time-box > .dot {
-  width: var(--dot-size);
-  height: var(--dot-size);
-  background-color: var(--link-color);
 }
 
 .time-box > .time {
