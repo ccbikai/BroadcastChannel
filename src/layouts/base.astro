@@ -94,6 +94,35 @@ const hasHeader = Astro.slots.has('header')
     <a href="#wrapper" id="back-to-top" aria-label="Back to top">
       <img {...backToTopIcon} alt="Back to Top" />
     </a>
+    <script is:inline>
+      const backToTop = document.getElementById('back-to-top')
+
+      if (backToTop) {
+        backToTop.addEventListener('click', (event) => {
+          if (event.defaultPrevented) {
+            return
+          }
+
+          event.preventDefault()
+
+          const target = document.getElementById('wrapper')
+          const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+          if (target?.scrollIntoView) {
+            target.scrollIntoView({
+              behavior: prefersReducedMotion ? 'auto' : 'smooth',
+              block: 'start',
+            })
+            return
+          }
+
+          window.scrollTo({
+            top: 0,
+            behavior: prefersReducedMotion ? 'auto' : 'smooth',
+          })
+        })
+      }
+    </script>
     <Fragment set:html={FOOTER_INJECT} />
   </body>
 </html>
