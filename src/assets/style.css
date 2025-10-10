@@ -270,6 +270,23 @@ audio::-webkit-media-controls-panel {
   font-weight: 500;
 }
 
+.item-content-container {
+  background-color: var(--code-background-color);
+  color: var(--secondary-color);
+  border: 1px solid var(--border-color);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  word-break: break-word;
+}
+
+.item-content-container .time-box,
+.item-content-container .text-box {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .pages-container {
   display: flex;
   align-items: center;
