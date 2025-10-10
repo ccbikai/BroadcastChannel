@@ -3,8 +3,13 @@ import { getEnv } from '../../lib/env'
 import voidFile from '../../assets/void.png'
 import List from '../../components/list.astro'
 import { getChannelInfo } from '../../lib/telegram'
+import rss from '../../assets/rss.svg'
+import soundcloud from '../../assets/soundcloud.svg'
+import bandcamp from '../../assets/bandcamp.svg'
+import spotify from '../../assets/spotify.svg'
+import applemusic from '../../assets/applemusic.svg'
 
-const { SITE_URL } = Astro.locals
+const { SITE_URL, RSS_URL } = Astro.locals
 
 const channelInfo = await getChannelInfo(Astro)
 
@@ -20,6 +25,10 @@ const channel = {
 }
 
 const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
+const SOUNDCLOUD = getEnv(import.meta.env, Astro, 'SOUNDCLOUD')
+const BANDCAMP = getEnv(import.meta.env, Astro, 'BANDCAMP')
+const SPOTIFY = getEnv(import.meta.env, Astro, 'SPOTIFY')
+const APPLEMUSIC = getEnv(import.meta.env, Astro, 'APPLEMUSIC')
 ---
 
 <List channel={channel} before={false} after={false} isItem={true}>
@@ -38,6 +47,43 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
         onclick={`event.preventDefault(); if (history.length > 1) { history.back(); } else { window.location.assign('${SITE_URL}'); }`}
       >
         {channel.title}
+      </a>
+    </div>
+    <div class="header-icons">
+      {
+        SOUNDCLOUD && SOUNDCLOUD.length > 0 && (
+          <a href={SOUNDCLOUD} title="SoundCloud" target="_blank">
+            <img {...soundcloud} alt="SoundCloud" class="social-icon" width="1em" />
+          </a>
+        )
+      }
+
+      {
+        BANDCAMP && BANDCAMP.length > 0 && (
+          <a href={BANDCAMP} title="Bandcamp" target="_blank">
+            <img {...bandcamp} alt="Bandcamp" class="social-icon" width="1em" />
+          </a>
+        )
+      }
+
+      {
+        SPOTIFY && SPOTIFY.length > 0 && (
+          <a href={SPOTIFY} title="Spotify" target="_blank">
+            <img {...spotify} alt="Spotify" class="social-icon" width="1em" />
+          </a>
+        )
+      }
+
+      {
+        APPLEMUSIC && APPLEMUSIC.length > 0 && (
+          <a href={APPLEMUSIC} title="Apple Music" target="_blank">
+            <img {...applemusic} alt="Apple Music" class="social-icon" width="1em" />
+          </a>
+        )
+      }
+
+      <a href={RSS_URL} target="_blank" rel="alternate" type="application/rss+xml" title="RSS Feed">
+        <img {...rss} alt="RSS" class="social-icon" width="1em" />
       </a>
     </div>
   </div>
