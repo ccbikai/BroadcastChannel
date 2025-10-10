@@ -240,7 +240,7 @@
   }
 }
 
-[popover] {
+[popover]:not(:popover-open) {
   display: none;
 
   &:popover-open {
@@ -273,6 +273,16 @@
   position: fixed;
   inset: 0;
   z-index: 1000;
+  display: none;
+  background-color: rgba(2, 6, 23, 0.75);
+  backdrop-filter: blur(24px) saturate(140%);
+  align-items: center;
+  justify-content: center;
+  padding: clamp(var(--space-md), 6vw, var(--space-xl));
+}
+
+.modal:popover-open {
+  display: flex;
   background-color: rgba(2, 6, 23, 0.75);
   backdrop-filter: blur(24px) saturate(140%);
   display: flex;
