@@ -78,7 +78,7 @@ const hasSocialLinks = socialLinks.some((link) => typeof link.href === 'string' 
           {socialLinks.map((link) =>
             link.href ? (
               <a href={link.href} title={link.alt} target="_blank" rel="noopener noreferrer">
-                <img {...link.icon} alt={link.alt} class="social-icon" width="3em" />
+                <img {...link.icon} alt={link.alt} class="social-icon" width="3em" loading="lazy" decoding="async" />
               </a>
             ) : null,
           )}
