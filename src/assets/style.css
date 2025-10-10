@@ -42,7 +42,7 @@
   --icon-hover-filter: brightness(1.2) saturate(1.2);
   --icon-secondary-filter: brightness(0.85) saturate(0.9);
   --box-border-radius: var(--radius-md);
-  --media-border-radius: var(--radius-lg);
+  --media-border-radius: 0;
   --box-margin: var(--space-sm);
   --transition-fast: 140ms ease;
   --transition-base: 240ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -263,7 +263,7 @@ a.item-link:focus-visible {
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   box-shadow: var(--shadow-sm);
 }
 
@@ -273,7 +273,7 @@ a.item-link:focus-visible {
   height: auto;
   max-height: none;
   border: 1px solid var(--border-color);
-  border-radius: var(--media-border-radius);
+  border-radius: 0;
   margin-block-end: var(--space-sm);
   box-shadow: var(--shadow-md);
 }
@@ -282,14 +282,14 @@ a.item-link:focus-visible {
 .audio-box audio {
   width: 100%;
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   background-color: var(--cell-background-color);
   box-shadow: var(--shadow-sm);
 }
 
 audio::-webkit-media-controls-panel {
   background-color: rgba(15, 23, 42, 0.55);
-  border-radius: var(--radius-md);
+  border-radius: 0;
 }
 
 .title-box {
