@@ -8,6 +8,7 @@ import soundcloud from '../../assets/soundcloud.svg'
 import bandcamp from '../../assets/bandcamp.svg'
 import spotify from '../../assets/spotify.svg'
 import applemusic from '../../assets/applemusic.svg'
+import telegram from '../../assets/telegram.svg'
 
 const { SITE_URL, RSS_URL } = Astro.locals
 
@@ -29,6 +30,7 @@ const SOUNDCLOUD = getEnv(import.meta.env, Astro, 'SOUNDCLOUD')
 const BANDCAMP = getEnv(import.meta.env, Astro, 'BANDCAMP')
 const SPOTIFY = getEnv(import.meta.env, Astro, 'SPOTIFY')
 const APPLEMUSIC = getEnv(import.meta.env, Astro, 'APPLEMUSIC')
+const TELEGRAM = getEnv(import.meta.env, Astro, 'TELEGRAM')
 ---
 
 <List channel={channel} before={false} after={false} isItem={true}>
@@ -53,7 +55,7 @@ const APPLEMUSIC = getEnv(import.meta.env, Astro, 'APPLEMUSIC')
       {
         SOUNDCLOUD && SOUNDCLOUD.length > 0 && (
           <a href={SOUNDCLOUD} title="SoundCloud" target="_blank">
-            <img {...soundcloud} alt="SoundCloud" class="social-icon" width="1em" />
+            <img {...soundcloud} alt="SoundCloud" class="social-icon" width="1.2em" />
           </a>
         )
       }
@@ -61,7 +63,7 @@ const APPLEMUSIC = getEnv(import.meta.env, Astro, 'APPLEMUSIC')
       {
         BANDCAMP && BANDCAMP.length > 0 && (
           <a href={BANDCAMP} title="Bandcamp" target="_blank">
-            <img {...bandcamp} alt="Bandcamp" class="social-icon" width="1em" />
+            <img {...bandcamp} alt="Bandcamp" class="social-icon" width="1.2em" />
           </a>
         )
       }
@@ -69,7 +71,7 @@ const APPLEMUSIC = getEnv(import.meta.env, Astro, 'APPLEMUSIC')
       {
         SPOTIFY && SPOTIFY.length > 0 && (
           <a href={SPOTIFY} title="Spotify" target="_blank">
-            <img {...spotify} alt="Spotify" class="social-icon" width="1em" />
+            <img {...spotify} alt="Spotify" class="social-icon" width="1.2em" />
           </a>
         )
       }
@@ -77,13 +79,21 @@ const APPLEMUSIC = getEnv(import.meta.env, Astro, 'APPLEMUSIC')
       {
         APPLEMUSIC && APPLEMUSIC.length > 0 && (
           <a href={APPLEMUSIC} title="Apple Music" target="_blank">
-            <img {...applemusic} alt="Apple Music" class="social-icon" width="1em" />
+            <img {...applemusic} alt="Apple Music" class="social-icon" width="1.2em" />
+          </a>
+        )
+      }
+
+      {
+        TELEGRAM && TELEGRAM.length > 0 && (
+          <a href={TELEGRAM} title="Telegram" target="_blank">
+            <img {...telegram} alt="Telegram" class="social-icon" width="1.2em" />
           </a>
         )
       }
 
       <a href={RSS_URL} target="_blank" rel="alternate" type="application/rss+xml" title="RSS Feed">
-        <img {...rss} alt="RSS" class="social-icon" width="1em" />
+        <img {...rss} alt="RSS" class="social-icon" width="1.2em" />
       </a>
     </div>
   </div>
