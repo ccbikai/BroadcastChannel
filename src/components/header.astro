@@ -9,6 +9,11 @@ import discord from '../assets/discord.svg'
 import telegram from '../assets/telegram.svg'
 import mastodon from '../assets/mastodon.svg'
 import bluesky from '../assets/bluesky.svg'
+import youtube from '../assets/youtube.svg'
+import soundcloud from '../assets/soundcloud.svg'
+import bandcamp from '../assets/bandcamp.svg'
+import spotify from '../assets/spotify.svg'
+import applemusic from '../assets/applemusic.svg'
 
 const { SITE_URL, RSS_URL } = Astro.locals
 const { channel } = Astro.props
@@ -20,6 +25,11 @@ const TELEGRAM = getEnv(import.meta.env, Astro, 'TELEGRAM')
 const DISCORD = getEnv(import.meta.env, Astro, 'DISCORD')
 const MASTODON = getEnv(import.meta.env, Astro, 'MASTODON')
 const BLUESKY = getEnv(import.meta.env, Astro, 'BLUESKY')
+const YOUTUBE = getEnv(import.meta.env, Astro, 'YOUTUBE')
+const SOUNDCLOUD = getEnv(import.meta.env, Astro, 'SOUNDCLOUD')
+const BANDCAMP = getEnv(import.meta.env, Astro, 'BANDCAMP')
+const SPOTIFY = getEnv(import.meta.env, Astro, 'SPOTIFY')
+const APPLEMUSIC = getEnv(import.meta.env, Astro, 'APPLEMUSIC')
 
 const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
 ---
@@ -95,6 +105,46 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
       BLUESKY && BLUESKY.length > 0 && (
         <a href={`https://bsky.app/profile/${BLUESKY}`} title="BlueSky" target="_blank">
           <img {...bluesky} alt={`@${BLUESKY}`} class="social-icon" width="1em" />
+        </a>
+      )
+    }
+
+    {
+      YOUTUBE && YOUTUBE.length > 0 && (
+        <a href={YOUTUBE} title="YouTube" target="_blank">
+          <img {...youtube} alt="YouTube" class="social-icon" width="1em" />
+        </a>
+      )
+    }
+
+    {
+      SOUNDCLOUD && SOUNDCLOUD.length > 0 && (
+        <a href={SOUNDCLOUD} title="SoundCloud" target="_blank">
+          <img {...soundcloud} alt="SoundCloud" class="social-icon" width="1em" />
+        </a>
+      )
+    }
+
+    {
+      BANDCAMP && BANDCAMP.length > 0 && (
+        <a href={BANDCAMP} title="Bandcamp" target="_blank">
+          <img {...bandcamp} alt="Bandcamp" class="social-icon" width="1em" />
+        </a>
+      )
+    }
+
+    {
+      SPOTIFY && SPOTIFY.length > 0 && (
+        <a href={SPOTIFY} title="Spotify" target="_blank">
+          <img {...spotify} alt="Spotify" class="social-icon" width="1em" />
+        </a>
+      )
+    }
+
+    {
+      APPLEMUSIC && APPLEMUSIC.length > 0 && (
+        <a href={APPLEMUSIC} title="Apple Music" target="_blank">
+          <img {...applemusic} alt="Apple Music" class="social-icon" width="1em" />
         </a>
       )
     }
