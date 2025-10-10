@@ -3,14 +3,13 @@ import { getEnv } from '../../lib/env'
 import voidFile from '../../assets/void.png'
 import List from '../../components/list.astro'
 import { getChannelInfo } from '../../lib/telegram'
-import rss from '../../assets/rss.svg'
-import soundcloud from '../../assets/soundcloud.svg'
 import bandcamp from '../../assets/bandcamp.svg'
-import spotify from '../../assets/spotify.svg'
+import soundcloud from '../../assets/soundcloud.svg'
 import applemusic from '../../assets/applemusic.svg'
+import spotify from '../../assets/spotify.svg'
 import telegram from '../../assets/telegram.svg'
 
-const { SITE_URL, RSS_URL } = Astro.locals
+const { SITE_URL } = Astro.locals
 
 const channelInfo = await getChannelInfo(Astro)
 
@@ -53,25 +52,17 @@ const TELEGRAM = getEnv(import.meta.env, Astro, 'TELEGRAM')
     </div>
     <div class="header-icons">
       {
-        SOUNDCLOUD && SOUNDCLOUD.length > 0 && (
-          <a href={SOUNDCLOUD} title="SoundCloud" target="_blank">
-            <img {...soundcloud} alt="SoundCloud" class="social-icon" width="1.2em" />
-          </a>
-        )
-      }
-
-      {
         BANDCAMP && BANDCAMP.length > 0 && (
           <a href={BANDCAMP} title="Bandcamp" target="_blank">
-            <img {...bandcamp} alt="Bandcamp" class="social-icon" width="1.2em" />
+            <img {...bandcamp} alt="Bandcamp" class="social-icon" width="2em" />
           </a>
         )
       }
 
       {
-        SPOTIFY && SPOTIFY.length > 0 && (
-          <a href={SPOTIFY} title="Spotify" target="_blank">
-            <img {...spotify} alt="Spotify" class="social-icon" width="1.2em" />
+        SOUNDCLOUD && SOUNDCLOUD.length > 0 && (
+          <a href={SOUNDCLOUD} title="SoundCloud" target="_blank">
+            <img {...soundcloud} alt="SoundCloud" class="social-icon" width="2em" />
           </a>
         )
       }
@@ -79,7 +70,15 @@ const TELEGRAM = getEnv(import.meta.env, Astro, 'TELEGRAM')
       {
         APPLEMUSIC && APPLEMUSIC.length > 0 && (
           <a href={APPLEMUSIC} title="Apple Music" target="_blank">
-            <img {...applemusic} alt="Apple Music" class="social-icon" width="1.2em" />
+            <img {...applemusic} alt="Apple Music" class="social-icon" width="2em" />
+          </a>
+        )
+      }
+
+      {
+        SPOTIFY && SPOTIFY.length > 0 && (
+          <a href={SPOTIFY} title="Spotify" target="_blank">
+            <img {...spotify} alt="Spotify" class="social-icon" width="2em" />
           </a>
         )
       }
@@ -87,14 +86,10 @@ const TELEGRAM = getEnv(import.meta.env, Astro, 'TELEGRAM')
       {
         TELEGRAM && TELEGRAM.length > 0 && (
           <a href={TELEGRAM} title="Telegram" target="_blank">
-            <img {...telegram} alt="Telegram" class="social-icon" width="1.2em" />
+            <img {...telegram} alt="Telegram" class="social-icon" width="2em" />
           </a>
         )
       }
-
-      <a href={RSS_URL} target="_blank" rel="alternate" type="application/rss+xml" title="RSS Feed">
-        <img {...rss} alt="RSS" class="social-icon" width="1.2em" />
-      </a>
     </div>
   </div>
 </List>
