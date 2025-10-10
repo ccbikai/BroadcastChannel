@@ -62,7 +62,6 @@ a.item-link:hover {
 
 #header-container {
   margin-bottom: 36px;
-  border-bottom: 1px solid var(--border-color);
   padding-bottom: 24px;
 }
 
@@ -154,11 +153,10 @@ a.item-link:hover {
 .audio-box,
 .attachment-box,
 .text-box,
+.time-box,
 .title-box,
 .tag-box {
-  border-left: 2px solid var(--border-color);
-  padding-left: 28px;
-  margin-left: 3px;
+  background-color: var(--cell-background-color);
 }
 
 .image-box,
@@ -317,8 +315,8 @@ audio::-webkit-media-controls-panel {
 
 .pages-container .page:hover,
 .pages-container .page:focus-visible {
-  color: var(--link-color);
-  border-color: var(--link-color);
+  color: var(--secondary-color);
+  border-color: var(--border-color);
   text-decoration: none;
 }
 
