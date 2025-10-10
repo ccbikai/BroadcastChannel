@@ -219,8 +219,8 @@ a.item-link:focus-visible {
 }
 
 .item {
-  background: var(--surface-elevated);
-  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(180, 180, 192, 0.2);
+  border: 1px solid rgba(180, 180, 192, 0.45);
   border-radius: var(--box-border-radius);
   padding: clamp(var(--space-md), 5vw, var(--space-xl));
   box-shadow: var(--shadow-sm);
