@@ -384,10 +384,12 @@ audio::-webkit-media-controls-panel {
   inset-block-start: calc(var(--item-content-padding) * 0.5);
   inset-inline-start: var(--item-content-padding);
   transform: translateY(-50%);
-  padding: var(--space-3xs) var(--space-sm);
+  padding-block: var(--space-2xs);
+  padding-inline: var(--space-xs);
+  padding-inline-start: 0;
   background: var(--surface-elevated);
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(148, 163, 184, 0.24);
+  border: none;
   box-shadow: var(--shadow-sm);
   max-width: calc(100% - (var(--item-content-padding) * 2));
   z-index: 1;
