@@ -89,6 +89,23 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
       modalState.previousOverflow = ''
     }
 
+    const originalParent = modal.__originalParent
+    const originalNextSibling = modal.__originalNextSibling
+    if (modal.parentElement === document.body && originalParent) {
+      if (!originalParent.isConnected) {
+        modal.remove()
+      }
+
+      if (originalParent.isConnected) {
+        let referenceNode = null
+        if (originalNextSibling && originalNextSibling.parentNode === originalParent) {
+          referenceNode = originalNextSibling
+        }
+        originalParent.insertBefore(modal, referenceNode)
+        modal.__originalNextSibling = modal.nextSibling
+      }
+    }
+
     const trigger = modal.__triggerElement
     if (trigger && typeof trigger.focus === 'function') {
       trigger.focus({ preventScroll: true })
@@ -106,6 +123,12 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
 
     if (modalState.activeModal && modalState.activeModal !== modal) {
       closeModal(modalState.activeModal)
+    }
+
+    if (document.body && modal.parentElement !== document.body) {
+      modal.__originalParent = modal.parentElement
+      modal.__originalNextSibling = modal.nextSibling
+      document.body.appendChild(modal)
     }
 
     modal.__triggerElement = trigger || null
