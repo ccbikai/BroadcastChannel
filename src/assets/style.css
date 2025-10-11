@@ -367,23 +367,23 @@ audio::-webkit-media-controls-panel {
 .item-content-wrapper {
   position: relative;
   --item-content-padding: clamp(var(--space-md), 5vw, var(--space-xl));
-  padding-block-start: calc(var(--item-content-padding) * 0.5 + var(--space-sm));
+  --item-content-offset: calc(var(--item-content-padding) * 0.5 + var(--space-sm));
+  padding-block-start: var(--item-content-offset);
 }
 
 .item-content-wrapper > .time-box {
   position: absolute;
-  inset-block-start: calc(var(--item-content-padding) * 0.5);
+  inset-block-start: calc(var(--item-content-offset) / 2);
   inset-inline-start: var(--item-content-padding);
   transform: translateY(-50%);
-  padding-block: var(--space-2xs);
-  padding-inline: var(--space-xs);
-  padding-inline-start: 0;
-  background: var(--surface-elevated);
-  border-radius: var(--radius-pill);
+  padding: 0;
+  background: none;
+  border-radius: 0;
   border: none;
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
   max-width: calc(100% - (var(--item-content-padding) * 2));
   z-index: 1;
+  gap: 0;
 }
 
 .item-content-container {
