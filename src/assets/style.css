@@ -238,12 +238,24 @@ a.site-title:focus-visible {
   background: rgba(180, 180, 192, 0.2);
   border: 1px solid rgba(140, 148, 168, 0.45);
   border-radius: var(--box-border-radius);
-  padding: var(--item-content-padding);
+  padding-inline: var(--item-content-padding);
+  padding-block: 0 var(--item-content-padding);
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: clamp(var(--space-sm), 3vw, var(--space-lg));
   isolation: isolate;
+}
+
+.item > * + * {
+  margin-block-start: clamp(var(--space-sm), 3vw, var(--space-lg));
+}
+
+.item > .time-box {
+  margin-block: calc(var(--item-content-padding) / 2);
+}
+
+.item > .time-box + * {
+  margin-block-start: calc(var(--item-content-padding) / 2);
 }
 
 .image-box,
