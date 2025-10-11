@@ -94,7 +94,7 @@ a:focus-visible {
 
 .time-box .time-link {
   font-size: var(--time-box-font-size);
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.01em;
   text-transform: none;
   display: inline-flex;
@@ -388,12 +388,12 @@ audio::-webkit-media-controls-panel {
   flex: 1;
   color: #798894;
   font-size: var(--time-box-font-size);
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-family: "Georgia", "Times New Roman", serif;
   font-style: italic;
-  text-indent: 12px;
+  text-indent: 10px;
 }
 
 .item-content-container {
