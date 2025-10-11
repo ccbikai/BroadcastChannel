@@ -1,6 +1,16 @@
 const UNDEFINED_STRING = 'undefined'
 
 function normalizeBaseUrl(base = '/') {
+  if (typeof base !== 'string' || base.length === 0) {
+    return '/'
+  }
+
+  const isAbsoluteUrl = /^(?:[a-zA-Z][\w+.-]*:|\/\/)/u.test(base)
+
+  if (isAbsoluteUrl) {
+    return base.endsWith('/') ? base : `${base}/`
+  }
+
   if (!base.startsWith('/')) {
     base = `/${base}`
   }
