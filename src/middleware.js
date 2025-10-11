@@ -1,7 +1,6 @@
 export async function onRequest(context, next) {
   context.locals.SITE_URL = `${import.meta.env.SITE ?? ''}${import.meta.env.BASE_URL}`
   context.locals.RSS_URL = `${context.locals.SITE_URL}rss.xml`
-  context.locals.RSS_PREFIX = ''
 
   const response = await next()
 

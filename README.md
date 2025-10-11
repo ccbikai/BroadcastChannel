@@ -75,8 +75,6 @@ GOOGLE_SEARCH_SITE=memo.miantiao.me
 ## Show comments
 COMMENTS=true
 
-## Enable RSS beautify
-RSS_BEAUTIFY=true
 ```
 
 ## 🙋🏻 FAQs
