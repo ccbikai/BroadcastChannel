@@ -1,22 +1,12 @@
 import process from 'node:process'
 import { defineConfig } from 'astro/config'
-import vercel from '@astrojs/vercel/serverless'
 import cloudflare from '@astrojs/cloudflare'
-import netlify from '@astrojs/netlify'
 import node from '@astrojs/node'
 import { provider } from 'std-env'
 import sentry from '@sentry/astro'
 
 const providers = {
-  vercel: vercel({
-    isr: false,
-    edgeMiddleware: false,
-  }),
   cloudflare_pages: cloudflare(),
-  netlify: netlify({
-    cacheOnDemandPages: false,
-    edgeMiddleware: false,
-  }),
   node: node({
     mode: 'standalone',
   }),

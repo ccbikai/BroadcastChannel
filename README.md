@@ -5,10 +5,8 @@
 ### Platform
 
 1. [Cloudflare](https://broadcast-channel.pages.dev/)
-2. [Netlify](https://broadcast-channel.netlify.app/)
-3. [Vercel](https://broadcast-channel.vercel.app/)
 
-BroadcastChannel supports deployment on serverless platforms like Cloudflare, Netlify, Vercel that support Node.js SSR, or on a VPS.
+BroadcastChannel supports deployment on serverless platforms like Cloudflare that support Node.js SSR, or on a VPS.
 For detailed tutorials, see [Deploy your Astro site](https://docs.astro.build/en/guides/deploy/).
 
 ## 🧱 Tech Stack
@@ -27,7 +25,7 @@ For detailed tutorials, see [Deploy your Astro site](https://docs.astro.build/en
 ### Serverless
 
 1. [Fork](https://github.com/ccbikai/BroadcastChannel/fork) this project to your GitHub
-2. Create a project on Cloudflare/Netlify/Vercel
+2. Create a project on Cloudflare Pages or Workers
 3. Select the `BroadcastChannel` project and the `Astro` framework
 4. Configure the environment variable `CHANNEL` with your channel name. This is the minimal configuration, for more configurations see the options below
 5. Save and deploy
