@@ -25,18 +25,6 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
     {content.length > 0 && <div class={`text-box content`} set:html={content} />}
   </div>
 
-  {
-    Array.isArray(post?.tags) && post.tags.length > 0 && (
-      <div class="item-tags" aria-label="Post tags">
-        {post.tags.map((tag) => (
-          <a href={`${BASE_URL}tags/${encodeURIComponent(tag)}/`} class="item-tag" title={`#${tag}`}>
-            #{tag}
-          </a>
-        ))}
-      </div>
-    )
-  }
-
   <div class="time-box">
     <div class="time">
       <a href={`${BASE_URL}posts/${post.id}`} title={post.datetime} class="time-link">
