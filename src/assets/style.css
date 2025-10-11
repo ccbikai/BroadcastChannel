@@ -154,7 +154,7 @@ a.item-link:focus-visible {
 }
 
 .header-avatar {
-  width: clamp(3rem, 2.6rem + 1vw, 3.5rem);
+  width: clamp(3.5rem, 3.1rem + 1.2vw, 4.25rem);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   border: 2px solid rgba(148, 163, 184, 0.25);
@@ -181,8 +181,8 @@ a.item-link:focus-visible {
 }
 
 .social-icon {
-  width: 3.3em;
-  height: 3.3em;
+  width: clamp(2.4rem, 2.1rem + 0.8vw, 2.9rem);
+  height: clamp(2.4rem, 2.1rem + 0.8vw, 2.9rem);
   vertical-align: bottom;
   filter: var(--icon-secondary-filter);
   transition: filter var(--transition-fast), transform var(--transition-fast);
@@ -197,7 +197,7 @@ a.item-link:focus-visible {
 }
 
 .breadcrumb-avatar {
-  width: clamp(3rem, 2.6rem + 1vw, 3.5rem);
+  width: clamp(3.5rem, 3.1rem + 1.2vw, 4.25rem);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   border: 2px solid rgba(148, 163, 184, 0.2);
