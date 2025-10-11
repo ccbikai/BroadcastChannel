@@ -2,7 +2,6 @@
 import { getEnv } from '../../lib/env'
 import List from '../../components/list.astro'
 import { getChannelInfo } from '../../lib/telegram'
-import { getSocialLinks } from '../../lib/social-links'
 import voidFile from '../../assets/void.png'
 
 const { BASE_URL } = Astro.locals
@@ -21,10 +20,6 @@ const channel = {
 }
 
 const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
-const socialLinks = getSocialLinks(import.meta.env, Astro)
-const hasSocialLinks = socialLinks.length > 0
-const hasDescription = typeof channel?.descriptionHTML === 'string' && channel.descriptionHTML.length > 0
-const shouldRenderFooter = hasDescription || hasSocialLinks
 ---
 
 <List channel={channel} before={false} after={false} isItem={true} paginationGap={true}>
@@ -49,28 +44,5 @@ const shouldRenderFooter = hasDescription || hasSocialLinks
         </div>
       </div>
     </div>
-
-    {
-      shouldRenderFooter && (
-        <footer class="site-footer">
-          {hasDescription && <div class="text-box site-intro site-intro--plain" set:html={channel?.descriptionHTML} />}
-          {hasSocialLinks && (
-            <div class="footer-icons">
-              {socialLinks.map((link) => (
-                <a
-                  href={link.href}
-                  title={link.alt}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="footer-icons__link"
-                >
-                  <img {...link.icon} alt={link.alt} class="social-icon" width="3em" loading="lazy" decoding="async" />
-                </a>
-              ))}
-            </div>
-          )}
-        </footer>
-      )
-    }
   </div>
 </List>

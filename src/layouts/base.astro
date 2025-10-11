@@ -5,6 +5,7 @@ import '../assets/global.css'
 import { SEO } from 'astro-seo'
 import { getEnv } from '../lib/env'
 import backToTopIcon from '../assets/back-to-top.svg'
+import Footer from '../components/footer.astro'
 
 const { SITE_URL, RSS_URL, BASE_URL } = Astro.locals
 const { channel } = Astro.props
@@ -91,6 +92,7 @@ const hasHeader = Astro.slots.has('header')
       <main id="main-container">
         <slot />
       </main>
+      <Footer channel={channel} />
     </div>
     <a href="#wrapper" id="back-to-top" aria-label="Back to top">
       <img {...backToTopIcon} alt="Back to Top" />
