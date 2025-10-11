@@ -34,15 +34,11 @@ body {
   position: fixed;
   inset-block-end: var(--space-xl);
   inset-inline-end: clamp(var(--space-lg), 3vw, var(--space-2xl));
-  inline-size: 3rem;
-  block-size: 3rem;
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--border-color);
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--highlight-color) 24%, transparent),
-    var(--cell-background-color)
-  );
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: rgba(36, 36, 44, 0.6);
   color: var(--secondary-color);
   font-size: 1.5rem;
   text-decoration: none;
@@ -55,10 +51,10 @@ body {
   transition:
     opacity var(--transition-slow),
     transform var(--transition-base),
-    background var(--transition-slow);
-  box-shadow: var(--shadow-sm);
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
   z-index: 1000;
-  backdrop-filter: saturate(140%) blur(12px);
 
   img {
     filter: var(--icon-secondary-filter);
@@ -67,15 +63,18 @@ body {
 
   &:hover {
     transform: translateY(calc(-1 * var(--space-3xs)));
-    background: linear-gradient(
-      145deg,
-      color-mix(in srgb, var(--highlight-color) 38%, transparent),
-      color-mix(in srgb, var(--cell-background-color) 80%, black 20%)
-    );
+    background: rgba(180, 180, 192, 0.2);
+    border-color: rgba(180, 180, 192, 0.45);
+    box-shadow: var(--shadow-sm);
 
     img {
       filter: var(--icon-hover-filter);
     }
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(180, 180, 192, 0.45);
   }
 
   &:active {
