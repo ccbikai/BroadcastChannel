@@ -2,25 +2,28 @@
 import List from '../../../components/list.astro'
 import TagHeader from '../../../components/tag-header.astro'
 import { getChannelInfo } from '../../../lib/telegram'
+import { normalizeTag } from '../../../lib/tags'
 
 const rawTagParam = typeof Astro.params.tag === 'string' ? Astro.params.tag : ''
-const trimmedTag = rawTagParam.trim()
-const queryTag = trimmedTag.length > 0 ? (trimmedTag.startsWith('#') ? trimmedTag : `#${trimmedTag}`) : ''
+const normalizedTag = normalizeTag(rawTagParam)
+
+if (!normalizedTag) {
+  return Astro.redirect('/tags/')
+}
 
 const channel = await getChannelInfo(Astro, {
-  q: queryTag,
+  tag: normalizedTag,
 })
 
-const tagLabel = queryTag || '#'
+const tagLabel = `#${normalizedTag}`
 channel.seo = {
   title: tagLabel,
   text: `Posts tagged with ${tagLabel}`,
 }
 
-const encodedTag = encodeURIComponent(rawTagParam)
-const paginationBasePath = rawTagParam ? `tags/${encodedTag}/` : 'tags/'
+const paginationBasePath = `tags/${encodeURIComponent(normalizedTag)}/`
 ---
 
-<List channel={channel} paginationGap={true} paginationBasePath={paginationBasePath}>
+<List channel={channel} before={false} after={false} paginationGap={true} paginationBasePath={paginationBasePath}>
   <TagHeader slot="header" channel={channel} tag={tagLabel} />
 </List>
