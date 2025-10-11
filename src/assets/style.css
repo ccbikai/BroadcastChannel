@@ -114,6 +114,16 @@ a.item-link:focus-visible {
   text-underline-offset: 0.35em;
 }
 
+.time-box a.item-link:link,
+.time-box a.item-link:visited {
+  color: #798894;
+}
+
+.time-box a.item-link:hover,
+.time-box a.item-link:focus-visible {
+  color: #798894;
+}
+
 #wrapper {
   margin-inline: auto;
   padding: clamp(var(--space-2xl), 10vw, var(--space-3xl)) clamp(var(--space-lg), 6vw, var(--space-2xl))
