@@ -34,8 +34,11 @@
   }
 
   > pre {
-    width: fit-content;
-    max-width: min(100%, calc(100% - var(--box-margin)));
+    width: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+    white-space: pre-wrap;
+    word-break: break-word;
     align-self: flex-start;
     overflow-x: auto;
     padding: clamp(var(--space-xs), 2vw, var(--space-md));
