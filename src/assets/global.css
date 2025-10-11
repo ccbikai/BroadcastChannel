@@ -30,7 +30,6 @@ body {
 }
 
 #back-to-top {
-  display: none;
   position: fixed;
   inset-block-end: var(--space-xl);
   inset-inline-end: clamp(var(--space-lg), 3vw, var(--space-2xl));
