@@ -248,6 +248,8 @@ a.site-title:focus-visible {
   flex-direction: column;
   gap: clamp(var(--space-sm), 3vw, var(--space-lg));
   isolation: isolate;
+  min-width: 0;
+  min-inline-size: 0;
 }
 
 .image-box,
@@ -409,6 +411,8 @@ audio::-webkit-media-controls-panel {
     inset 0 0 0 1px rgba(0, 0, 0, 0.65),
     0 0 18px rgba(56, 189, 248, 0.12);
   font-family: var(--font-family-post);
+  min-width: 0;
+  min-inline-size: 0;
 }
 
 .item-content-container .text-box {
