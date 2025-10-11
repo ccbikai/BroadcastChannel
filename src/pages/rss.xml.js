@@ -31,12 +31,13 @@ export async function GET(Astro) {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'video', 'audio']),
         allowedAttributes: {
           ...sanitizeHtml.defaults.allowedAttributes,
+          a: [
+            ...(sanitizeHtml.defaults.allowedAttributes?.a ?? []),
+            'rel',
+          ],
           video: ['src', 'width', 'height', 'poster'],
           audio: ['src', 'controls'],
           img: ['src', 'srcset', 'alt', 'title', 'width', 'height', 'loading', 'class'],
-        },
-        exclusiveFilter(frame) {
-          return frame.tag === 'img' && frame.attribs?.class?.includes('modal-img')
         },
       }),
     })),
