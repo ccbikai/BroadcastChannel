@@ -493,11 +493,8 @@ audio::-webkit-media-controls-panel {
 }
 
 #main-container > .pages-container {
-  margin-block-start: 0;
-}
-
-#main-container > .pages-container.pages-container--with-gap {
   margin-block-start: var(--items-gap);
+  margin-block-end: 0;
 }
 
 .pages-info {
