@@ -266,6 +266,26 @@ a.site-title:focus-visible {
   font-family: 'Segoe UI', 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
 }
 
+.tag-page-intro {
+  font-size: var(--font-size-sm);
+  color: var(--secondary-color);
+}
+
+.tag-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4xs);
+  padding-inline: var(--space-xs);
+  padding-block: var(--space-4xs);
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(36, 36, 44, 0.5);
+  font-family: var(--font-family-post);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.08em;
+  color: var(--foreground-color);
+}
+
 .site-intro--plain .emoji {
   font-style: normal;
   margin-right: 2px;
@@ -312,8 +332,7 @@ a.site-title:focus-visible {
 .attachment-box,
 .text-box,
 .time-box,
-.title-box,
-.tag-box {
+.title-box {
   padding-block-start: var(--space-2xs);
 }
 
@@ -374,48 +393,6 @@ audio::-webkit-media-controls-panel {
   font-size: clamp(1.35rem, 1.18rem + 0.7vw, 1.9rem);
   line-height: var(--line-height-tight);
   font-weight: 700;
-}
-
-.tag-box {
-  padding-block-end: var(--space-md);
-  font-size: var(--font-size-xs);
-  line-height: var(--line-height-base);
-  display: flex;
-  gap: var(--space-xs);
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.tag-icon {
-  inline-size: 1.25rem;
-  block-size: 1.25rem;
-  background-size: cover;
-  opacity: 0.45;
-  background-image: url('tags.png');
-  background-repeat: no-repeat;
-  display: inline-block;
-}
-
-.tag {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--secondary-color);
-  border: 1px solid rgba(148, 163, 184, 0.25);
-  padding-inline: var(--space-sm);
-  padding-block: var(--space-3xs);
-  text-decoration: none;
-  letter-spacing: 0.08em;
-  border-radius: var(--radius-pill);
-  background: rgba(36, 36, 44, 0.6);
-  transition: border-color var(--transition-fast), color var(--transition-fast), background var(--transition-fast);
-}
-
-.tag:hover,
-.tag:focus-visible {
-  color: var(--foreground-color);
-  border-color: rgba(180, 180, 192, 0.45);
-  background: rgba(180, 180, 192, 0.18);
 }
 
 .text-box p:first-child {
