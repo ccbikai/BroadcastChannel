@@ -139,5 +139,10 @@ const hasSocialLinks = socialLinks.some((link) => typeof link.href === 'string' 
       font-style: normal;
       margin-right: 2px;
     }
+
+    & :global(a:hover),
+    & :global(a:focus-visible) {
+      color: var(--foreground-color);
+    }
   }
 </style>
