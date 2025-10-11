@@ -60,45 +60,45 @@
   .tgme_widget_message_link_preview {
     margin-top: var(--space-sm);
     display: grid;
-    gap: clamp(var(--space-2xs), 1vw, var(--space-xs));
-    border-radius: var(--radius-lg);
+    gap: 0.2rem;
+    border-radius: 0.75rem;
     overflow: hidden;
-    background: rgba(248, 250, 255, 0.92);
-    border: 1px solid rgba(148, 163, 184, 0.35);
-    box-shadow: var(--shadow-sm);
-    padding: clamp(var(--space-2xs), 1vw + 0.1rem, var(--space-sm))
-      clamp(var(--space-xs), 1vw + 0.35rem, var(--space-md));
-    color: rgba(30, 41, 59, 0.95);
+    background: #fff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    padding: 0.95rem 1.05rem;
+    color: rgb(17, 24, 39);
     text-decoration: none;
     align-items: flex-start;
     transition:
       border-color var(--transition-fast),
-      box-shadow var(--transition-fast),
-      transform var(--transition-fast),
-      background var(--transition-fast);
+      background var(--transition-fast),
+      box-shadow var(--transition-fast);
 
     .link_preview_site_name {
       display: block;
-      font-size: var(--font-size-xs);
+      font-size: 0.6875rem;
       font-weight: 600;
-      letter-spacing: 0.02em;
-      color: rgba(71, 85, 105, 0.85);
+      letter-spacing: 0.06em;
+      color: rgba(15, 23, 42, 0.56);
       text-transform: uppercase;
+      line-height: 1.2;
     }
 
     .link_preview_title {
       display: block;
-      font-size: clamp(var(--font-size-sm), 0.85rem + 0.12vw, var(--font-size-lg));
+      margin-top: 0.2rem;
+      font-size: clamp(0.95rem, 0.9rem + 0.12vw, 1.05rem);
       font-weight: 600;
-      line-height: var(--line-height-snug);
-      color: rgb(15, 23, 42);
+      line-height: 1.28;
+      color: rgb(17, 24, 39);
     }
 
     .link_preview_description {
       display: block;
-      font-size: clamp(var(--font-size-xs), 0.7rem + 0.12vw, var(--font-size-sm));
-      line-height: var(--line-height-base);
-      color: rgba(15, 23, 42, 0.7);
+      margin-top: 0.25rem;
+      font-size: clamp(0.82rem, 0.78rem + 0.1vw, 0.95rem);
+      line-height: 1.35;
+      color: rgba(15, 23, 42, 0.6);
     }
 
     .link_preview_image {
@@ -108,33 +108,31 @@
 
   .tgme_widget_message_link_preview:hover,
   .tgme_widget_message_link_preview:focus-visible {
-    border-color: rgba(148, 163, 184, 0.55);
-    box-shadow: var(--shadow-md);
-    background: rgba(255, 255, 255, 0.95);
-    transform: translateY(-1px);
+    border-color: rgba(15, 23, 42, 0.18);
+    background: rgba(246, 248, 252, 0.98);
+    box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.05);
   }
 
   .tgme_widget_message_link_preview:focus-visible {
-    outline: 2px solid rgba(59, 130, 246, 0.45);
+    outline: 2px solid rgba(51, 144, 236, 0.45);
     outline-offset: 2px;
   }
 
   .tgme_widget_message_link_preview:has(.link_preview_image) {
-    grid-template-columns: minmax(2.75rem, clamp(3rem, 4vw, 3.5rem)) 1fr;
-    gap: clamp(var(--space-2xs), 0.5vw + 0.1rem, var(--space-sm));
-    padding: clamp(var(--space-2xs), 1vw + 0.1rem, var(--space-sm))
-      clamp(var(--space-xs), 1vw + 0.35rem, var(--space-md));
-    align-items: flex-start;
+    grid-template-columns: clamp(4.25rem, 6vw, 5.1rem) 1fr;
+    gap: 0.8rem;
+    padding: 0.85rem 0.95rem;
+    align-items: center;
   }
 
   .tgme_widget_message_link_preview:has(.link_preview_image) .link_preview_image {
     display: block;
-    width: clamp(2.75rem, 4vw + 0.5rem, 4.25rem);
-    height: clamp(2.75rem, 4vw + 0.5rem, 4.25rem);
-    border-radius: var(--radius-md);
+    width: clamp(4.25rem, 6vw, 5.1rem);
+    height: clamp(4.25rem, 6vw, 5.1rem);
+    border-radius: 0.75rem;
     overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    align-self: flex-start;
+    background: #f1f3f5;
+    align-self: stretch;
   }
 
   .tgme_widget_message_link_preview:has(.link_preview_image) .link_preview_image img {
@@ -147,7 +145,7 @@
   .tgme_widget_message_link_preview:has(.link_preview_image) .link_preview_site_name,
   .tgme_widget_message_link_preview:has(.link_preview_image) .link_preview_title,
   .tgme_widget_message_link_preview:has(.link_preview_image) .link_preview_description {
-    padding: 0;
+    margin-left: 0;
   }
 
   .tgme_widget_message_video,
