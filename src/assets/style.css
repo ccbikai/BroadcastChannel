@@ -181,8 +181,8 @@ a.item-link:focus-visible {
 }
 
 .social-icon {
-  width: clamp(2.4rem, 2.1rem + 0.8vw, 2.9rem);
-  height: clamp(2.4rem, 2.1rem + 0.8vw, 2.9rem);
+  width: 3rem;
+  height: 3rem;
   vertical-align: bottom;
   filter: var(--icon-secondary-filter);
   transition: filter var(--transition-fast), transform var(--transition-fast);
@@ -381,7 +381,7 @@ audio::-webkit-media-controls-panel {
   flex: 1;
   color: #798894;
   font-size: clamp(var(--font-size-base), 1rem + 0.15vw, 1.2rem);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-family: "Georgia", "Times New Roman", serif;
@@ -398,8 +398,8 @@ audio::-webkit-media-controls-panel {
 .item-content-wrapper > .time-box {
   position: absolute;
   inset-block-start: calc(var(--item-content-offset) / 2);
-  inset-inline-start: var(--item-content-padding);
-  transform: translateY(-50%);
+  inset-inline-start: 12px;
+  transform: translateY(-24px);
   padding: 0;
   background: none;
   border-radius: 0;
