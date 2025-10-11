@@ -112,9 +112,8 @@ a.site-title:visited {
 
 a.site-title:hover,
 a.site-title:focus-visible {
-  color: color-mix(in srgb, var(--foreground-color) 92%, var(--link-color) 8%);
-  text-decoration: underline;
-  text-underline-offset: 0.35em;
+  color: color-mix(in srgb, var(--foreground-color) 75%, white 25%);
+  text-decoration: none;
 }
 
 .time-box .time-link:link,
