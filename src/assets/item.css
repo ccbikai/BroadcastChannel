@@ -285,17 +285,15 @@
   width: 100vw;
   height: 100vh;
   display: none;
-  padding: clamp(var(--space-sm), 4vw, var(--space-lg));
+  padding: clamp(var(--space-2xs), 4vw, var(--space-lg));
   align-items: center;
   justify-content: center;
-  background-color: rgba(15, 15, 18, 0.75);
-  backdrop-filter: blur(24px) saturate(140%);
+  background-color: rgba(12, 12, 16, 0.9);
+  backdrop-filter: blur(8px) saturate(130%);
 }
 
 .modal.is-open {
-  display: grid;
-  place-items: center;
-  padding: clamp(var(--space-md), 6vw, var(--space-xl));
+  display: flex;
 }
 
 .modal-backdrop {
@@ -311,43 +309,45 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: min(100%, calc(100vw - 2 * clamp(var(--space-md), 6vw, var(--space-xl))));
-  max-height: min(100%, calc(100vh - 2 * clamp(var(--space-md), 6vw, var(--space-xl))));
-  padding: clamp(var(--space-2xs), 3vw, var(--space-sm));
-  border: 1px solid rgba(148, 163, 184, 0.25);
-  border-radius: var(--radius-lg);
-  background: rgba(34, 34, 42, 0.85);
-  box-shadow: var(--shadow-lg);
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   overflow: auto;
   cursor: default;
 }
 
 .modal-close {
   position: absolute;
-  top: clamp(var(--space-2xs), 2vw, var(--space-sm));
-  right: clamp(var(--space-2xs), 2vw, var(--space-sm));
+  top: clamp(var(--space-sm), 3vw, var(--space-lg));
+  right: clamp(var(--space-sm), 3vw, var(--space-lg));
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: clamp(2rem, 1.8rem + 0.5vw, 2.5rem);
-  height: clamp(2rem, 1.8rem + 0.5vw, 2.5rem);
+  width: clamp(2.25rem, 2rem + 0.5vw, 2.75rem);
+  height: clamp(2.25rem, 2rem + 0.5vw, 2.75rem);
   padding: 0;
-  border: 1px solid rgba(148, 163, 184, 0.3);
-  border-radius: var(--radius-sm);
-  background: rgba(34, 34, 42, 0.85);
+  border: none;
+  border-radius: 999px;
+  background: rgba(8, 8, 12, 0.65);
   color: var(--foreground-color);
   font-size: clamp(1.25rem, 1.1rem + 0.4vw, 1.5rem);
   line-height: 1;
   cursor: pointer;
   transition:
     transform var(--transition-fast),
-    box-shadow var(--transition-fast);
+    background-color var(--transition-fast);
 }
 
 .modal-close:hover,
 .modal-close:focus-visible {
   transform: scale(1.05);
-  box-shadow: var(--shadow-sm);
+  background: rgba(8, 8, 12, 0.85);
 }
 
 .modal-content.is-zoomed {
@@ -360,14 +360,15 @@
 
 .modal-img {
   display: block;
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   max-width: 100%;
   max-height: 100%;
-  border-radius: calc(var(--radius-lg) - 0.1rem);
+  object-fit: contain;
+  border-radius: 0;
   border: none;
   background: transparent;
-  box-shadow: var(--shadow-lg);
+  box-shadow: none;
   transition: transform var(--transition-base);
   transform-origin: center center;
   cursor: zoom-in;
