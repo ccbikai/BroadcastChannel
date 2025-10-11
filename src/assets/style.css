@@ -382,11 +382,12 @@ audio::-webkit-media-controls-panel {
   flex: 1;
   color: #798894;
   font-size: clamp(var(--font-size-base), 1rem + 0.15vw, 1.2rem);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-family: "Georgia", "Times New Roman", serif;
   font-style: italic;
+  text-indent: 12px;
 }
 
 .item-content-container {
