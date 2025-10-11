@@ -69,9 +69,6 @@ SENTRY_PROJECT=SENTRY_PROJECT
 HOST=telegram.dog
 STATIC_PROXY=
 
-## Enable Google Site Search
-GOOGLE_SEARCH_SITE=memo.miantiao.me
-
 ## Show comments
 COMMENTS=true
 
