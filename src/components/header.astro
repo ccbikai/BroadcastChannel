@@ -142,14 +142,9 @@ const hasSocialLinks = socialLinks.some((link) => typeof link.href === 'string' 
       margin-right: 2px;
     }
 
-    & :global(a) {
-      transition: color var(--transition-fast);
-    }
-
     & :global(a:hover),
     & :global(a:focus-visible) {
-      color: color-mix(in srgb, var(--foreground-color) 75%, white 25%);
-      text-decoration: none;
+      color: var(--foreground-color);
     }
   }
 </style>
