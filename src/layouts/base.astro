@@ -69,10 +69,6 @@ const hasHeader = Astro.slots.has('header')
     <SEO
       titleTemplate={`%s | ${channel?.title}`}
       titleDefault={[channel?.title, seoParams.description].filter(Boolean).join(' - ')}
-      twitter={{
-        card: 'summary_large_image',
-        creator: github ? `@${github}` : undefined,
-      }}
       {...seoParams}
     />
     <Fragment set:html={HEADER_INJECT} />
