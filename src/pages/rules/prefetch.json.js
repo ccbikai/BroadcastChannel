@@ -2,7 +2,7 @@ export async function GET() {
   return Response.json({
     prerender: [
       {
-        urls: ['/', '/tags'],
+        urls: ['/'],
         eagerness: 'eager',
       },
     ],
