@@ -39,7 +39,7 @@
   --code-background-color: #18181b;
   --border-color: rgba(156, 163, 175, 0.24);
   --focus-ring-color: rgba(161, 161, 170, 0.45);
-  --icon-hover-filter: brightness(1.1) saturate(1.05);
+  --icon-hover-filter: invert(0.9) sepia(4%) saturate(260%) hue-rotate(210deg) brightness(1.05) contrast(0.95);
   --icon-secondary-filter: invert(0.64) sepia(6%) saturate(210%) hue-rotate(210deg) brightness(0.95) contrast(0.92);
   --box-border-radius: var(--radius-md);
   --media-border-radius: 0;
@@ -168,7 +168,7 @@ a.item-link:focus-visible {
 
 .social-icon:hover,
 .social-icon:focus-visible {
-  filter: var(--icon-secondary-filter);
+  filter: var(--icon-hover-filter);
   transform: translateY(calc(-1 * var(--space-3xs)));
 }
 
