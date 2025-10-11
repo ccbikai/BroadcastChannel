@@ -88,8 +88,12 @@ a:focus-visible {
   text-underline-offset: 0.35em;
 }
 
+.time-box {
+  --time-box-font-size: clamp(1.1rem, 1.02rem + 0.38vw, 1.35rem);
+}
+
 .time-box .time-link {
-  font-size: clamp(1rem, 0.96rem + 0.32vw, 1.2rem);
+  font-size: var(--time-box-font-size);
   font-weight: 700;
   letter-spacing: 0.01em;
   text-transform: none;
@@ -383,7 +387,7 @@ audio::-webkit-media-controls-panel {
 .time-box > .time {
   flex: 1;
   color: #798894;
-  font-size: clamp(var(--font-size-base), 1rem + 0.2vw, 1.3rem);
+  font-size: var(--time-box-font-size);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
