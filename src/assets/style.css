@@ -101,27 +101,17 @@ a.site-title:focus-visible {
   text-underline-offset: 0.35em;
 }
 
-a.item-link:link,
-a.item-link:visited {
-  color: var(--post-text-color);
+.time-box .time-link:link,
+.time-box .time-link:visited {
+  color: #798894;
   text-decoration: none;
+  transition: color var(--transition-fast);
 }
 
-a.item-link:hover,
-a.item-link:focus-visible {
-  color: var(--post-text-color);
-  text-decoration: underline;
-  text-underline-offset: 0.35em;
-}
-
-.time-box a.item-link:link,
-.time-box a.item-link:visited {
-  color: #798894;
-}
-
-.time-box a.item-link:hover,
-.time-box a.item-link:focus-visible {
-  color: #798894;
+.time-box .time-link:hover,
+.time-box .time-link:focus-visible {
+  color: color-mix(in srgb, #798894 70%, white 30%);
+  text-decoration: none;
 }
 
 #wrapper {
