@@ -232,10 +232,11 @@ a.item-link:focus-visible {
 }
 
 .item {
+  --item-content-padding: clamp(var(--space-md), 5vw, var(--space-xl));
   background: rgba(180, 180, 192, 0.2);
   border: 1px solid rgba(140, 148, 168, 0.45);
   border-radius: var(--box-border-radius);
-  padding: clamp(var(--space-md), 5vw, var(--space-xl));
+  padding: var(--item-content-padding);
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
@@ -386,28 +387,6 @@ audio::-webkit-media-controls-panel {
   text-transform: uppercase;
   font-family: "Georgia", "Times New Roman", serif;
   font-style: italic;
-}
-
-.item-content-wrapper {
-  position: relative;
-  --item-content-padding: clamp(var(--space-md), 5vw, var(--space-xl));
-  --item-content-offset: calc(var(--item-content-padding) * 0.5 + var(--space-sm));
-  padding-block-start: var(--item-content-offset);
-}
-
-.item-content-wrapper > .time-box {
-  position: absolute;
-  inset-block-start: calc(var(--item-content-offset) / 2);
-  inset-inline-start: 12px;
-  transform: translateY(-24px);
-  padding: 0;
-  background: none;
-  border-radius: 0;
-  border: none;
-  box-shadow: none;
-  max-width: calc(100% - (var(--item-content-padding) * 2));
-  z-index: 1;
-  gap: 0;
 }
 
 .item-content-container {
