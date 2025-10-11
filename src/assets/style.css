@@ -381,8 +381,8 @@ audio::-webkit-media-controls-panel {
 .time-box > .time {
   flex: 1;
   color: #798894;
-  font-size: clamp(var(--font-size-base), 1rem + 0.15vw, 1.2rem);
-  font-weight: 600;
+  font-size: clamp(var(--font-size-base), 1rem + 0.2vw, 1.3rem);
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-family: "Georgia", "Times New Roman", serif;
