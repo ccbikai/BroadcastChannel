@@ -60,16 +60,17 @@
   .tgme_widget_message_link_preview {
     margin-top: var(--space-sm);
     display: grid;
-    gap: var(--space-sm);
+    gap: clamp(var(--space-2xs), 1vw, var(--space-xs));
     border-radius: var(--radius-lg);
     overflow: hidden;
     background: rgba(248, 250, 255, 0.92);
     border: 1px solid rgba(148, 163, 184, 0.35);
     box-shadow: var(--shadow-sm);
-    padding: var(--space-sm) var(--space-md);
+    padding: clamp(var(--space-2xs), 1vw + 0.1rem, var(--space-sm))
+      clamp(var(--space-xs), 1vw + 0.35rem, var(--space-md));
     color: rgba(30, 41, 59, 0.95);
     text-decoration: none;
-    align-items: center;
+    align-items: flex-start;
     transition:
       border-color var(--transition-fast),
       box-shadow var(--transition-fast),
@@ -87,7 +88,7 @@
 
     .link_preview_title {
       display: block;
-      font-size: clamp(var(--font-size-base), 0.95rem + 0.15vw, var(--font-size-lg));
+      font-size: clamp(var(--font-size-sm), 0.85rem + 0.12vw, var(--font-size-lg));
       font-weight: 600;
       line-height: var(--line-height-snug);
       color: rgb(15, 23, 42);
@@ -95,7 +96,7 @@
 
     .link_preview_description {
       display: block;
-      font-size: var(--font-size-sm);
+      font-size: clamp(var(--font-size-xs), 0.7rem + 0.12vw, var(--font-size-sm));
       line-height: var(--line-height-base);
       color: rgba(15, 23, 42, 0.7);
     }
@@ -119,18 +120,21 @@
   }
 
   .tgme_widget_message_link_preview:has(.link_preview_image) {
-    grid-template-columns: auto 1fr;
-    gap: var(--space-sm);
-    padding: var(--space-sm) var(--space-md);
+    grid-template-columns: minmax(2.75rem, clamp(3rem, 4vw, 3.5rem)) 1fr;
+    gap: clamp(var(--space-2xs), 0.5vw + 0.1rem, var(--space-sm));
+    padding: clamp(var(--space-2xs), 1vw + 0.1rem, var(--space-sm))
+      clamp(var(--space-xs), 1vw + 0.35rem, var(--space-md));
+    align-items: flex-start;
   }
 
   .tgme_widget_message_link_preview:has(.link_preview_image) .link_preview_image {
     display: block;
-    width: clamp(3.5rem, 5vw + 1rem, 5rem);
-    height: clamp(3.5rem, 5vw + 1rem, 5rem);
+    width: clamp(2.75rem, 4vw + 0.5rem, 4.25rem);
+    height: clamp(2.75rem, 4vw + 0.5rem, 4.25rem);
     border-radius: var(--radius-md);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
+    align-self: flex-start;
   }
 
   .tgme_widget_message_link_preview:has(.link_preview_image) .link_preview_image img {
