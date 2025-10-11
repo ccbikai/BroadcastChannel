@@ -6,7 +6,7 @@ import { SEO } from 'astro-seo'
 import { getEnv } from '../lib/env'
 import backToTopIcon from '../assets/back-to-top.svg'
 
-const { SITE_URL, RSS_URL, RSS_PREFIX } = Astro.locals
+const { SITE_URL, RSS_URL } = Astro.locals
 const { channel } = Astro.props
 
 const locale = getEnv(import.meta.env, Astro, 'LOCALE')
@@ -60,7 +60,7 @@ const hasHeader = Astro.slots.has('header')
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0d0d0d" />
-    <link rel="alternate" type="application/rss+xml" title={`${RSS_PREFIX}${channel?.title}`} href={RSS_URL} />
+    <link rel="alternate" type="application/rss+xml" title={channel?.title} href={RSS_URL} />
     <style is:inline>
       @view-transition {
         navigation: auto;
