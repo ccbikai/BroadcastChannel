@@ -62,7 +62,7 @@ const socialLinks = [
 const hasSocialLinks = socialLinks.some((link) => typeof link.href === 'string' && link.href.length > 0)
 ---
 
-<List channel={channel} before={false} after={false} isItem={true}>
+<List channel={channel} before={false} after={false} isItem={true} paginationGap={true}>
   <div slot="header" class="header-wrapper">
     <div id="breadcrumb-section">
       <div id="breadcrumb">
