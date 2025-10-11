@@ -1,0 +1,26 @@
+---
+import List from '../../../components/list.astro'
+import TagHeader from '../../../components/tag-header.astro'
+import { getChannelInfo } from '../../../lib/telegram'
+
+const rawTagParam = typeof Astro.params.tag === 'string' ? Astro.params.tag : ''
+const trimmedTag = rawTagParam.trim()
+const queryTag = trimmedTag.length > 0 ? (trimmedTag.startsWith('#') ? trimmedTag : `#${trimmedTag}`) : ''
+
+const channel = await getChannelInfo(Astro, {
+  q: queryTag,
+})
+
+const tagLabel = queryTag || '#'
+channel.seo = {
+  title: tagLabel,
+  text: `Posts tagged with ${tagLabel}`,
+}
+
+const encodedTag = encodeURIComponent(rawTagParam)
+const paginationBasePath = rawTagParam ? `tags/${encodedTag}/` : 'tags/'
+---
+
+<List channel={channel} paginationGap={true} paginationBasePath={paginationBasePath}>
+  <TagHeader slot="header" channel={channel} tag={tagLabel} />
+</List>

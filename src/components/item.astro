@@ -18,23 +18,12 @@ const COMMENTS = getEnv(import.meta.env, Astro, 'COMMENTS')
 const content = typeof post.content === 'string' ? post.content : ''
 const datetime = dayjs(post.datetime).tz(timezone)
 const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('HH:mm · ll · ddd') : datetime.fromNow()
-const tags = Array.isArray(post.tags) ? post.tags : []
 ---
 
 <div class="item" style={{ 'view-transition-name': `post-${post.id}` }}>
   <div class="item-content-container">
     {content.length > 0 && <div class={`text-box content`} set:html={content} />}
   </div>
-  {
-    tags.length > 0 && (
-      <div class="tag-box" style={content.length === 0 ? 'padding-top: 24px;' : ''}>
-        <div class="tag-icon" />
-        {tags.map((tag) => (
-          <span class="tag">{tag}</span>
-        ))}
-      </div>
-    )
-  }
 
   <div class="time-box">
     <div class="time">

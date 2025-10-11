@@ -4,14 +4,22 @@ import Header from '../components/header.astro'
 import Item from '../components/item.astro'
 
 const { BASE_URL } = Astro.locals
-const { channel, before = true, after = true, isItem = false, paginationGap = false } = Astro.props
+const {
+  channel,
+  before = true,
+  after = true,
+  isItem = false,
+  paginationGap = false,
+  paginationBasePath = '',
+} = Astro.props
 
 const posts = Array.isArray(channel?.posts) ? channel.posts : []
 const beforeCursor = posts.at(-1)?.id
 const afterCursor = posts[0]?.id
 
-const beforeHref = typeof beforeCursor === 'undefined' ? '' : `${BASE_URL}before/${beforeCursor}`
-const afterHref = typeof afterCursor === 'undefined' ? '' : `${BASE_URL}after/${afterCursor}`
+const normalizedBasePath = paginationBasePath ? `${paginationBasePath.replace(/^\/+/u, '').replace(/\/+$/u, '')}/` : ''
+const beforeHref = typeof beforeCursor === 'undefined' ? '' : `${BASE_URL}${normalizedBasePath}before/${beforeCursor}`
+const afterHref = typeof afterCursor === 'undefined' ? '' : `${BASE_URL}${normalizedBasePath}after/${afterCursor}`
 const hasOlderPosts = before && typeof beforeCursor !== 'undefined' && Number.parseInt(beforeCursor, 10) > 1
 const hasNewerPosts = after && typeof afterCursor !== 'undefined'
 const paginationClassList = {

@@ -1,0 +1,15 @@
+---
+import Header from './header.astro'
+
+const rawTag = typeof Astro.props.tag === 'string' ? Astro.props.tag : ''
+const trimmedTag = rawTag.trim()
+const tagLabel = trimmedTag.length > 0 ? (trimmedTag.startsWith('#') ? trimmedTag : `#${trimmedTag}`) : '#'
+const { channel } = Astro.props
+---
+
+<Fragment>
+  <Header channel={channel} />
+  <div class="site-intro site-intro--plain tag-page-intro">
+    Posts tagged with <span class="tag-label">{tagLabel}</span>
+  </div>
+</Fragment>
