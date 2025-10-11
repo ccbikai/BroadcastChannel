@@ -9,7 +9,7 @@ import applemusic from '../../assets/applemusic.svg'
 import spotify from '../../assets/spotify.svg'
 import telegram from '../../assets/telegram.svg'
 
-const { SITE_URL } = Astro.locals
+const { BASE_URL } = Astro.locals
 
 const channelInfo = await getChannelInfo(Astro)
 
@@ -74,10 +74,10 @@ const hasSocialLinks = socialLinks.some((link) => typeof link.href === 'string' 
         />
         <div class="breadcrumb-title">
           <a
-            href={SITE_URL}
+            href={BASE_URL}
             class="site-title"
             title={channel?.title}
-            onclick={`event.preventDefault(); if (history.length > 1) { history.back(); } else { window.location.assign('${SITE_URL}'); }`}
+            onclick={`event.preventDefault(); if (history.length > 1) { history.back(); } else { window.location.assign('${BASE_URL}'); }`}
           >
             {channel.title}
           </a>

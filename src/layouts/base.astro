@@ -6,14 +6,19 @@ import { SEO } from 'astro-seo'
 import { getEnv } from '../lib/env'
 import backToTopIcon from '../assets/back-to-top.svg'
 
-const { SITE_URL, RSS_URL } = Astro.locals
+const { SITE_URL, RSS_URL, BASE_URL } = Astro.locals
 const { channel } = Astro.props
 
 const locale = getEnv(import.meta.env, Astro, 'LOCALE')
 
 const seo = channel?.seo
-const reqPathname = Astro.url.pathname.replace(/\/$/, '')
-const canonical = SITE_URL.startsWith('http') ? new URL(SITE_URL).origin + reqPathname : Astro.url.origin + reqPathname
+const requestPathname = Astro.url.pathname.replace(/\/$/, '')
+const basePathname = BASE_URL.replace(/\/$/, '') || '/'
+const relativePathname =
+  basePathname !== '/' && requestPathname.startsWith(basePathname)
+    ? requestPathname.slice(basePathname.length)
+    : requestPathname
+const canonical = new URL(relativePathname.replace(/^\//, ''), SITE_URL).href
 
 const { origin } = new URL(canonical)
 const github = getEnv(import.meta.env, Astro, 'GITHUB')

@@ -7,7 +7,7 @@ import applemusic from '../assets/applemusic.svg'
 import spotify from '../assets/spotify.svg'
 import telegram from '../assets/telegram.svg'
 
-const { SITE_URL } = Astro.locals
+const { BASE_URL } = Astro.locals
 const { channel } = Astro.props
 
 const BANDCAMP = getEnv(import.meta.env, Astro, 'BANDCAMP')
@@ -51,7 +51,7 @@ const hasSocialLinks = socialLinks.some((link) => typeof link.href === 'string' 
 
 <div id="header-section">
   <div id="header">
-    <a href={SITE_URL} title={channel?.title}>
+    <a href={BASE_URL} title={channel?.title}>
       <img
         src={channel?.avatar?.startsWith('http') ? staticProxy + channel?.avatar : voidFile.src}
         alt={channel?.title}
@@ -60,7 +60,7 @@ const hasSocialLinks = socialLinks.some((link) => typeof link.href === 'string' 
       />
     </a>
     <div class="header-title">
-      <a href={SITE_URL} class="site-title" title={channel?.title}>
+      <a href={BASE_URL} class="site-title" title={channel?.title}>
         {channel?.title}
       </a>
     </div>

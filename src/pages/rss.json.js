@@ -7,19 +7,15 @@ export async function GET(Astro) {
     q: tag ? `#${tag}` : '',
   })
   const posts = channel.posts || []
-
-  const request = Astro.request
-  const url = new URL(request.url)
-  url.pathname = SITE_URL
-  url.search = ''
+  const siteUrl = new URL(SITE_URL)
 
   return Response.json({
     version: 'https://jsonfeed.org/version/1.1',
     title: `${tag ? `${tag} | ` : ''}${channel.title}`,
     description: channel.description,
-    home_page_url: url.toString(),
+    home_page_url: siteUrl.toString(),
     items: posts.map(item => ({
-      url: `${url.toString()}posts/${item.id}`,
+      url: new URL(`posts/${item.id}`, siteUrl).toString(),
       title: item.title,
       description: item.description,
       date_published: new Date(item.datetime),

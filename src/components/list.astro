@@ -3,13 +3,17 @@ import Layout from '../layouts/base.astro'
 import Header from '../components/header.astro'
 import Item from '../components/item.astro'
 
-const { SITE_URL } = Astro.locals
+const { BASE_URL } = Astro.locals
 const { channel, before = true, after = true, isItem = false, paginationGap = false } = Astro.props
-const posts = channel.posts ?? []
+const posts = Array.isArray(channel?.posts) ? channel.posts : []
 
-const beforeCursor = posts[posts.length - 1]?.id
+const beforeCursor = posts.at(-1)?.id
 const afterCursor = posts[0]?.id
-// const cursor = +Astro.params.cursor
+
+const beforeHref = typeof beforeCursor !== 'undefined' ? `${BASE_URL}before/${beforeCursor}` : ''
+const afterHref = typeof afterCursor !== 'undefined' ? `${BASE_URL}after/${afterCursor}` : ''
+const hasOlderPosts = before && Number.parseInt(beforeCursor, 10) > 1
+const hasNewerPosts = after && typeof afterCursor !== 'undefined'
 ---
 
 <Layout channel={channel} id="main-container">
@@ -17,13 +21,17 @@ const afterCursor = posts[0]?.id
     <Header channel={channel} />
   </slot>
   <div class="items">
-    {posts.map((post) => <Item post={post} isItem={isItem} />)}
+    {
+      posts.map((post, index) => (
+        <Item post={post} isItem={isItem} key={post.id ?? `${post.datetime ?? 'post'}-${index}`} />
+      ))
+    }
   </div>
 
   <div class={`pages-container${paginationGap ? ' pages-container--with-gap' : ''}`}>
     {
-      before && beforeCursor > 1 ? (
-        <a href={`${SITE_URL}before/${beforeCursor}`} title="Older posts" class="page">
+      hasOlderPosts ? (
+        <a href={beforeHref} title="Older posts" class="page">
           Older
         </a>
       ) : (
@@ -33,8 +41,8 @@ const afterCursor = posts[0]?.id
 
     <div class="pages-info"></div>
     {
-      after && afterCursor ? (
-        <a href={`${SITE_URL}after/${afterCursor}`} title="Newer posts" class="page">
+      hasNewerPosts ? (
+        <a href={afterHref} title="Newer posts" class="page">
           Newer
         </a>
       ) : (

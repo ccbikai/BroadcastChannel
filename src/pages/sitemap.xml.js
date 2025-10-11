@@ -1,25 +1,28 @@
 import { getChannelInfo } from '../lib/telegram'
 
 export async function GET(Astro) {
-  const request = Astro.request
-  const url = new URL(request.url)
+  const { SITE_URL } = Astro.locals
   const channel = await getChannelInfo(Astro)
   const posts = channel.posts || []
 
   const pageSize = 20
-  let count = +posts[0]?.id
+  let count = Number.parseInt(posts[0]?.id, 10)
 
   const pages = []
-  pages.push(count)
-  while (count > pageSize) {
-    count -= pageSize
+  if (Number.isFinite(count)) {
     pages.push(count)
+    while (count > pageSize) {
+      count -= pageSize
+      pages.push(count)
+    }
   }
+
+  const siteUrl = new URL(SITE_URL)
 
   const sitemaps = pages.map((page) => {
     return `
 <sitemap>
-  <loc>${url.origin}/sitemap/${page}.xml</loc>
+  <loc>${new URL(`sitemap/${page}.xml`, siteUrl).toString()}</loc>
 </sitemap>`
   })
 
