@@ -89,11 +89,14 @@ a:focus-visible {
 a.site-title:link,
 a.site-title:visited {
   color: var(--foreground-color);
+  text-decoration: none;
 }
 
 a.site-title:hover,
 a.site-title:focus-visible {
   color: color-mix(in srgb, var(--foreground-color) 92%, var(--link-color) 8%);
+  text-decoration: underline;
+  text-underline-offset: 0.35em;
 }
 
 a.item-link:link,
@@ -125,13 +128,15 @@ a.item-link:focus-visible {
   gap: var(--space-md);
 }
 
-#header {
+#header,
+#breadcrumb {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
   font-family: var(--font-family-display);
   font-size: var(--font-size-lg);
   font-weight: 600;
+  color: var(--foreground-color);
 }
 
 .header-avatar {
@@ -144,7 +149,8 @@ a.item-link:focus-visible {
   box-shadow: var(--shadow-sm);
 }
 
-.header-title {
+.header-title,
+.breadcrumb-title {
   flex: 1;
   font-size: clamp(1.35rem, 1.22rem + 0.6vw, 1.85rem);
   letter-spacing: 0.015em;
@@ -172,15 +178,6 @@ a.item-link:focus-visible {
   transform: translateY(calc(-1 * var(--space-3xs)));
 }
 
-#breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  font-weight: 600;
-  font-size: var(--font-size-sm);
-  color: var(--secondary-color);
-}
-
 .breadcrumb-avatar {
   width: clamp(3rem, 2.6rem + 1vw, 3.5rem);
   aspect-ratio: 1 / 1;
@@ -188,12 +185,6 @@ a.item-link:focus-visible {
   border: 2px solid rgba(148, 163, 184, 0.2);
   display: block;
   object-fit: cover;
-}
-
-.breadcrumb-title {
-  flex: 1;
-  font-size: clamp(1.15rem, 1.02rem + 0.45vw, 1.5rem);
-  letter-spacing: 0.01em;
 }
 
 #site-intro {
