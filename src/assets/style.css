@@ -358,7 +358,7 @@ audio::-webkit-media-controls-panel {
 .time-box > .time {
   flex: 1;
   color: var(--link-color);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-base);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
