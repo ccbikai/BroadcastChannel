@@ -110,6 +110,12 @@ function ensureBaseUrl(baseUrl = '/') {
     return '/'
   }
 
+  const isAbsoluteUrl = /^(?:[a-zA-Z][\w+.-]*:|\/\/)/u.test(baseUrl)
+
+  if (isAbsoluteUrl) {
+    return baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`
+  }
+
   if (!baseUrl.startsWith('/')) {
     baseUrl = `/${baseUrl}`
   }
