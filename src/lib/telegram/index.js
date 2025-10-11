@@ -49,20 +49,7 @@ function getImages($, item, { staticProxy, index, title }) {
       </a>
     `
   })?.get()
-  if (!images.length) {
-    return ''
-  }
-
-  const classes = [
-    'image-list-container',
-    images.length % 2 === 0 ? 'image-list-even' : 'image-list-odd',
-  ]
-
-  if (images.length > 1) {
-    classes.push('image-list-masonry')
-  }
-
-  return `<div class="${classes.join(' ')}">${images?.join('')}</div>`
+  return images.length ? `<div class="image-list-container ${images.length % 2 === 0 ? 'image-list-even' : 'image-list-odd'}">${images?.join('')}</div>` : ''
 }
 
 function getVideo($, item, { staticProxy, index }) {
