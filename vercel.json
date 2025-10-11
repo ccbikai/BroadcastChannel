@@ -1,5 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/static/:path*", "destination": "/api/static" }
-  ]
-}
