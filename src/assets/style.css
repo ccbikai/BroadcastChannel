@@ -219,7 +219,10 @@ a.item-link:focus-visible {
 #main-container {
   display: flex;
   flex-direction: column;
-  gap: clamp(var(--space-lg), 6vw, var(--space-2xl));
+}
+
+#main-container > * + * {
+  margin-block-start: clamp(var(--space-lg), 6vw, var(--space-2xl));
 }
 
 .items {
@@ -440,9 +443,13 @@ audio::-webkit-media-controls-panel {
 .pages-container {
   display: flex;
   align-items: center;
-  margin-block: var(--space-sm);
+  margin-block: 0;
   gap: var(--space-sm);
   flex-wrap: wrap;
+}
+
+#main-container > .pages-container {
+  margin-block-start: 0;
 }
 
 .pages-info {
