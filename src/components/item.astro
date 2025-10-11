@@ -9,25 +9,27 @@ const timezone = getEnv(import.meta.env, Astro, 'TIMEZONE')
 
 locale && dayjs.locale(locale)
 
-const { SITE_URL } = Astro.locals
+const { BASE_URL } = Astro.locals
 const { post, isItem } = Astro.props
 
 const channel = getEnv(import.meta.env, Astro, 'CHANNEL')
 const COMMENTS = getEnv(import.meta.env, Astro, 'COMMENTS')
 
+const content = typeof post.content === 'string' ? post.content : ''
 const datetime = dayjs(post.datetime).tz(timezone)
 const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('HH:mm · ll · ddd') : datetime.fromNow()
+const tags = Array.isArray(post.tags) ? post.tags : []
 ---
 
 <div class="item" style={{ 'view-transition-name': `post-${post.id}` }}>
   <div class="item-content-container">
-    {post.content.length > 0 && <div class={`text-box content`} set:html={post.content} />}
+    {content.length > 0 && <div class={`text-box content`} set:html={content} />}
   </div>
   {
-    post.tags.length > 0 && (
-      <div class="tag-box" style={post.content.length === 0 ? 'padding-top: 24px;' : ''}>
+    tags.length > 0 && (
+      <div class="tag-box" style={content.length === 0 ? 'padding-top: 24px;' : ''}>
         <div class="tag-icon" />
-        {post.tags.map((tag) => (
+        {tags.map((tag) => (
           <span class="tag">{tag}</span>
         ))}
       </div>
@@ -36,7 +38,7 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
 
   <div class="time-box">
     <div class="time">
-      <a href={`${SITE_URL}posts/${post.id}`} title={post.datetime} class="time-link">
+      <a href={`${BASE_URL}posts/${post.id}`} title={post.datetime} class="time-link">
         <time datetime={post.datetime} title={timeago}>{timeago}</time>
       </a>
     </div>
