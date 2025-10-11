@@ -34,9 +34,9 @@
   }
 
   > pre {
-    width: min(100%, calc(100% - var(--box-margin)));
-    max-width: 100%;
-    align-self: stretch;
+    width: fit-content;
+    max-width: min(100%, calc(100% - var(--box-margin)));
+    align-self: flex-start;
     overflow-x: auto;
     padding: clamp(var(--space-xs), 2vw, var(--space-md));
     font-family: 'Lucida Handwriting', 'Brush Script MT', cursive;
