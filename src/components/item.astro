@@ -173,9 +173,28 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
       modal.dataset.modalEnhanced = 'true'
 
       let scale = 1
-      const maxScale = 6
+      let maxScale = 1
+
+      const updateZoomConstraints = () => {
+        const { naturalWidth, naturalHeight, clientWidth, clientHeight } = image
+
+        if (!naturalWidth || !naturalHeight || !clientWidth || !clientHeight) {
+          maxScale = 1
+          return
+        }
+
+        const widthScale = naturalWidth / clientWidth
+        const heightScale = naturalHeight / clientHeight
+        maxScale = Math.max(1, widthScale, heightScale)
+      }
 
       const updateZoom = () => {
+        updateZoomConstraints()
+
+        if (scale > maxScale) {
+          scale = maxScale
+        }
+
         if (scale <= 1) {
           scale = 1
           image.dataset.zoomed = 'false'
@@ -197,14 +216,18 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
       }
 
       const toggleZoom = () => {
+        updateZoomConstraints()
+
+        if (maxScale <= 1) {
+          return
+        }
+
         if (image.dataset.zoomed === 'true') {
           resetZoom()
           return
         }
 
-        const naturalScale = image.naturalWidth && image.clientWidth ? image.naturalWidth / image.clientWidth : 1
-        scale = Math.max(1.5, naturalScale)
-        scale = Math.min(maxScale, scale)
+        scale = maxScale
         updateZoom()
       }
 
@@ -215,6 +238,7 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
       })
 
       image.addEventListener('load', () => {
+        updateZoomConstraints()
         scale = 1
         updateZoom()
       })
@@ -222,6 +246,12 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
       content.addEventListener(
         'wheel',
         (event) => {
+          updateZoomConstraints()
+
+          if (maxScale <= 1) {
+            return
+          }
+
           if (!event.ctrlKey && image.dataset.zoomed !== 'true') {
             return
           }
