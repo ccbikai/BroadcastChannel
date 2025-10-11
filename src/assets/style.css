@@ -233,7 +233,7 @@ a.item-link:focus-visible {
 
 .item {
   background: rgba(180, 180, 192, 0.2);
-  border: 1px solid rgba(180, 180, 192, 0.45);
+  border: 1px solid rgba(140, 148, 168, 0.45);
   border-radius: var(--box-border-radius);
   padding: clamp(var(--space-md), 5vw, var(--space-xl));
   box-shadow: var(--shadow-sm);
