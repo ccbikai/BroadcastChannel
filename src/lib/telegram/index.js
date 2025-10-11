@@ -105,7 +105,78 @@ function getReply($, item, { channel }) {
   return $.html(reply)
 }
 
-function modifyHTMLContent($, content, { index } = {}) {
+function ensureBaseUrl(baseUrl = '/') {
+  if (typeof baseUrl !== 'string' || baseUrl.length === 0) {
+    return '/'
+  }
+
+  if (!baseUrl.startsWith('/')) {
+    baseUrl = `/${baseUrl}`
+  }
+
+  if (!baseUrl.endsWith('/')) {
+    baseUrl = `${baseUrl}/`
+  }
+
+  return baseUrl
+}
+
+function linkifyHashtags($, root, { baseUrl = '/' } = {}) {
+  const normalizedBaseUrl = ensureBaseUrl(baseUrl)
+
+  root.contents().each((_index, node) => {
+    if (node.type === 'text') {
+      const text = node.data
+
+      if (!text || !text.includes('#')) {
+        return
+      }
+
+      const hashtagRegex = /#[\p{L}\p{N}_-]+/gu
+      let result = ''
+      let lastIndex = 0
+      let replaced = false
+
+      for (const match of text.matchAll(hashtagRegex)) {
+        const start = match.index ?? 0
+        const end = start + match[0].length
+
+        const previousCharacter = start > 0 ? text[start - 1] : ''
+        if (previousCharacter && /[\p{L}\p{N}_-]/u.test(previousCharacter)) {
+          continue
+        }
+
+        const rawHashtag = match[0]
+        const normalizedTag = normalizeTag(rawHashtag)
+
+        result += text.slice(lastIndex, start)
+
+        if (!normalizedTag) {
+          result += rawHashtag
+        }
+        else {
+          replaced = true
+          const tagHref = `${normalizedBaseUrl}tags/${encodeURIComponent(normalizedTag)}/`
+          result += `<a href="${tagHref}" class="hashtag" title="${rawHashtag}">${rawHashtag}</a>`
+        }
+
+        lastIndex = end
+      }
+
+      if (replaced) {
+        result += text.slice(lastIndex)
+        $(node).replaceWith(result)
+      }
+    }
+    else if (node.type === 'tag' && !['a', 'code', 'pre', 'script', 'style'].includes(node.name)) {
+      linkifyHashtags($, $(node), { baseUrl })
+    }
+  })
+
+  return root
+}
+
+function modifyHTMLContent($, content, { index, baseUrl } = {}) {
   $(content).find('.emoji')?.removeAttr('style')
   $(content).find('a')?.each((_index, a) => {
     $(a)?.attr('title', $(a)?.text())?.removeAttr('onclick')
@@ -129,7 +200,7 @@ function modifyHTMLContent($, content, { index } = {}) {
       console.error(error)
     }
   })
-  return content
+  return linkifyHashtags($, content, { baseUrl })
 }
 
 function buildTagIndex(posts) {
@@ -156,11 +227,11 @@ function buildTagIndex(posts) {
   return tagIndex
 }
 
-function getPost($, item, { channel, staticProxy, index = 0 }) {
+function getPost($, item, { channel, staticProxy, index = 0, baseUrl = '/' }) {
   item = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
   const content = $(item).find('.js-message_reply_text')?.length > 0
-    ? modifyHTMLContent($, $(item).find('.tgme_widget_message_text.js-message_text'), { index })
-    : modifyHTMLContent($, $(item).find('.tgme_widget_message_text'), { index })
+    ? modifyHTMLContent($, $(item).find('.tgme_widget_message_text.js-message_text'), { index, baseUrl })
+    : modifyHTMLContent($, $(item).find('.tgme_widget_message_text'), { index, baseUrl })
   const textContent = content?.text() ?? ''
   const title = textContent.match(/^.*?(?=[。\n]|http\S)/g)?.[0] ?? textContent ?? ''
   const id = $(item).attr('data-post')?.replace(new RegExp(`${channel}/`, 'i'), '')
@@ -216,6 +287,7 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
     ?? 't.me'
   const channel = getEnv(import.meta.env, Astro, 'CHANNEL')
   const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
+  const baseUrl = Astro.locals?.BASE_URL ?? '/'
 
   const normalizedTag = normalizeTag(tag)
   const searchQuery = type === 'post' ? q : (q || (normalizedTag ? `#${normalizedTag}` : ''))
@@ -243,12 +315,12 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
 
   const $ = cheerio.load(html, {}, false)
   if (id) {
-    const post = getPost($, null, { channel, staticProxy })
+    const post = getPost($, null, { channel, staticProxy, baseUrl })
     cache.set(cacheKey, post)
     return post
   }
   const posts = $('.tgme_channel_history  .tgme_widget_message_wrap')?.map((index, item) => {
-    return getPost($, item, { channel, staticProxy, index })
+    return getPost($, item, { channel, staticProxy, index, baseUrl })
   })?.get()?.reverse().filter(post => ['text'].includes(post.type) && post.id && post.content)
 
   const tagIndex = buildTagIndex(posts)
