@@ -4,6 +4,7 @@ import { LRUCache } from 'lru-cache'
 import flourite from 'flourite'
 import prism from '../prism'
 import { getEnv } from '../env'
+import { extractTagsFromText, normalizeTag } from '../tags'
 
 const cache = new LRUCache({
   ttl: 1000 * 60 * 5, // 5 minutes
@@ -131,18 +132,39 @@ function modifyHTMLContent($, content, { index } = {}) {
   return content
 }
 
+function buildTagIndex(posts) {
+  const tagIndex = Object.create(null)
+
+  posts.forEach((post) => {
+    if (!Array.isArray(post?.tags)) {
+      return
+    }
+
+    post.tags.forEach((tag) => {
+      if (!tag) {
+        return
+      }
+
+      if (!tagIndex[tag]) {
+        tagIndex[tag] = []
+      }
+
+      tagIndex[tag].push(post)
+    })
+  })
+
+  return tagIndex
+}
+
 function getPost($, item, { channel, staticProxy, index = 0 }) {
   item = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
   const content = $(item).find('.js-message_reply_text')?.length > 0
     ? modifyHTMLContent($, $(item).find('.tgme_widget_message_text.js-message_text'), { index })
     : modifyHTMLContent($, $(item).find('.tgme_widget_message_text'), { index })
-  const title = content?.text()?.match(/^.*?(?=[。\n]|http\S)/g)?.[0] ?? content?.text() ?? ''
+  const textContent = content?.text() ?? ''
+  const title = textContent.match(/^.*?(?=[。\n]|http\S)/g)?.[0] ?? textContent ?? ''
   const id = $(item).attr('data-post')?.replace(new RegExp(`${channel}/`, 'i'), '')
-
-  const tags = $(content)
-    .find('a[href^="?q="]')
-    ?.map((_index, a) => $(a)?.text()?.replace('#', ''))
-    ?.get()
+  const tags = extractTagsFromText(textContent)
 
   return {
     id,
@@ -150,7 +172,7 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
     type: $(item).attr('class')?.includes('service_message') ? 'service' : 'text',
     datetime: $(item).find('.tgme_widget_message_date time')?.attr('datetime'),
     tags,
-    text: content?.text(),
+    text: textContent,
     content: [
       getReply($, item, { channel }),
       getImages($, item, { staticProxy, index, title }),
@@ -179,12 +201,12 @@ function getPost($, item, { channel, staticProxy, index = 0 }) {
 
 const unnessaryHeaders = ['host', 'cookie', 'origin', 'referer']
 
-export async function getChannelInfo(Astro, { before = '', after = '', q = '', type = 'list', id = '' } = {}) {
-  const cacheKey = JSON.stringify({ before, after, q, type, id })
+export async function getChannelInfo(Astro, { before = '', after = '', q = '', type = 'list', id = '', tag = '' } = {}) {
+  const cacheKey = JSON.stringify({ before, after, q, type, id, tag })
   const cachedResult = cache.get(cacheKey)
 
   if (cachedResult) {
-    console.info('Match Cache', { before, after, q, type, id })
+    console.info('Match Cache', { before, after, q, type, id, tag })
     return JSON.parse(JSON.stringify(cachedResult))
   }
 
@@ -195,6 +217,9 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
   const channel = getEnv(import.meta.env, Astro, 'CHANNEL')
   const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
 
+  const normalizedTag = normalizeTag(tag)
+  const searchQuery = type === 'post' ? q : (q || (normalizedTag ? `#${normalizedTag}` : ''))
+
   const url = id ? `https://${host}/${channel}/${id}?embed=1&mode=tme` : `https://${host}/s/${channel}`
   const headers = Object.fromEntries(Astro.request.headers)
 
@@ -204,13 +229,13 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
     }
   })
 
-  console.info('Fetching', url, { before, after, q, type, id })
+  console.info('Fetching', url, { before, after, q: searchQuery, type, id, tag })
   const html = await $fetch(url, {
     headers,
     query: {
       before: before || undefined,
       after: after || undefined,
-      q: q || undefined,
+      q: searchQuery || undefined,
     },
     retry: 3,
     retryDelay: 100,
@@ -226,12 +251,20 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
     return getPost($, item, { channel, staticProxy, index })
   })?.get()?.reverse().filter(post => ['text'].includes(post.type) && post.id && post.content)
 
+  const tagIndex = buildTagIndex(posts)
+  const availableTags = Object.keys(tagIndex).sort((a, b) => a.localeCompare(b))
+  const selectedTag = normalizedTag
+  const filteredPosts = selectedTag ? (tagIndex[selectedTag] ?? []) : posts
+
   const channelInfo = {
-    posts,
+    posts: filteredPosts,
     title: $('.tgme_channel_info_header_title')?.text(),
     description: $('.tgme_channel_info_description')?.text(),
     descriptionHTML: modifyHTMLContent($, $('.tgme_channel_info_description'))?.html(),
     avatar: $('.tgme_page_photo_image img')?.attr('src'),
+    availableTags,
+    tagIndex,
+    selectedTag,
   }
 
   cache.set(cacheKey, channelInfo)

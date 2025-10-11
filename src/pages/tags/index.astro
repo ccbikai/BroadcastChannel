@@ -1,0 +1,34 @@
+---
+import Layout from '../../layouts/base.astro'
+import Header from '../../components/header.astro'
+import { getChannelInfo } from '../../lib/telegram'
+
+const { BASE_URL } = Astro.locals
+const channel = await getChannelInfo(Astro)
+const tags = Array.isArray(channel?.availableTags) ? channel.availableTags : []
+
+channel.seo = {
+  title: 'Tags',
+  text: tags.length > 0 ? 'Browse posts by hashtag' : 'No tags available yet',
+}
+---
+
+<Layout channel={channel}>
+  <Header slot="header" channel={channel} />
+
+  <div class="site-intro site-intro--plain tag-page-intro">
+    {tags.length > 0 ? 'Browse posts by hashtag' : 'No tags available yet'}
+  </div>
+
+  {
+    tags.length > 0 && (
+      <div class="tag-collection" role="list">
+        {tags.map((tag) => (
+          <a href={`${BASE_URL}tags/${encodeURIComponent(tag)}/`} class="item-tag" role="listitem" title={`#${tag}`}>
+            #{tag}
+          </a>
+        ))}
+      </div>
+    )
+  }
+</Layout>
