@@ -46,9 +46,9 @@
   --box-border-radius: var(--radius-md);
   --media-border-radius: 0;
   --box-margin: var(--space-sm);
-  --transition-fast: 140ms ease;
-  --transition-base: 240ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 420ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 320ms cubic-bezier(0.35, 0.15, 0.25, 1);
+  --transition-slow: 520ms cubic-bezier(0.35, 0.15, 0.25, 1);
   --max-width-wrapper: min(64rem, 100% - clamp(var(--space-md), 7vw, var(--space-2xl)));
 }
 
