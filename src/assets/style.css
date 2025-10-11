@@ -233,13 +233,10 @@ a.item-link:focus-visible {
 
 .item {
   background: rgba(180, 180, 192, 0.2);
-  border: 1px solid rgba(232, 220, 200, 0.28);
+  border: 1px solid rgba(180, 180, 192, 0.45);
   border-radius: var(--box-border-radius);
   padding: clamp(var(--space-md), 5vw, var(--space-xl));
-  box-shadow:
-    0 22px 28px -24px rgba(54, 36, 18, 0.65),
-    0 12px 20px -14px rgba(125, 88, 44, 0.4),
-    inset 0 1px 0 rgba(255, 246, 230, 0.35);
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   gap: clamp(var(--space-sm), 3vw, var(--space-lg));
