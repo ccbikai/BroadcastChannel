@@ -16,7 +16,7 @@ const reqPathname = Astro.url.pathname.replace(/\/$/, '')
 const canonical = SITE_URL.startsWith('http') ? new URL(SITE_URL).origin + reqPathname : Astro.url.origin + reqPathname
 
 const { origin } = new URL(canonical)
-const twitter = getEnv(import.meta.env, Astro, 'TWITTER')
+const github = getEnv(import.meta.env, Astro, 'GITHUB')
 
 const seoParams = {
   title: seo?.title,
@@ -71,7 +71,7 @@ const hasHeader = Astro.slots.has('header')
       titleDefault={[channel?.title, seoParams.description].filter(Boolean).join(' - ')}
       twitter={{
         card: 'summary_large_image',
-        creator: twitter ? `@${twitter}` : undefined,
+        creator: github ? `@${github}` : undefined,
       }}
       {...seoParams}
     />
