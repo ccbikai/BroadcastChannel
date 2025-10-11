@@ -99,14 +99,10 @@
     }
   }
 
-  .tgme_widget_message_link_preview:hover,
   .tgme_widget_message_link_preview:focus-visible {
     border-color: rgba(148, 163, 184, 0.38);
     box-shadow: var(--shadow-md);
     transform: translateY(-1px);
-  }
-
-  .tgme_widget_message_link_preview:focus-visible {
     outline: 2px solid rgba(59, 130, 246, 0.55);
     outline-offset: 2px;
   }
