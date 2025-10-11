@@ -19,7 +19,7 @@ function getVideoStickers($, item, { staticProxy, index }) {
     const imgurl = $(video).find('img')?.attr('src')
     return `
     <div style="background-image: none; width: 256px;">
-      <video src="${staticProxy + url}" width="100%" height="100%" alt="Video Sticker" preload muted autoplay loop playsinline disablepictureinpicture >
+      <video src="${staticProxy + url}" width="100%" height="100%" alt="Video Sticker" preload="metadata" muted loop playsinline disablepictureinpicture controls>
         <img class="sticker" src="${staticProxy + imgurl}" alt="Video Sticker" loading="${index > 15 ? 'eager' : 'lazy'}" />
       </video>
     </div>
@@ -59,12 +59,14 @@ function getImages($, item, { staticProxy, id, index, title }) {
 function getVideo($, item, { staticProxy, index }) {
   const video = $(item).find('.tgme_widget_message_video_wrap video')
   video?.attr('src', staticProxy + video?.attr('src'))
+    ?.removeAttr('autoplay')
     ?.attr('controls', true)
     ?.attr('preload', index > 15 ? 'auto' : 'metadata')
     ?.attr('playsinline', true).attr('webkit-playsinline', true)
 
   const roundVideo = $(item).find('.tgme_widget_message_roundvideo_wrap video')
   roundVideo?.attr('src', staticProxy + roundVideo?.attr('src'))
+    ?.removeAttr('autoplay')
     ?.attr('controls', true)
     ?.attr('preload', index > 15 ? 'auto' : 'metadata')
     ?.attr('playsinline', true).attr('webkit-playsinline', true)
@@ -74,6 +76,7 @@ function getVideo($, item, { staticProxy, index }) {
 function getAudio($, item, { staticProxy }) {
   const audio = $(item).find('.tgme_widget_message_voice')
   audio?.attr('src', staticProxy + audio?.attr('src'))
+    ?.removeAttr('autoplay')
     ?.attr('controls', true)
   return $.html(audio)
 }
