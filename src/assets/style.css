@@ -217,17 +217,18 @@ a.item-link:focus-visible {
 }
 
 #main-container {
+  --items-gap: clamp(var(--space-lg), 6vw, var(--space-2xl));
   display: flex;
   flex-direction: column;
 }
 
 #main-container > * + * {
-  margin-block-start: clamp(var(--space-lg), 6vw, var(--space-2xl));
+  margin-block-start: var(--items-gap);
 }
 
 .items {
   display: grid;
-  gap: clamp(var(--space-lg), 6vw, var(--space-2xl));
+  gap: var(--items-gap);
 }
 
 .item {
@@ -450,6 +451,10 @@ audio::-webkit-media-controls-panel {
 
 #main-container > .pages-container {
   margin-block-start: 0;
+}
+
+#main-container > .pages-container.pages-container--with-gap {
+  margin-block-start: var(--items-gap);
 }
 
 .pages-info {

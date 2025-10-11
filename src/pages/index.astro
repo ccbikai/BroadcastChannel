@@ -5,4 +5,4 @@ import { getChannelInfo } from '../lib/telegram'
 const channel = await getChannelInfo(Astro)
 ---
 
-<List channel={channel} after={false} />
+<List channel={channel} after={false} paginationGap={true} />

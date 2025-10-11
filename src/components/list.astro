@@ -4,7 +4,7 @@ import Header from '../components/header.astro'
 import Item from '../components/item.astro'
 
 const { SITE_URL } = Astro.locals
-const { channel, before = true, after = true, isItem = false } = Astro.props
+const { channel, before = true, after = true, isItem = false, paginationGap = false } = Astro.props
 const posts = channel.posts ?? []
 
 const beforeCursor = posts[posts.length - 1]?.id
@@ -20,7 +20,7 @@ const afterCursor = posts[0]?.id
     {posts.map((post) => <Item post={post} isItem={isItem} />)}
   </div>
 
-  <div class="pages-container">
+  <div class={`pages-container${paginationGap ? ' pages-container--with-gap' : ''}`}>
     {
       before && beforeCursor > 1 ? (
         <a href={`${SITE_URL}before/${beforeCursor}`} title="Older posts" class="page">
