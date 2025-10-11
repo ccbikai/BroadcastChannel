@@ -88,6 +88,18 @@ a:focus-visible {
   text-underline-offset: 0.35em;
 }
 
+.time-box .time-link {
+  font-size: clamp(1rem, 0.96rem + 0.32vw, 1.2rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  display: inline-flex;
+}
+
+.time-box .time-link time {
+  font: inherit;
+}
+
 a.site-title:link,
 a.site-title:visited {
   color: var(--foreground-color);
