@@ -26,9 +26,9 @@
   --radius-md: 0.9rem;
   --radius-lg: 1.5rem;
   --radius-pill: 999px;
-  --shadow-sm: 0 1rem 2.25rem -0.75rem rgb(15 23 42 / 0.55);
-  --shadow-md: 0 2.25rem 4.25rem -1rem rgb(15 23 42 / 0.58);
-  --shadow-lg: 0 3.5rem 7.5rem -1.25rem rgb(15 23 42 / 0.6);
+  --shadow-sm: 0 1.25rem 2.75rem -0.5rem rgb(15 23 42 / 0.62);
+  --shadow-md: 0 2.75rem 5rem -0.75rem rgb(15 23 42 / 0.66);
+  --shadow-lg: 0 4rem 8.5rem -1rem rgb(15 23 42 / 0.7);
   --background-color: #0f1012;
   --foreground-color: #e4e4e7;
   --secondary-color: #a1a1aa;
