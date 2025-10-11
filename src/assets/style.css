@@ -379,9 +379,8 @@ audio::-webkit-media-controls-panel {
 .time-box {
   padding: 0;
   line-height: 1;
-  display: flex;
+  display: block;
   align-items: center;
-  justify-content: center;
 }
 
 .time-box > .time {
