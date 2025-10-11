@@ -46,7 +46,6 @@ TIMEZONE=America/New_York
 
 ## Social media usernames
 TELEGRAM=ccbikai
-TWITTER=ccbikai
 GITHUB=ccbikai
 
 ## The following social media need to be URLs
