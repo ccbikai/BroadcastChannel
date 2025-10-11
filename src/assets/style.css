@@ -381,11 +381,11 @@ audio::-webkit-media-controls-panel {
   line-height: 1;
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  justify-content: center;
 }
 
 .time-box > .time {
-  flex: 1;
+  flex: 0;
   color: #798894;
   font-size: var(--time-box-font-size);
   font-weight: 500;
@@ -393,7 +393,7 @@ audio::-webkit-media-controls-panel {
   text-transform: uppercase;
   font-family: "Georgia", "Times New Roman", serif;
   font-style: italic;
-  text-indent: 10px;
+  text-align: center;
 }
 
 .item-content-container {
