@@ -1,20 +1,46 @@
 ---
-import { resolveEmbed } from '../lib/embeds'
+import EmbedFrame from './EmbedFrame.astro'
+import { detectEmbed } from '../lib/embeds'
 
-const { url, oembedHtml } = Astro.props as { url: string; oembedHtml?: string }
+const { url } = Astro.props as { url: string }
 
-const fromLoader = oembedHtml ? { html: oembedHtml } : null
-const resolved = fromLoader ?? resolveEmbed(url)
-const isSoundCloudPlaceholder =
-  !fromLoader && typeof resolved?.html === 'string' && resolved.html.startsWith('<!-- SOUNDCloud_OEMBED')
+const spec = detectEmbed(url)
 ---
 
 {
-  resolved && !isSoundCloudPlaceholder ? (
-    <Fragment set:html={resolved.html} />
+  spec ? (
+    <div class="embed-container">
+      <EmbedFrame spec={spec} originalUrl={url} />
+      <p class="embed-fallback">
+        <a href={url} rel="noopener nofollow ugc">
+          {url}
+        </a>
+      </p>
+    </div>
   ) : (
     <a href={url} rel="noopener nofollow ugc">
       {url}
     </a>
   )
 }
+
+<style>
+  .embed-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .embed-fallback {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    word-break: break-all;
+  }
+
+  .embed-fallback a {
+    color: inherit;
+    text-decoration: underline;
+  }
+</style>
