@@ -445,7 +445,10 @@ audio::-webkit-media-controls-panel {
   color: var(--post-text-color);
   border: 1px solid #1f2937;
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
+  box-shadow:
+    0 0 22px rgba(125, 249, 167, 0.18),
+    0 0 45px rgba(56, 189, 248, 0.12),
+    inset 0 0 18px rgba(15, 23, 42, 0.75);
   padding: var(--item-content-padding);
   display: flex;
   flex-direction: column;
