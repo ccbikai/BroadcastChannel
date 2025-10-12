@@ -33,7 +33,7 @@
 .embed-item iframe {
   width: 100%;
   border: 0;
-  border-radius: var(--radius-md);
+  border-radius: 0;
   box-shadow: var(--shadow-md);
 }
 
