@@ -4,6 +4,8 @@ import voidFile from '../assets/void.png'
 
 const { BASE_URL } = Astro.locals
 const { channel } = Astro.props
+const rawTitleSuffix = typeof Astro.props.titleSuffix === 'string' ? Astro.props.titleSuffix : ''
+const titleSuffix = rawTitleSuffix.trim()
 
 const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
 ---
@@ -22,6 +24,7 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
       <a href={BASE_URL} class="site-title" title={channel?.title}>
         {channel?.title}
       </a>
+      {titleSuffix.length > 0 && <span class="site-title-suffix">{titleSuffix}</span>}
     </div>
   </div>
 </div>
