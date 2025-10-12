@@ -188,7 +188,7 @@ async function fetchSoundCloudOembed(rawUrl) {
 function isSoundCloudUrl(rawUrl) {
   try {
     const url = new URL(rawUrl)
-    return /(^|\.)soundcloud\.com$/iu.test(url.hostname)
+    return /(?:^|\.)soundcloud\.com$/iu.test(url.hostname)
   }
   catch {
     return false
@@ -320,10 +320,60 @@ function getAudio($, item, { staticProxy }) {
   return audioItems?.filter(Boolean) ?? []
 }
 
-function getLinkPreview($, item, { staticProxy, index }) {
+function getEmbedFamilyFromUrl(rawUrl) {
+  if (typeof rawUrl !== 'string' || !rawUrl) {
+    return null
+  }
+
+  try {
+    const hostname = new URL(rawUrl).hostname?.toLowerCase()
+
+    if (!hostname) {
+      return null
+    }
+
+    if (hostname === 'youtu.be' || hostname === 'youtube.com' || hostname.endsWith('.youtube.com')) {
+      return 'youtube'
+    }
+
+    if (hostname === 'open.spotify.com' || hostname.endsWith('.spotify.com')) {
+      return 'spotify'
+    }
+
+    if (hostname === 'music.apple.com' || hostname.endsWith('.music.apple.com')) {
+      return 'apple-music'
+    }
+
+    if (hostname === 'bandcamp.com' || hostname.endsWith('.bandcamp.com')) {
+      return 'bandcamp'
+    }
+
+    if (hostname === 'soundcloud.com' || hostname.endsWith('.soundcloud.com')) {
+      return 'soundcloud'
+    }
+
+    return null
+  }
+  catch {
+    return null
+  }
+}
+
+function getLinkPreview($, item, { staticProxy, index, embeds }) {
   const link = $(item).find('.tgme_widget_message_link_preview')
   const title = $(item).find('.link_preview_title')?.text() || $(item).find('.link_preview_site_name')?.text()
   const description = $(item).find('.link_preview_description')?.text()
+
+  const href = link?.attr('href')?.trim()
+  const previewFamily = getEmbedFamilyFromUrl(href)
+
+  if (previewFamily && Array.isArray(embeds) && embeds.length > 0) {
+    const hasMatchingEmbed = embeds.some(embed => getEmbedFamilyFromUrl(embed?.url) === previewFamily)
+
+    if (hasMatchingEmbed) {
+      return ''
+    }
+  }
 
   link?.attr('target', '_blank').attr('rel', 'noopener').attr('title', description)
 
@@ -503,6 +553,7 @@ function getPost($, item, { channel, staticProxy, index = 0, baseUrl = '/', enab
   const id = $(item).attr('data-post')?.replace(new RegExp(`${channel}/`, 'i'), '')
   const tags = extractTagsFromText(textContent)
   const embeds = enableEmbeds ? extractEmbeddableLinks($, content) : []
+  const linkPreview = getLinkPreview($, item, { staticProxy, index, embeds })
   const contentHtml = content?.html()
 
   return {
@@ -524,7 +575,7 @@ function getPost($, item, { channel, staticProxy, index = 0, baseUrl = '/', enab
       $.html($(item).find('.tgme_widget_message_document_wrap')),
       $.html($(item).find('.tgme_widget_message_video_player.not_supported')),
       $.html($(item).find('.tgme_widget_message_location_wrap')),
-      getLinkPreview($, item, { staticProxy, index }),
+      linkPreview,
     ].filter(Boolean).join('').replace(/(url\(["'])((https?:)?\/\/)/g, (match, p1, p2, _p3) => {
       if (p2 === '//') {
         p2 = 'https://'
