@@ -394,6 +394,58 @@ function getLinkPreview($, item, { staticProxy, index, embeds }) {
   return $.html(link)
 }
 
+function normalizeLinkForComparison(raw) {
+  if (typeof raw !== 'string') {
+    return ''
+  }
+
+  return raw.trim().replace(/^[a-zA-Z][\w+.-]*:\/\//u, '').replace(/\/+$/u, '')
+}
+
+function removeDuplicatePreviewLink($, content, previewHref) {
+  if (!content || typeof content.find !== 'function') {
+    return
+  }
+
+  const normalizedPreviewHref = normalizeLinkForComparison(previewHref)
+
+  if (!normalizedPreviewHref) {
+    return
+  }
+
+  content
+    .find('a')
+    ?.each((_index, anchor) => {
+      const element = $(anchor)
+      const href = element?.attr('href')?.trim()
+
+      if (!href) {
+        return
+      }
+
+      const normalizedHref = normalizeLinkForComparison(href)
+
+      if (normalizedHref !== normalizedPreviewHref) {
+        return
+      }
+
+      const text = element?.text()?.trim()
+      const html = element?.html()?.trim()
+
+      if (!text || html !== text) {
+        return
+      }
+
+      const normalizedText = normalizeLinkForComparison(text)
+
+      if (normalizedText !== normalizedPreviewHref && text !== href) {
+        return
+      }
+
+      element.remove()
+    })
+}
+
 function getReply($, item, { channel }) {
   const reply = $(item).find('.tgme_widget_message_reply')
   reply?.wrapInner('<small></small>')?.wrapInner('<blockquote></blockquote>')
@@ -563,6 +615,12 @@ function getPost($, item, { channel, staticProxy, index = 0, baseUrl = '/', enab
   const id = $(item).attr('data-post')?.replace(new RegExp(`${channel}/`, 'i'), '')
   const tags = extractTagsFromText(textContent)
   const embeds = enableEmbeds ? extractEmbeddableLinks($, content) : []
+  const previewHref = $(item).find('.tgme_widget_message_link_preview')?.attr('href')?.trim()
+
+  if (previewHref) {
+    removeDuplicatePreviewLink($, content, previewHref)
+  }
+
   const linkPreview = getLinkPreview($, item, { staticProxy, index, embeds })
   const contentHtml = content?.html()
 
