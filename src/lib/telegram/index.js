@@ -109,6 +109,12 @@ const allowedIframeAttributes = new Set([
   'width',
 ])
 
+function appendDarkModeStyles(style = '') {
+  const trimmed = style.trim().replace(/;\s*$/u, '')
+  const base = trimmed.length ? `${trimmed};` : ''
+  return `${base}color-scheme:dark;background-color:#000;`
+}
+
 function sanitizeIframeHtml(html) {
   if (typeof html !== 'string') {
     return ''
@@ -150,8 +156,12 @@ function sanitizeIframeHtml(html) {
     iframe.removeAttr('style')
   }
 
-  if (!iframe.attr('style')) {
-    iframe.attr('style', 'width:100%;border:0;')
+  const currentStyle = iframe.attr('style')
+  if (!currentStyle) {
+    iframe.attr('style', appendDarkModeStyles('width:100%;border:0;'))
+  }
+  else {
+    iframe.attr('style', appendDarkModeStyles(currentStyle))
   }
 
   return $.html('iframe')
@@ -164,7 +174,7 @@ async function fetchSoundCloudOembed(rawUrl) {
     return soundCloudOembedCache.get(rawUrl)
   }
 
-  const endpoint = `https://soundcloud.com/oembed?format=json&url=${encodeURIComponent(rawUrl)}&maxheight=166&show_artwork=true`
+  const endpoint = `https://soundcloud.com/oembed?format=json&url=${encodeURIComponent(rawUrl)}&maxheight=166&show_artwork=true&color=%23212121`
 
   const request = $fetch(endpoint, {
     responseType: 'json',
