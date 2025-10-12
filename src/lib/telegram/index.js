@@ -633,9 +633,9 @@ function getPost($, item, { channel, staticProxy, index = 0, baseUrl = '/', enab
     text: textContent,
     content: [
       getReply($, item, { channel }),
+      contentHtml,
       getImages($, item, { staticProxy, index, title }),
       getVideo($, item, { staticProxy, id, index, title }),
-      contentHtml,
       getImageStickers($, item, { staticProxy, index }),
       getVideoStickers($, item, { staticProxy, index }),
       // $(item).find('.tgme_widget_message_sticker_wrap')?.html(),
