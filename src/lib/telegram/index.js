@@ -188,7 +188,7 @@ async function fetchSoundCloudOembed(rawUrl) {
 function isSoundCloudUrl(rawUrl) {
   try {
     const url = new URL(rawUrl)
-    return /(?:^|\.)soundcloud\.com$/iu.test(url.hostname)
+    return /(^|\.)soundcloud\.com$/iu.test(url.hostname)
   }
   catch {
     return false
@@ -221,42 +221,6 @@ function extractEmbeddableLinks($, content) {
     })
 
   return links
-}
-
-function isRichEmbedUrl(rawUrl) {
-  if (!rawUrl) {
-    return false
-  }
-
-  try {
-    const url = new URL(rawUrl)
-    const hostname = url.hostname.toLowerCase()
-
-    if (hostname === 'youtu.be' || /(?:^|\.)youtube\.com$/iu.test(hostname)) {
-      return true
-    }
-
-    if (/(?:^|\.)open\.spotify\.com$/iu.test(hostname)) {
-      return true
-    }
-
-    if (/(?:^|\.)music\.apple\.com$/iu.test(hostname)) {
-      return true
-    }
-
-    if (/bandcamp\.com$/iu.test(hostname)) {
-      return true
-    }
-
-    if (/(?:^|\.)soundcloud\.com$/iu.test(hostname)) {
-      return true
-    }
-
-    return false
-  }
-  catch {
-    return false
-  }
 }
 
 async function hydrateSoundCloudEmbeds(posts, { enableEmbeds }) {
@@ -356,14 +320,8 @@ function getAudio($, item, { staticProxy }) {
   return audioItems?.filter(Boolean) ?? []
 }
 
-function getLinkPreview($, item, { staticProxy, index, skipUrls = new Set() }) {
+function getLinkPreview($, item, { staticProxy, index }) {
   const link = $(item).find('.tgme_widget_message_link_preview')
-  const href = link?.attr('href')?.trim()
-
-  if (href && skipUrls.has(href)) {
-    return ''
-  }
-
   const title = $(item).find('.link_preview_title')?.text() || $(item).find('.link_preview_site_name')?.text()
   const description = $(item).find('.link_preview_description')?.text()
 
@@ -545,11 +503,6 @@ function getPost($, item, { channel, staticProxy, index = 0, baseUrl = '/', enab
   const id = $(item).attr('data-post')?.replace(new RegExp(`${channel}/`, 'i'), '')
   const tags = extractTagsFromText(textContent)
   const embeds = enableEmbeds ? extractEmbeddableLinks($, content) : []
-  const embedUrls = new Set(
-    embeds
-      ?.map(embed => embed?.url?.trim())
-      .filter(url => url && isRichEmbedUrl(url)),
-  )
   const contentHtml = content?.html()
 
   return {
@@ -571,7 +524,7 @@ function getPost($, item, { channel, staticProxy, index = 0, baseUrl = '/', enab
       $.html($(item).find('.tgme_widget_message_document_wrap')),
       $.html($(item).find('.tgme_widget_message_video_player.not_supported')),
       $.html($(item).find('.tgme_widget_message_location_wrap')),
-      getLinkPreview($, item, { staticProxy, index, skipUrls: embedUrls }),
+      getLinkPreview($, item, { staticProxy, index }),
     ].filter(Boolean).join('').replace(/(url\(["'])((https?:)?\/\/)/g, (match, p1, p2, _p3) => {
       if (p2 === '//') {
         p2 = 'https://'
