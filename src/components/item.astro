@@ -47,7 +47,7 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
         <div class="embed-list">
           {embedList.map((embed, index) => (
             <div class="embed-item" key={`embed-${post.id ?? index}-${index}`}>
-              <Embed url={embed.url} oembedHtml={embed.oembedHtml} />
+              <Embed url={embed.url} />
             </div>
           ))}
         </div>
