@@ -5,6 +5,12 @@ import flourite from 'flourite'
 import prism from '../prism'
 import { getEnv } from '../env'
 import { extractTagsFromText, normalizeTag } from '../tags'
+import {
+  getFileNameFromUrl,
+  guessAudioMime,
+  isPlayableAudioHref,
+  proxiedUrl,
+} from '../media'
 
 const cache = new LRUCache({
   ttl: 1000 * 60 * 5, // 5 minutes
@@ -276,6 +282,9 @@ function getAudio($, item, { staticProxy }) {
   const audioItems = audios
     ?.map((_audioIndex, audioElement) => {
       const audioNode = $(audioElement)
+      if (audioNode?.attr('data-inline-audio') === 'true') {
+        return null
+      }
       const audioTag = audioNode.is('audio') ? audioNode : audioNode.find('audio').first()
       const sources = []
 
@@ -306,7 +315,7 @@ function getAudio($, item, { staticProxy }) {
           if (!normalizedSrc) {
             return null
           }
-          return { url: normalizedSrc, mime: type }
+          return { url: normalizedSrc, mime: type ?? guessAudioMime(normalizedSrc, type) }
         })
         .find(Boolean)
 
@@ -315,17 +324,23 @@ function getAudio($, item, { staticProxy }) {
       }
 
       const captionText = audioTag?.attr('title') || audioNode.attr('title') || audioNode.find('figcaption')?.text() || ''
+      const guessedTitle = captionText?.trim() || getFileNameFromUrl(normalizedSource.url) || 'Audio'
+      const proxiedSrc = proxiedUrl(normalizedSource.url, staticProxy)
 
       return {
         kind: 'audio',
-        url: normalizedSource.url,
-        mime: normalizedSource.mime || undefined,
-        caption: captionText?.trim() ? captionText.trim() : undefined,
+        url: proxiedSrc,
+        mime: normalizedSource.mime || guessAudioMime(normalizedSource.url, normalizedSource.mime) || undefined,
+        caption: captionText?.trim() ? captionText.trim() : guessedTitle,
+        downloadHref: proxiedSrc,
+        title: guessedTitle,
       }
     })
     ?.get()
 
-  audios.remove()
+  audios
+    .filter((_index, element) => $(element).attr('data-inline-audio') !== 'true')
+    .remove()
 
   return audioItems?.filter(Boolean) ?? []
 }
@@ -484,7 +499,7 @@ function linkifyHashtags($, root, { baseUrl = '/' } = {}) {
   return root
 }
 
-function modifyHTMLContent($, content, { index, baseUrl } = {}) {
+function modifyHTMLContent($, content, { index, baseUrl, staticProxy } = {}) {
   const normalizedBaseUrl = ensureBaseUrl(baseUrl)
 
   $(content).find('.emoji')?.removeAttr('style')
@@ -496,6 +511,45 @@ function modifyHTMLContent($, content, { index, baseUrl } = {}) {
     const isTelegramHashtagLink = href?.includes('q=%23') || anchor?.hasClass('tgme_widget_message_hashtag')
 
     anchor?.attr('title', anchorText)?.removeAttr('onclick')
+
+    if (isPlayableAudioHref(href)) {
+      const normalizedHref = normalizeMediaSrc(href, staticProxy)
+      const proxiedHref = proxiedUrl(normalizedHref, staticProxy)
+      const audioTitle = anchorText?.trim() || getFileNameFromUrl(normalizedHref) || 'Audio'
+      const audioFigure = $('<figure></figure>').addClass('media-audio media-audio--inline')
+      const audioElement = $('<audio></audio>')
+        .attr('controls', true)
+        .attr('preload', 'metadata')
+        .attr('crossorigin', 'anonymous')
+        .attr('data-inline-audio', 'true')
+      const sourceElement = $('<source />')
+        .attr('src', proxiedHref)
+        .attr('type', guessAudioMime(normalizedHref, anchor.attr('type')) ?? 'audio/mpeg')
+      const fallbackLink = $('<a></a>')
+        .addClass('media-audio__download')
+        .attr('href', proxiedHref)
+        .attr('rel', 'noopener noreferrer')
+        .text(`Download ${audioTitle}`)
+
+      audioElement.append(sourceElement)
+      audioElement.append(fallbackLink)
+
+      const caption = $('<figcaption></figcaption>')
+      caption.append($('<span></span>').addClass('media-audio__title').text(audioTitle))
+      caption.append(
+        $('<a></a>')
+          .addClass('media-audio__download')
+          .attr('href', proxiedHref)
+          .attr('rel', 'noopener noreferrer')
+          .text('Download'),
+      )
+
+      audioFigure.append(audioElement)
+      audioFigure.append(caption)
+
+      anchor.replaceWith(audioFigure)
+      return
+    }
 
     if (normalizedTag && isTelegramHashtagLink) {
       const hashtag = anchorText?.trim().startsWith('#') ? anchorText.trim() : `#${normalizedTag}`
@@ -555,8 +609,8 @@ function buildTagIndex(posts) {
 function getPost($, item, { channel, staticProxy, index = 0, baseUrl = '/', enableEmbeds = true }) {
   item = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
   const content = $(item).find('.js-message_reply_text')?.length > 0
-    ? modifyHTMLContent($, $(item).find('.tgme_widget_message_text.js-message_text'), { index, baseUrl })
-    : modifyHTMLContent($, $(item).find('.tgme_widget_message_text'), { index, baseUrl })
+    ? modifyHTMLContent($, $(item).find('.tgme_widget_message_text.js-message_text'), { index, baseUrl, staticProxy })
+    : modifyHTMLContent($, $(item).find('.tgme_widget_message_text'), { index, baseUrl, staticProxy })
   const media = getAudio($, item, { staticProxy })
   const textContent = content?.text() ?? ''
   const title = textContent.match(/^.*?(?=[。\n]|http\S)/g)?.[0] ?? textContent ?? ''
@@ -669,7 +723,7 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
     posts: filteredPosts,
     title: $('.tgme_channel_info_header_title')?.text(),
     description: $('.tgme_channel_info_description')?.text(),
-    descriptionHTML: modifyHTMLContent($, $('.tgme_channel_info_description'))?.html(),
+    descriptionHTML: modifyHTMLContent($, $('.tgme_channel_info_description'), { staticProxy })?.html(),
     avatar: $('.tgme_page_photo_image img')?.attr('src'),
     availableTags,
     tagIndex,
