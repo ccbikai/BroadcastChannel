@@ -7,9 +7,4 @@ const tagLabel = trimmedTag.length > 0 ? (trimmedTag.startsWith('#') ? trimmedTa
 const { channel } = Astro.props
 ---
 
-<Fragment>
-  <Header channel={channel} />
-  <div class="site-intro site-intro--plain tag-page-intro">
-    Posts tagged with <span class="tag-label">{tagLabel}</span>
-  </div>
-</Fragment>
+<Header channel={channel} titleSuffix={tagLabel} />
