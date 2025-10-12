@@ -1,8 +1,10 @@
 .content {
   word-break: break-word;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(var(--space-sm), 3vw, var(--space-lg));
+  display: block;
+
+  > * + * {
+    margin-top: clamp(var(--space-sm), 3vw, var(--space-lg));
+  }
 
   .image-list-container {
     display: grid;
