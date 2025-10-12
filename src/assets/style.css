@@ -196,6 +196,21 @@ a.site-title:focus-visible {
   font-family: var(--font-family-post);
 }
 
+.header-title {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35ch;
+  flex-wrap: wrap;
+}
+
+.site-title-suffix {
+  font-family: var(--font-family-post);
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  color: color-mix(in srgb, var(--foreground-color) 55%, black 45%);
+}
+
 .header-icons {
   display: flex;
   align-items: center;
