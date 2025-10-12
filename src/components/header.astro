@@ -24,7 +24,9 @@ const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
       <a href={BASE_URL} class="site-title" title={channel?.title}>
         {channel?.title}
       </a>
-      {titleSuffix.length > 0 && <span class="site-title-suffix">{titleSuffix}</span>}
+      {titleSuffix.length > 0 && (
+        <span class="site-title-suffix">{titleSuffix}</span>
+      )}
     </div>
   </div>
 </div>
