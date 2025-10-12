@@ -59,12 +59,10 @@ const HEADER_INJECT = getEnv(import.meta.env, Astro, 'HEADER_INJECT')
 const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
 
 const hasHeader = Astro.slots.has('header')
-const texturePreference = getEnv(import.meta.env, Astro, 'ENABLE_PAPER_TEXTURE')
-const isTextureEnabled = !/^(false|0|off|no)$/i.test(String(texturePreference ?? '').trim())
 ---
 
 <!doctype html>
-<html lang={locale ?? 'en'} data-texture={isTextureEnabled ? 'on' : 'off'}>
+<html lang={locale ?? 'en'}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -79,7 +77,7 @@ const isTextureEnabled = !/^(false|0|off|no)$/i.test(String(texturePreference ??
     <Fragment set:html={HEADER_INJECT} />
   </head>
 
-  <body class="site-bg">
+  <body>
     <div id="wrapper">
       {
         hasHeader && (
