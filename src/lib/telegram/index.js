@@ -5,7 +5,6 @@ import flourite from 'flourite'
 import prism from '../prism'
 import { getEnv } from '../env'
 import { extractTagsFromText, normalizeTag } from '../tags'
-import { normalizeStaticProxy, toProxyUrl } from '../static-proxy'
 
 const cache = new LRUCache({
   ttl: 1000 * 60 * 5, // 5 minutes
@@ -16,45 +15,24 @@ const cache = new LRUCache({
 })
 
 function getVideoStickers($, item, { staticProxy, index }) {
-  return $(item)
-    .find('.js-videosticker_video')
-    ?.map((_index, video) => {
-      const videoSrc = toProxyUrl(staticProxy, $(video)?.attr('src'))
-      if (!videoSrc) {
-        return ''
-      }
-
-      const posterSrc = toProxyUrl(staticProxy, $(video).find('img')?.attr('src'))
-
-      const poster = posterSrc
-        ? `<img class="sticker" src="${posterSrc}" alt="Video Sticker" loading="${index > 15 ? 'eager' : 'lazy'}" />`
-        : ''
-
-      return `
+  return $(item).find('.js-videosticker_video')?.map((_index, video) => {
+    const url = $(video)?.attr('src')
+    const imgurl = $(video).find('img')?.attr('src')
+    return `
     <div style="background-image: none; width: 256px;">
-      <video src="${videoSrc}" width="100%" height="100%" alt="Video Sticker" preload="metadata" muted loop playsinline disablepictureinpicture controls>
-        ${poster}
+      <video src="${staticProxy + url}" width="100%" height="100%" alt="Video Sticker" preload="metadata" muted loop playsinline disablepictureinpicture controls>
+        <img class="sticker" src="${staticProxy + imgurl}" alt="Video Sticker" loading="${index > 15 ? 'eager' : 'lazy'}" />
       </video>
     </div>
     `
-    })
-    ?.get()
-    ?.join('')
+  })?.get()?.join('')
 }
 
 function getImageStickers($, item, { staticProxy, index }) {
-  return $(item)
-    .find('.tgme_widget_message_sticker')
-    ?.map((_index, image) => {
-      const url = toProxyUrl(staticProxy, $(image)?.attr('data-webp'))
-      if (!url) {
-        return ''
-      }
-
-      return `<img class="sticker" src="${url}" style="width: 256px;" alt="Sticker" loading="${index > 15 ? 'eager' : 'lazy'}" />`
-    })
-    ?.get()
-    ?.join('')
+  return $(item).find('.tgme_widget_message_sticker')?.map((_index, image) => {
+    const url = $(image)?.attr('data-webp')
+    return `<img class="sticker" src="${staticProxy + url}" style="width: 256px;" alt="Sticker" loading="${index > 15 ? 'eager' : 'lazy'}" />`
+  })?.get()?.join('')
 }
 
 function getImages($, item, { staticProxy, index, title }) {
@@ -64,10 +42,7 @@ function getImages($, item, { staticProxy, index, title }) {
       return ''
     }
 
-    const imageSrc = toProxyUrl(staticProxy, url)
-    if (!imageSrc) {
-      return ''
-    }
+    const imageSrc = staticProxy + url
 
     return `
       <a class="image-preview-link image-preview-wrap" href="${imageSrc}" target="_blank" rel="noopener noreferrer">
@@ -80,28 +55,18 @@ function getImages($, item, { staticProxy, index, title }) {
 
 function getVideo($, item, { staticProxy, index }) {
   const video = $(item).find('.tgme_widget_message_video_wrap video')
-  const videoSrc = toProxyUrl(staticProxy, video?.attr('src'))
-  if (videoSrc) {
-    video
-      ?.attr('src', videoSrc)
-      ?.removeAttr('autoplay')
-      ?.attr('controls', true)
-      ?.attr('preload', index > 15 ? 'auto' : 'metadata')
-      ?.attr('playsinline', true)
-      ?.attr('webkit-playsinline', true)
-  }
+  video?.attr('src', staticProxy + video?.attr('src'))
+    ?.removeAttr('autoplay')
+    ?.attr('controls', true)
+    ?.attr('preload', index > 15 ? 'auto' : 'metadata')
+    ?.attr('playsinline', true).attr('webkit-playsinline', true)
 
   const roundVideo = $(item).find('.tgme_widget_message_roundvideo_wrap video')
-  const roundVideoSrc = toProxyUrl(staticProxy, roundVideo?.attr('src'))
-  if (roundVideoSrc) {
-    roundVideo
-      ?.attr('src', roundVideoSrc)
-      ?.removeAttr('autoplay')
-      ?.attr('controls', true)
-      ?.attr('preload', index > 15 ? 'auto' : 'metadata')
-      ?.attr('playsinline', true)
-      ?.attr('webkit-playsinline', true)
-  }
+  roundVideo?.attr('src', staticProxy + roundVideo?.attr('src'))
+    ?.removeAttr('autoplay')
+    ?.attr('controls', true)
+    ?.attr('preload', index > 15 ? 'auto' : 'metadata')
+    ?.attr('playsinline', true).attr('webkit-playsinline', true)
   return $.html(video) + $.html(roundVideo)
 }
 
@@ -120,7 +85,7 @@ function normalizeMediaSrc(src, staticProxy) {
     return `https:${trimmedSrc}`
   }
 
-  const normalizedProxy = normalizeStaticProxy(staticProxy)
+  const normalizedProxy = staticProxy?.endsWith('/') ? staticProxy : `${staticProxy}/`
   if (trimmedSrc.startsWith(normalizedProxy)) {
     return trimmedSrc
   }
@@ -424,10 +389,8 @@ function getLinkPreview($, item, { staticProxy, index, embeds }) {
 
   const image = $(item).find('.link_preview_image')
   const src = image?.attr('style')?.match(/url\(["'](.*?)["']/i)?.[1]
-  const imageSrc = src ? toProxyUrl(staticProxy, src) : ''
-  if (imageSrc) {
-    image?.replaceWith(`<img class="link_preview_image" alt="${title}" src="${imageSrc}" loading="${index > 15 ? 'eager' : 'lazy'}" />`)
-  }
+  const imageSrc = src ? staticProxy + src : ''
+  image?.replaceWith(`<img class="link_preview_image" alt="${title}" src="${imageSrc}" loading="${index > 15 ? 'eager' : 'lazy'}" />`)
   return $.html(link)
 }
 
@@ -681,14 +644,15 @@ function getPost($, item, { channel, staticProxy, index = 0, baseUrl = '/', enab
       $.html($(item).find('.tgme_widget_message_video_player.not_supported')),
       $.html($(item).find('.tgme_widget_message_location_wrap')),
       linkPreview,
-    ]
-      .filter(Boolean)
-      .join('')
-      .replace(/(url\(["'])(https?:)?(\/\/)/g, (match, p1, protocol = '', slashes = '//') => {
-        const scheme = protocol ? `${protocol}:` : 'https:'
-        const prefix = `${scheme}${slashes}`
-        return `${p1}${staticProxy}${prefix}`
-      }),
+    ].filter(Boolean).join('').replace(/(url\(["'])((https?:)?\/\/)/g, (match, p1, p2, _p3) => {
+      if (p2 === '//') {
+        p2 = 'https://'
+      }
+      if (p2?.startsWith('t.me')) {
+        return false
+      }
+      return `${p1}${staticProxy}${p2}`
+    }),
     media: Array.isArray(media) ? media : [],
     embeds: Array.isArray(embeds) ? embeds : [],
     embedsEnabled: Boolean(enableEmbeds),
@@ -712,7 +676,7 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
     ?? getEnv(import.meta.env, Astro, 'HOST')
     ?? 't.me'
   const channel = getEnv(import.meta.env, Astro, 'CHANNEL')
-  const staticProxy = normalizeStaticProxy(getEnv(import.meta.env, Astro, 'STATIC_PROXY'))
+  const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
   const baseUrl = Astro.locals?.BASE_URL ?? '/'
 
   const normalizedTag = normalizeTag(tag)

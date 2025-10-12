@@ -1,21 +1,24 @@
 ---
 import { getEnv } from '../lib/env'
 import voidFile from '../assets/void.png'
-import { normalizeStaticProxy, toProxyUrl } from '../lib/static-proxy'
 
 const { BASE_URL } = Astro.locals
 const { channel } = Astro.props
 const rawTitleSuffix = typeof Astro.props.titleSuffix === 'string' ? Astro.props.titleSuffix : ''
 const titleSuffix = rawTitleSuffix.trim()
 
-const staticProxy = normalizeStaticProxy(getEnv(import.meta.env, Astro, 'STATIC_PROXY'))
-const avatarSrc = toProxyUrl(staticProxy, channel?.avatar) || voidFile.src
+const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
 ---
 
 <div id="header-section">
   <div id="header">
     <a href={BASE_URL} title={channel?.title}>
-      <img src={avatarSrc} alt={channel?.title} loading="eager" class="header-avatar" />
+      <img
+        src={channel?.avatar?.startsWith('http') ? staticProxy + channel?.avatar : voidFile.src}
+        alt={channel?.title}
+        loading="eager"
+        class="header-avatar"
+      />
     </a>
     <div class="header-title">
       <a href={BASE_URL} class="site-title" title={channel?.title}>
