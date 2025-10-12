@@ -112,9 +112,7 @@ const allowedIframeAttributes = new Set([
 function appendDarkModeStyles(style = '') {
   const trimmed = style.trim().replace(/;\s*$/u, '')
   const base = trimmed.length ? `${trimmed};` : ''
-  const hasBorderRadius = /border-radius\s*:/iu.test(trimmed)
-  const borderRadius = hasBorderRadius ? '' : 'border-radius:12px;'
-  return `${base}${borderRadius}color-scheme:dark;background-color:#000;`
+  return `${base}color-scheme:dark;background-color:#000;`
 }
 
 function sanitizeIframeHtml(html) {
