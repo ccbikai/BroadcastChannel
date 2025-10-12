@@ -70,12 +70,70 @@ function getVideo($, item, { staticProxy, index }) {
   return $.html(video) + $.html(roundVideo)
 }
 
-function getAudio($, item, { staticProxy }) {
-  const audio = $(item).find('.tgme_widget_message_voice')
-  audio?.attr('src', staticProxy + audio?.attr('src'))
-    ?.removeAttr('autoplay')
-    ?.attr('controls', true)
-  return $.html(audio)
+function normalizeMediaSrc(src, staticProxy) {
+  if (!src) {
+    return ''
+  }
+
+  const trimmedSrc = src.trim()
+
+  if (/^(?:data:|blob:|https?:)/u.test(trimmedSrc)) {
+    return trimmedSrc
+  }
+
+  if (trimmedSrc.startsWith('//')) {
+    return `https:${trimmedSrc}`
+  }
+
+  const normalizedProxy = staticProxy?.endsWith('/') ? staticProxy : `${staticProxy}/`
+  if (trimmedSrc.startsWith(normalizedProxy)) {
+    return trimmedSrc
+  }
+
+  const normalizedSrc = trimmedSrc.startsWith('/') ? trimmedSrc.slice(1) : trimmedSrc
+  return `${normalizedProxy}${normalizedSrc}`
+}
+
+function getAudio($, item, { staticProxy, index }) {
+  const audios = $(item).find('audio, .tgme_widget_message_voice')
+  if (!audios?.length) {
+    return ''
+  }
+
+  const audioMarkup = audios
+    ?.map((_audioIndex, audioElement) => {
+      const audio = $(audioElement).clone()
+
+      const srcAttribute = audio.attr('src') || audio.attr('data-src')
+      const normalizedSrc = normalizeMediaSrc(srcAttribute, staticProxy)
+      if (normalizedSrc) {
+        audio.attr('src', normalizedSrc)
+      }
+
+      audio.find('source').each((_sourceIndex, sourceElement) => {
+        const source = $(sourceElement)
+        const sourceSrc = source.attr('src') || source.attr('data-src')
+        const normalizedSourceSrc = normalizeMediaSrc(sourceSrc, staticProxy)
+        if (normalizedSourceSrc) {
+          source.attr('src', normalizedSourceSrc)
+        }
+      })
+
+      audio.removeAttr('autoplay')
+        ?.attr('controls', true)
+        ?.attr('preload', index > 15 ? 'auto' : 'metadata')
+        ?.attr('playsinline', true)
+        ?.attr('webkit-playsinline', true)
+
+      const container = $('<div class="audio-box"></div>')
+      container.append(audio)
+      return $.html(container)
+    })
+    ?.get()
+
+  audios.remove()
+
+  return audioMarkup?.join('') ?? ''
 }
 
 function getLinkPreview($, item, { staticProxy, index }) {
