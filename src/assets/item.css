@@ -5,9 +5,14 @@
 }
 
 .media-audio {
-  margin: 0;
+  margin: var(--space-sm) 0 var(--space-lg);
   display: grid;
   gap: var(--space-2xs);
+}
+
+.media-audio--inline {
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .media-audio audio {
@@ -22,6 +27,21 @@
 .media-audio figcaption {
   font-size: var(--font-size-sm);
   color: var(--secondary-color);
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.media-audio__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.media-audio__download {
+  color: inherit;
+  text-decoration: underline;
 }
 
 .embed-list {
