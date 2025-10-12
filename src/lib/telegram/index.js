@@ -183,9 +183,26 @@ function linkifyHashtags($, root, { baseUrl = '/' } = {}) {
 }
 
 function modifyHTMLContent($, content, { index, baseUrl } = {}) {
+  const normalizedBaseUrl = ensureBaseUrl(baseUrl)
+
   $(content).find('.emoji')?.removeAttr('style')
   $(content).find('a')?.each((_index, a) => {
-    $(a)?.attr('title', $(a)?.text())?.removeAttr('onclick')
+    const anchor = $(a)
+    const anchorText = anchor?.text() ?? ''
+    const href = anchor?.attr('href') ?? ''
+    const normalizedTag = normalizeTag(anchorText)
+    const isTelegramHashtagLink = href?.includes('q=%23') || anchor?.hasClass('tgme_widget_message_hashtag')
+
+    anchor?.attr('title', anchorText)?.removeAttr('onclick')
+
+    if (normalizedTag && isTelegramHashtagLink) {
+      const hashtag = anchorText?.trim().startsWith('#') ? anchorText.trim() : `#${normalizedTag}`
+      const tagHref = `${normalizedBaseUrl}tags/${encodeURIComponent(normalizedTag)}/`
+      anchor
+        ?.attr('href', tagHref)
+        ?.attr('title', hashtag)
+        ?.addClass('hashtag')
+    }
   })
   $(content).find('tg-spoiler')?.each((_index, spoiler) => {
     const id = `spoiler-${index}-${_index}`
