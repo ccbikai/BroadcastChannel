@@ -13,6 +13,13 @@ const {
   paginationBasePath = '',
 } = Astro.props
 
+const DEFAULT_POSTS_PER_PAGE = 20
+const configuredPostsPerPage = Number.parseInt(import.meta.env.PUBLIC_POSTS_PER_PAGE ?? '', 10)
+const maxPostsPerPage =
+  Number.isFinite(configuredPostsPerPage) && configuredPostsPerPage > 0
+    ? configuredPostsPerPage
+    : DEFAULT_POSTS_PER_PAGE
+
 const posts = Array.isArray(channel?.posts) ? channel.posts : []
 const beforeCursor = posts.at(-1)?.id
 const afterCursor = posts[0]?.id
@@ -20,7 +27,11 @@ const afterCursor = posts[0]?.id
 const normalizedBasePath = paginationBasePath ? `${paginationBasePath.replace(/^\/+/u, '').replace(/\/+$/u, '')}/` : ''
 const beforeHref = typeof beforeCursor === 'undefined' ? '' : `${BASE_URL}${normalizedBasePath}before/${beforeCursor}`
 const afterHref = typeof afterCursor === 'undefined' ? '' : `${BASE_URL}${normalizedBasePath}after/${afterCursor}`
-const hasOlderPosts = before && typeof beforeCursor !== 'undefined' && Number.parseInt(beforeCursor, 10) > 1
+const hasOlderPosts =
+  before &&
+  typeof beforeCursor !== 'undefined' &&
+  Number.parseInt(beforeCursor, 10) > 1 &&
+  posts.length >= maxPostsPerPage
 const hasNewerPosts = after && typeof afterCursor !== 'undefined'
 const paginationClassList = {
   'pages-container': true,
