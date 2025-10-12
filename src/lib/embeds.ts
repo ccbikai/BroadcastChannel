@@ -5,7 +5,10 @@ const esc = (s: string) =>
 
 function appendDarkModeStyles(style: string) {
   const trimmed = style.trim().replace(/;\s*$/u, '')
-  return `${trimmed};color-scheme:dark;background-color:#000;`
+  const base = trimmed.length ? `${trimmed};` : ''
+  const hasBorderRadius = /border-radius\s*:/iu.test(trimmed)
+  const borderRadius = hasBorderRadius ? '' : 'border-radius:12px;'
+  return `${base}${borderRadius}color-scheme:dark;background-color:#000;`
 }
 
 export function resolveEmbed(rawUrl: string): ResolvedEmbed | null {
