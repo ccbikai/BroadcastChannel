@@ -9,6 +9,12 @@ const isSoundCloudPlaceholder =
   !fromLoader && typeof resolved?.html === 'string' && resolved.html.startsWith('<!-- SOUNDCloud_OEMBED')
 ---
 
-{resolved && !isSoundCloudPlaceholder
-  ? <Fragment set:html={resolved.html} />
-  : <a href={url} rel="noopener nofollow ugc">{url}</a>}
+{
+  resolved && !isSoundCloudPlaceholder ? (
+    <Fragment set:html={resolved.html} />
+  ) : (
+    <a href={url} rel="noopener nofollow ugc">
+      {url}
+    </a>
+  )
+}

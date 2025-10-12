@@ -32,23 +32,27 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
   <div class="item-content-container">
     {content.length > 0 && <div class={`text-box content`} set:html={content} />}
 
-    {mediaList.length > 0 && (
-      <div class="media-list">
-        {mediaList.map((media, index) => (
-          <Media {...media} key={`media-${post.id ?? index}-${index}`} />
-        ))}
-      </div>
-    )}
+    {
+      mediaList.length > 0 && (
+        <div class="media-list">
+          {mediaList.map((media, index) => (
+            <Media {...media} key={`media-${post.id ?? index}-${index}`} />
+          ))}
+        </div>
+      )
+    }
 
-    {shouldRenderEmbeds && (
-      <div class="embed-list">
-        {embedList.map((embed, index) => (
-          <div class="embed-item" key={`embed-${post.id ?? index}-${index}`}>
-            <Embed url={embed.url} oembedHtml={embed.oembedHtml} />
-          </div>
-        ))}
-      </div>
-    )}
+    {
+      shouldRenderEmbeds && (
+        <div class="embed-list">
+          {embedList.map((embed, index) => (
+            <div class="embed-item" key={`embed-${post.id ?? index}-${index}`}>
+              <Embed url={embed.url} oembedHtml={embed.oembedHtml} />
+            </div>
+          ))}
+        </div>
+      )
+    }
   </div>
 
   <div class="time-box">
