@@ -3,6 +3,8 @@ import '../assets/item.css'
 import 'prismjs/themes/prism.css'
 import dayjs from '../lib/dayjs'
 import { getEnv } from '../lib/env'
+import Embed from './Embed.astro'
+import Media from './Media.astro'
 
 const locale = getEnv(import.meta.env, Astro, 'LOCALE')
 const timezone = getEnv(import.meta.env, Astro, 'TIMEZONE')
@@ -14,8 +16,14 @@ const { post, isItem } = Astro.props
 
 const channel = getEnv(import.meta.env, Astro, 'CHANNEL')
 const COMMENTS = getEnv(import.meta.env, Astro, 'COMMENTS')
+const envEmbedSetting = getEnv(import.meta.env, Astro, 'ENABLE_EMBEDS')
+const envEmbedsEnabled = envEmbedSetting === undefined ? true : envEmbedSetting !== 'false'
 
 const content = typeof post.content === 'string' ? post.content : ''
+const mediaList = Array.isArray(post?.media) ? post.media : []
+const embedList = Array.isArray(post?.embeds) ? post.embeds : []
+const embedsEnabled = envEmbedsEnabled && (post?.embedsEnabled ?? envEmbedsEnabled)
+const shouldRenderEmbeds = embedsEnabled && embedList.length > 0
 const datetime = dayjs(post.datetime).tz(timezone)
 const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('HH:mm · ll · ddd') : datetime.fromNow()
 ---
@@ -23,6 +31,24 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
 <div class="item" style={{ 'view-transition-name': `post-${post.id}` }}>
   <div class="item-content-container">
     {content.length > 0 && <div class={`text-box content`} set:html={content} />}
+
+    {mediaList.length > 0 && (
+      <div class="media-list">
+        {mediaList.map((media, index) => (
+          <Media {...media} key={`media-${post.id ?? index}-${index}`} />
+        ))}
+      </div>
+    )}
+
+    {shouldRenderEmbeds && (
+      <div class="embed-list">
+        {embedList.map((embed, index) => (
+          <div class="embed-item" key={`embed-${post.id ?? index}-${index}`}>
+            <Embed url={embed.url} oembedHtml={embed.oembedHtml} />
+          </div>
+        ))}
+      </div>
+    )}
   </div>
 
   <div class="time-box">
