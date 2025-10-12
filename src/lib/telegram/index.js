@@ -5,6 +5,7 @@ import flourite from 'flourite'
 import prism from '../prism'
 import { getEnv } from '../env'
 import { extractTagsFromText, normalizeTag } from '../tags'
+import { resolveEmbed } from '../embed'
 
 const cache = new LRUCache({
   ttl: 1000 * 60 * 5, // 5 minutes
@@ -140,6 +141,15 @@ function getLinkPreview($, item, { staticProxy, index }) {
   const link = $(item).find('.tgme_widget_message_link_preview')
   const title = $(item).find('.link_preview_title')?.text() || $(item).find('.link_preview_site_name')?.text()
   const description = $(item).find('.link_preview_description')?.text()
+
+  if (link?.length) {
+    const href = link.attr('href') ?? ''
+    const embed = resolveEmbed(href, { title, description })
+
+    if (embed) {
+      return embed
+    }
+  }
 
   link?.attr('target', '_blank').attr('rel', 'noopener').attr('title', description)
 

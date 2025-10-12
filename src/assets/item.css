@@ -140,6 +140,51 @@
     margin-bottom: var(--space-md);
   }
 
+  .embed {
+    margin-top: var(--space-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .embed__inner {
+    width: 100%;
+    position: relative;
+    background: rgba(15, 23, 42, 0.3);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .embed__inner iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .embed__fallback {
+    margin: 0;
+    font-size: var(--font-size-xs);
+    color: var(--secondary-color);
+  }
+
+  .embed__fallback a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  .embed--youtube .embed__inner {
+    background: #000;
+  }
+
+  .embed--spotify .embed__inner,
+  .embed--bandcamp .embed__inner,
+  .embed--soundcloud .embed__inner,
+  .embed--applemusic .embed__inner {
+    background: #111827;
+  }
+
   .tgme_widget_message_video,
   .tgme_widget_message_roundvideo {
     display: block;
