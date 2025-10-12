@@ -4,11 +4,6 @@
   flex-direction: column;
   gap: clamp(var(--space-sm), 3vw, var(--space-lg));
 
-  .hashtag {
-    white-space: nowrap;
-    word-break: normal;
-  }
-
   .image-list-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr));
