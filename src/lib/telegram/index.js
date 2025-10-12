@@ -94,46 +94,230 @@ function normalizeMediaSrc(src, staticProxy) {
   return `${normalizedProxy}${normalizedSrc}`
 }
 
-function getAudio($, item, { staticProxy, index }) {
-  const audios = $(item).find('audio, .tgme_widget_message_voice')
-  if (!audios?.length) {
+const allowedIframeAttributes = new Set([
+  'allow',
+  'allowfullscreen',
+  'allowtransparency',
+  'frameborder',
+  'height',
+  'loading',
+  'scrolling',
+  'sandbox',
+  'src',
+  'style',
+  'title',
+  'width',
+])
+
+function sanitizeIframeHtml(html) {
+  if (typeof html !== 'string') {
     return ''
   }
 
-  const audioMarkup = audios
-    ?.map((_audioIndex, audioElement) => {
-      const audio = $(audioElement).clone()
+  const match = html.match(/<iframe\b[^>]*><\/iframe>/i)
+  if (!match) {
+    return ''
+  }
 
-      const srcAttribute = audio.attr('src') || audio.attr('data-src')
-      const normalizedSrc = normalizeMediaSrc(srcAttribute, staticProxy)
-      if (normalizedSrc) {
-        audio.attr('src', normalizedSrc)
+  const $ = cheerio.load(match[0])
+  const iframe = $('iframe').first()
+  if (!iframe?.length) {
+    return ''
+  }
+
+  Object.entries(iframe.attr() ?? {}).forEach(([name]) => {
+    if (!allowedIframeAttributes.has(name)) {
+      iframe.removeAttr(name)
+    }
+  })
+
+  const src = iframe.attr('src')
+  if (!src || !/^https?:/iu.test(src)) {
+    return ''
+  }
+
+  iframe.attr('src', src.trim())
+  iframe.attr('width', '100%')
+  if (!iframe.attr('loading')) {
+    iframe.attr('loading', 'lazy')
+  }
+  if (!iframe.attr('title')) {
+    iframe.attr('title', 'SoundCloud embed')
+  }
+
+  const style = iframe.attr('style')
+  if (style && /javascript:/iu.test(style)) {
+    iframe.removeAttr('style')
+  }
+
+  if (!iframe.attr('style')) {
+    iframe.attr('style', 'width:100%;border:0;')
+  }
+
+  return $.html('iframe')
+}
+
+const soundCloudOembedCache = new Map()
+
+async function fetchSoundCloudOembed(rawUrl) {
+  if (soundCloudOembedCache.has(rawUrl)) {
+    return soundCloudOembedCache.get(rawUrl)
+  }
+
+  const endpoint = `https://soundcloud.com/oembed?format=json&url=${encodeURIComponent(rawUrl)}&maxheight=166&show_artwork=true`
+
+  const request = $fetch(endpoint, {
+    responseType: 'json',
+    retry: 2,
+    retryDelay: 100,
+  })
+    .then((data) => {
+      const html = typeof data?.html === 'string' ? data.html : ''
+      const sanitized = sanitizeIframeHtml(html)
+      return sanitized || null
+    })
+    .catch((error) => {
+      console.error('SoundCloud oEmbed failed', { url: rawUrl, error: error?.message ?? error })
+      return null
+    })
+
+  soundCloudOembedCache.set(rawUrl, request)
+  return request
+}
+
+function isSoundCloudUrl(rawUrl) {
+  try {
+    const url = new URL(rawUrl)
+    return /(^|\.)soundcloud\.com$/iu.test(url.hostname)
+  }
+  catch {
+    return false
+  }
+}
+
+function extractEmbeddableLinks($, content) {
+  if (!content?.find) {
+    return []
+  }
+
+  const seen = new Set()
+  const links = []
+
+  content
+    .find('a[href]')
+    .each((_index, element) => {
+      const anchor = $(element)
+      const href = anchor.attr('href')?.trim()
+      if (!href || !/^https?:/iu.test(href)) {
+        return
       }
 
-      audio.find('source').each((_sourceIndex, sourceElement) => {
-        const source = $(sourceElement)
-        const sourceSrc = source.attr('src') || source.attr('data-src')
-        const normalizedSourceSrc = normalizeMediaSrc(sourceSrc, staticProxy)
-        if (normalizedSourceSrc) {
-          source.attr('src', normalizedSourceSrc)
+      if (seen.has(href)) {
+        return
+      }
+
+      seen.add(href)
+      links.push({ url: href })
+    })
+
+  return links
+}
+
+async function hydrateSoundCloudEmbeds(posts, { enableEmbeds }) {
+  if (!enableEmbeds) {
+    return posts
+  }
+
+  const tasks = []
+
+  posts.forEach((post) => {
+    if (!Array.isArray(post?.embeds)) {
+      return
+    }
+
+    post.embeds.forEach((embed) => {
+      if (!embed?.url || !isSoundCloudUrl(embed.url)) {
+        return
+      }
+
+      const task = fetchSoundCloudOembed(embed.url).then((html) => {
+        if (html) {
+          embed.oembedHtml = html
         }
       })
 
-      audio.removeAttr('autoplay')
-        ?.attr('controls', true)
-        ?.attr('preload', index > 15 ? 'auto' : 'metadata')
-        ?.attr('playsinline', true)
-        ?.attr('webkit-playsinline', true)
+      tasks.push(task)
+    })
+  })
 
-      const container = $('<div class="audio-box"></div>')
-      container.append(audio)
-      return $.html(container)
+  if (tasks.length > 0) {
+    await Promise.allSettled(tasks)
+  }
+
+  return posts
+}
+
+function getAudio($, item, { staticProxy }) {
+  const audios = $(item).find('audio, .tgme_widget_message_voice')
+  if (!audios?.length) {
+    return []
+  }
+
+  const audioItems = audios
+    ?.map((_audioIndex, audioElement) => {
+      const audioNode = $(audioElement)
+      const audioTag = audioNode.is('audio') ? audioNode : audioNode.find('audio').first()
+      const sources = []
+
+      if (audioTag?.length) {
+        const directSource = audioTag.attr('src') || audioTag.attr('data-src')
+        const directType = audioTag.attr('type')
+        if (directSource) {
+          sources.push({ src: directSource, type: directType })
+        }
+
+        audioTag.find('source').each((_sourceIndex, sourceElement) => {
+          const source = $(sourceElement)
+          const sourceSrc = source.attr('src') || source.attr('data-src')
+          if (sourceSrc) {
+            sources.push({ src: sourceSrc, type: source.attr('type') })
+          }
+        })
+      }
+
+      const fallbackSource = audioNode.attr('src') || audioNode.attr('data-src') || audioNode.attr('href')
+      if (fallbackSource) {
+        sources.push({ src: fallbackSource, type: audioNode.attr('type') })
+      }
+
+      const normalizedSource = sources
+        .map(({ src, type }) => {
+          const normalizedSrc = normalizeMediaSrc(src, staticProxy)
+          if (!normalizedSrc) {
+            return null
+          }
+          return { url: normalizedSrc, mime: type }
+        })
+        .find(Boolean)
+
+      if (!normalizedSource?.url) {
+        return null
+      }
+
+      const captionText = audioTag?.attr('title') || audioNode.attr('title') || audioNode.find('figcaption')?.text() || ''
+
+      return {
+        kind: 'audio',
+        url: normalizedSource.url,
+        mime: normalizedSource.mime || undefined,
+        caption: captionText?.trim() ? captionText.trim() : undefined,
+      }
     })
     ?.get()
 
   audios.remove()
 
-  return audioMarkup?.join('') ?? ''
+  return audioItems?.filter(Boolean) ?? []
 }
 
 function getLinkPreview($, item, { staticProxy, index }) {
@@ -308,15 +492,18 @@ function buildTagIndex(posts) {
   return tagIndex
 }
 
-function getPost($, item, { channel, staticProxy, index = 0, baseUrl = '/' }) {
+function getPost($, item, { channel, staticProxy, index = 0, baseUrl = '/', enableEmbeds = true }) {
   item = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
   const content = $(item).find('.js-message_reply_text')?.length > 0
     ? modifyHTMLContent($, $(item).find('.tgme_widget_message_text.js-message_text'), { index, baseUrl })
     : modifyHTMLContent($, $(item).find('.tgme_widget_message_text'), { index, baseUrl })
+  const media = getAudio($, item, { staticProxy })
   const textContent = content?.text() ?? ''
   const title = textContent.match(/^.*?(?=[。\n]|http\S)/g)?.[0] ?? textContent ?? ''
   const id = $(item).attr('data-post')?.replace(new RegExp(`${channel}/`, 'i'), '')
   const tags = extractTagsFromText(textContent)
+  const embeds = enableEmbeds ? extractEmbeddableLinks($, content) : []
+  const contentHtml = content?.html()
 
   return {
     id,
@@ -329,8 +516,7 @@ function getPost($, item, { channel, staticProxy, index = 0, baseUrl = '/' }) {
       getReply($, item, { channel }),
       getImages($, item, { staticProxy, index, title }),
       getVideo($, item, { staticProxy, id, index, title }),
-      getAudio($, item, { staticProxy, id, index, title }),
-      content?.html(),
+      contentHtml,
       getImageStickers($, item, { staticProxy, index }),
       getVideoStickers($, item, { staticProxy, index }),
       // $(item).find('.tgme_widget_message_sticker_wrap')?.html(),
@@ -348,13 +534,17 @@ function getPost($, item, { channel, staticProxy, index = 0, baseUrl = '/' }) {
       }
       return `${p1}${staticProxy}${p2}`
     }),
+    media: Array.isArray(media) ? media : [],
+    embeds: Array.isArray(embeds) ? embeds : [],
+    embedsEnabled: Boolean(enableEmbeds),
   }
 }
 
 const unnessaryHeaders = ['host', 'cookie', 'origin', 'referer']
 
 export async function getChannelInfo(Astro, { before = '', after = '', q = '', type = 'list', id = '', tag = '' } = {}) {
-  const cacheKey = JSON.stringify({ before, after, q, type, id, tag })
+  const embedsEnabled = (getEnv(import.meta.env, Astro, 'ENABLE_EMBEDS') ?? 'true') !== 'false'
+  const cacheKey = JSON.stringify({ before, after, q, type, id, tag, enableEmbeds: embedsEnabled })
   const cachedResult = cache.get(cacheKey)
 
   if (cachedResult) {
@@ -396,13 +586,18 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
 
   const $ = cheerio.load(html, {}, false)
   if (id) {
-    const post = getPost($, null, { channel, staticProxy, baseUrl })
+    const post = getPost($, null, { channel, staticProxy, baseUrl, enableEmbeds: embedsEnabled })
+    await hydrateSoundCloudEmbeds([post], { enableEmbeds: embedsEnabled })
     cache.set(cacheKey, post)
     return post
   }
-  const posts = $('.tgme_channel_history  .tgme_widget_message_wrap')?.map((index, item) => {
-    return getPost($, item, { channel, staticProxy, index, baseUrl })
-  })?.get()?.reverse().filter(post => ['text'].includes(post.type) && post.id && post.content)
+  const posts = (
+    $('.tgme_channel_history  .tgme_widget_message_wrap')?.map((index, item) => {
+      return getPost($, item, { channel, staticProxy, index, baseUrl, enableEmbeds: embedsEnabled })
+    })?.get()?.reverse().filter(post => ['text'].includes(post.type) && post.id && post.content)
+  ) ?? []
+
+  await hydrateSoundCloudEmbeds(posts, { enableEmbeds: embedsEnabled })
 
   const tagIndex = buildTagIndex(posts)
   const availableTags = Object.keys(tagIndex).sort((a, b) => a.localeCompare(b))
@@ -418,6 +613,7 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
     availableTags,
     tagIndex,
     selectedTag,
+    embedsEnabled,
   }
 
   cache.set(cacheKey, channelInfo)

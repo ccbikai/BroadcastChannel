@@ -1,0 +1,14 @@
+---
+import { resolveEmbed } from '../lib/embeds'
+
+const { url, oembedHtml } = Astro.props as { url: string; oembedHtml?: string }
+
+const fromLoader = oembedHtml ? { html: oembedHtml } : null
+const resolved = fromLoader ?? resolveEmbed(url)
+const isSoundCloudPlaceholder =
+  !fromLoader && typeof resolved?.html === 'string' && resolved.html.startsWith('<!-- SOUNDCloud_OEMBED')
+---
+
+{resolved && !isSoundCloudPlaceholder
+  ? <Fragment set:html={resolved.html} />
+  : <a href={url} rel="noopener nofollow ugc">{url}</a>}
