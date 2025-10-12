@@ -5,28 +5,13 @@ export const config = {
 }
 
 export default function handler(request) {
-  const requestUrl = new URL(request.url)
-  const directUrl = requestUrl.searchParams.get('url')
+  const url = request.url?.split('/static/')?.[1]
 
-  if (directUrl) {
-    return GET({
-      request,
-      params: {
-        url: directUrl,
-      },
-      url: {
-        search: '',
-      },
-    })
-  }
-
-  const pathUrl = request.url?.split('/static/')?.[1]
-
-  if (!pathUrl) {
+  if (!url) {
     return new Response('Not Found', { status: 404 })
   }
 
-  const target = new URL(pathUrl + requestUrl.search)
+  const target = new URL(url)
   target.searchParams.delete('path')
 
   return GET({
