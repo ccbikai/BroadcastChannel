@@ -1,25 +1,22 @@
 ---
-import AudioPlayer from './AudioPlayer.astro'
-
-const { kind, url, mime, caption, downloadHref, inline, title } = Astro.props as {
+const { kind, url, mime, caption } = Astro.props as {
   kind: 'image' | 'video' | 'audio' | 'link'
   url: string
   mime?: string
   caption?: string
-  downloadHref?: string
-  inline?: boolean
-  title?: string
 }
 ---
 
 {
   kind === 'audio' && url && (
-    <AudioPlayer
-      src={url}
-      mime={mime ?? undefined}
-      title={caption ?? title ?? 'Audio file'}
-      downloadHref={downloadHref ?? url}
-      inline={inline}
-    />
+    <figure class="media-audio">
+      <audio controls preload="metadata">
+        <source src={url} type={mime ?? 'audio/mpeg'} />
+        <a href={url} rel="noopener">
+          Download audio
+        </a>
+      </audio>
+      {caption && <figcaption>{caption}</figcaption>}
+    </figure>
   )
 }
