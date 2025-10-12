@@ -13,6 +13,7 @@ const { channel } = Astro.props
 const locale = getEnv(import.meta.env, Astro, 'LOCALE')
 
 const seo = channel?.seo
+const channelTitle = channel?.title ?? ''
 const requestPathname = Astro.url.pathname.replace(/\/$/, '')
 const basePathname = BASE_URL.replace(/\/$/, '') || '/'
 const relativePathname =
@@ -25,7 +26,7 @@ const { origin } = new URL(canonical)
 const github = getEnv(import.meta.env, Astro, 'GITHUB')
 
 const seoParams = {
-  title: seo?.title,
+  title: channelTitle,
   description: seo?.text ?? channel?.description,
   canonical,
   noindex: seo?.noindex ?? getEnv(import.meta.env, Astro, 'NOINDEX'),
@@ -33,7 +34,7 @@ const seoParams = {
   openGraph: {
     basic: {
       type: 'website',
-      title: channel?.title ?? '',
+      title: channelTitle,
       url: canonical,
       image: channel?.avatar ? channel.avatar : origin + '/favicon.ico',
     },
@@ -72,11 +73,7 @@ const hasHeader = Astro.slots.has('header')
         navigation: auto;
       }
     </style>
-    <SEO
-      titleTemplate={`%s | ${channel?.title}`}
-      titleDefault={[channel?.title, seoParams.description].filter(Boolean).join(' - ')}
-      {...seoParams}
-    />
+    <SEO titleDefault={channelTitle} {...seoParams} />
     <Fragment set:html={HEADER_INJECT} />
   </head>
 
