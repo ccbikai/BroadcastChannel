@@ -374,7 +374,6 @@ a.site-title:focus-visible {
   object-fit: cover;
   border: 1px solid var(--border-color);
   border-radius: 0;
-  box-shadow: var(--shadow-sm);
 }
 
 .image-box > img {
@@ -385,7 +384,6 @@ a.site-title:focus-visible {
   border: 1px solid var(--border-color);
   border-radius: 0;
   margin-block-end: var(--space-sm);
-  box-shadow: var(--shadow-md);
 }
 
 .video-box video,
@@ -394,7 +392,6 @@ a.site-title:focus-visible {
   border: 1px solid var(--border-color);
   border-radius: 0;
   background-color: var(--cell-background-color);
-  box-shadow: var(--shadow-sm);
 }
 
 audio::-webkit-media-controls-panel {
@@ -453,9 +450,6 @@ audio::-webkit-media-controls-panel {
   flex-direction: column;
   gap: var(--space-sm);
   word-break: break-word;
-  box-shadow:
-    inset 0 0 0 1px rgba(0, 0, 0, 0.65),
-    0 0 18px rgba(56, 189, 248, 0.12);
   font-family: var(--font-family-post);
   min-width: 0;
   min-inline-size: 0;
@@ -495,8 +489,7 @@ audio::-webkit-media-controls-panel {
   transition:
     color var(--transition-fast),
     border-color var(--transition-fast),
-    background-color var(--transition-fast),
-    box-shadow var(--transition-fast);
+    background-color var(--transition-fast);
 }
 
 .item-tag:hover,
@@ -504,7 +497,6 @@ audio::-webkit-media-controls-panel {
   color: var(--foreground-color);
   border-color: rgba(148, 163, 184, 0.45);
   background: rgba(36, 36, 44, 0.72);
-  box-shadow: var(--shadow-sm);
 }
 
 .item-tag:focus-visible {
@@ -567,8 +559,7 @@ audio::-webkit-media-controls-panel {
     transform var(--transition-base),
     color var(--transition-fast),
     border-color var(--transition-fast),
-    background var(--transition-fast),
-    box-shadow var(--transition-fast);
+    background var(--transition-fast);
 }
 
 .pages-container .page:hover,
@@ -576,7 +567,6 @@ audio::-webkit-media-controls-panel {
   color: var(--foreground-color);
   border-color: rgba(180, 180, 192, 0.45);
   background: rgba(180, 180, 192, 0.2);
-  box-shadow: var(--shadow-sm);
 }
 
 .pages-container .page:hover {
@@ -588,8 +578,8 @@ audio::-webkit-media-controls-panel {
 }
 
 .pages-container .page:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 0.2rem rgba(180, 180, 192, 0.45);
+  outline: 2px solid rgba(59, 130, 246, 0.45);
+  outline-offset: 2px;
 }
 
 .page-placeholder {
@@ -605,7 +595,6 @@ audio::-webkit-media-controls-panel {
   border-radius: var(--radius-md);
   overflow: hidden;
   background: rgba(32, 32, 40, 0.75);
-  box-shadow: var(--shadow-sm);
 }
 
 .content table tr {
