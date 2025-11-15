@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss'
 import sanitizeHtml from 'sanitize-html'
-import { getChannelInfo } from '../lib/telegram'
 import { getEnv } from '../lib/env'
+import { getChannelInfo } from '../lib/telegram'
 
 export async function GET(Astro) {
   const { SITE_URL } = Astro.locals

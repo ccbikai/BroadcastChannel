@@ -1,0 +1,8 @@
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - '@sentry/cli'
+  - esbuild
+  - protobufjs
+  - sharp
+  - simple-git-hooks
+  - workerd

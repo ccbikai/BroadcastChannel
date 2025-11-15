@@ -1,11 +1,11 @@
 import process from 'node:process'
-import { defineConfig } from 'astro/config'
-import vercel from '@astrojs/vercel/serverless'
 import cloudflare from '@astrojs/cloudflare'
 import netlify from '@astrojs/netlify'
 import node from '@astrojs/node'
-import { provider } from 'std-env'
+import vercel from '@astrojs/vercel'
 import sentry from '@sentry/astro'
+import { defineConfig } from 'astro/config'
+import { provider } from 'std-env'
 
 const providers = {
   vercel: vercel({
