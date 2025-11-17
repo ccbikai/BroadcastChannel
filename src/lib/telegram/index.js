@@ -218,12 +218,17 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
     return getPost($, item, { channel, staticProxy, index })
   })?.get()?.reverse().filter(post => ['text'].includes(post.type) && post.id && post.content)
 
+  const OVERRIDE_SITE_AVATAR_URL = getEnv(import.meta.env, Astro, 'OVERRIDE_SITE_AVATAR_URL')
+  const OVERRIDE_SITE_TITLE = getEnv(import.meta.env, Astro, 'OVERRIDE_SITE_TITLE')
+  const OVERRIDE_SITE_DESCRIPTION = getEnv(import.meta.env, Astro, 'OVERRIDE_SITE_DESCRIPTION')
+  const OVERRIDE_SITE_DESCRIPTION_HTML = getEnv(import.meta.env, Astro, 'OVERRIDE_SITE_DESCRIPTION_HTML')
+
   const channelInfo = {
     posts,
-    title: $('.tgme_channel_info_header_title')?.text(),
-    description: $('.tgme_channel_info_description')?.text(),
-    descriptionHTML: modifyHTMLContent($, $('.tgme_channel_info_description'))?.html(),
-    avatar: $('.tgme_page_photo_image img')?.attr('src'),
+    title: OVERRIDE_SITE_TITLE || $('.tgme_channel_info_header_title')?.text(),
+    description: OVERRIDE_SITE_DESCRIPTION || $('.tgme_channel_info_description')?.text(),
+    descriptionHTML: OVERRIDE_SITE_DESCRIPTION_HTML || modifyHTMLContent($, $('.tgme_channel_info_description'))?.html(),
+    avatar: OVERRIDE_SITE_AVATAR_URL || $('.tgme_page_photo_image img')?.attr('src'),
   }
 
   cache.set(cacheKey, channelInfo)
