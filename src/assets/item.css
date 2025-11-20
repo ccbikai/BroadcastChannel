@@ -107,6 +107,89 @@
     border-radius: var(--box-border-radius);
   }
 
+  .tg-expandable {
+    margin: 16px 0;
+    font-size: 0.8em;
+    background: var(--cell-background-color);
+    border-left: 3px solid var(--highlight-color);
+    padding: 6px;
+    padding-left: 10px;
+    padding-right: 30px;
+    border-radius: var(--box-border-radius);
+    position: relative;
+    min-height: 3.6em;
+  }
+
+  .tg-expandable__checkbox {
+    display: none;
+  }
+
+  .tg-expandable__content {
+    display: block;
+    user-select: text;
+  }
+
+  /* use @supports to check :has() support */
+  @supports selector(:has(*)) {
+    /* when :has() is supported, default to collapsed */
+    .tg-expandable__content {
+      display: -webkit-box;
+      line-clamp: 3;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* when checkbox is checked, expand */
+    .tg-expandable:has(.tg-expandable__checkbox:checked) .tg-expandable__content {
+      display: block;
+      line-clamp: unset;
+      -webkit-line-clamp: unset;
+      -webkit-box-orient: unset;
+      overflow: visible;
+      padding-bottom: 24px;
+    }
+  }
+
+  .tg-expandable__toggle {
+    /* default hidden, not show small triangle when :has() is not supported */
+    display: none;
+  }
+
+  @supports selector(:has(*)) {
+    .tg-expandable__toggle {
+      display: block;
+      position: absolute;
+      right: 6px;
+      bottom: 6px;
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      user-select: none;
+      z-index: 2;
+    }
+
+    .tg-expandable__toggle::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      border-left: 6px solid var(--secondary-color);
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.2s ease;
+      filter: var(--icon-secondary-filter);
+    }
+
+    .tg-expandable:has(.tg-expandable__checkbox:checked) .tg-expandable__toggle::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+  }
+
   .tgme_widget_message_sticker {
     display: block;
   }

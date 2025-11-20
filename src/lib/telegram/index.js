@@ -106,6 +106,17 @@ function modifyHTMLContent($, content, { index } = {}) {
   $(content).find('a')?.each((_index, a) => {
     $(a)?.attr('title', $(a)?.text())?.removeAttr('onclick')
   })
+  // Transform Telegram expandable quotes
+  $(content).find('blockquote[expandable]')?.each((_index, bq) => {
+    const innerHTML = $(bq).html()
+    const id = `expand-${index}-${_index}`
+    const expandable = `<div class="tg-expandable">
+      <input type="checkbox" id="${id}" class="tg-expandable__checkbox">
+      <div class="tg-expandable__content">${innerHTML}</div>
+      <label for="${id}" class="tg-expandable__toggle" aria-label="Expand/Collapse"></label>
+    </div>`
+    $(bq).replaceWith(expandable)
+  })
   $(content).find('tg-spoiler')?.each((_index, spoiler) => {
     const id = `spoiler-${index}-${_index}`
     $(spoiler)?.attr('id', id)?.wrap('<label class="spoiler-button"></label>')?.before(`<input type="checkbox" />`)
