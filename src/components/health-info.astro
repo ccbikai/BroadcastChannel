@@ -1,0 +1,228 @@
+---
+import '../assets/item.css'
+import { getEnv } from '../lib/env'
+
+const healthInfoEnabled = getEnv(import.meta.env, Astro, 'HEALTH_INFO') === 'true'
+---
+
+{healthInfoEnabled && (
+  <div id="health-info-container" class="item" style="display: none;">
+    <div class="time-box">
+      <div class="dot health-dot"></div>
+      <div class="time">
+        <time id="health-time" class="health-time"></time>
+      </div>
+    </div>
+    <div id="health-content" class="text-box health-content" style="display: none;">
+      <div id="heart-rate-info" class="health-item" style="display: none;">
+        <span class="health-icon">❤️</span>
+        <span class="health-label">心率:</span>
+        <span id="heart-rate-value" class="health-value"></span>
+        <span class="health-unit">bpm</span>
+      </div>
+      <div id="location-info" class="health-item" style="display: none;">
+        <span class="health-icon">📍</span>
+        <span class="health-label">位置:</span>
+        <span id="location-value" class="health-value"></span>
+      </div>
+    </div>
+  </div>
+)}
+
+<style>
+  .health-dot {
+    background-color: #ff6b6b;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(255, 107, 107, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
+    }
+  }
+
+  .health-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .health-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .health-icon {
+    font-size: 16px;
+  }
+
+  .health-label {
+    color: var(--secondary-color);
+    font-weight: 500;
+  }
+
+  .health-value {
+    color: var(--foreground-color);
+    font-weight: 600;
+  }
+
+  .health-unit {
+    color: var(--secondary-color);
+    font-size: 12px;
+  }
+
+  @media screen and (max-width: 600px) {
+    .health-content {
+      gap: 6px;
+    }
+    
+    .health-item {
+      font-size: 13px;
+      gap: 6px;
+    }
+    
+    .health-icon {
+      font-size: 14px;
+    }
+  }
+</style>
+
+{healthInfoEnabled && (
+  <script>
+    // 健康信息获取和展示逻辑
+    let healthInfoInterval;
+    
+    async function fetchHealthInfo() {
+      try {
+        const response = await fetch('https://zepp-api.whj.life/api/get', {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer zepp-api-token-whj.life',
+            'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+            'Accept': '*/*',
+            'Host': 'zepp-api.whj.life',
+            'Connection': 'keep-alive'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        updateHealthInfo(data);
+      } catch (error) {
+        console.error('获取健康信息失败:', error);
+        // 发生错误时隐藏健康信息容器
+        const container = document.getElementById('health-info-container');
+        if (container) {
+          container.style.display = 'none';
+        }
+      }
+    }
+    
+    function updateHealthInfo(data) {
+      const { heart_rate, location, updated } = data;
+      const hasHeartRate = heart_rate !== null && heart_rate !== undefined;
+      const hasLocation = location !== null && location !== undefined && location.lat !== null && location.lng !== null;
+      
+      // 如果心率和位置都为空，隐藏整个容器
+      if (!hasHeartRate && !hasLocation) {
+        const container = document.getElementById('health-info-container');
+        if (container) {
+          container.style.display = 'none';
+        }
+        return;
+      }
+      
+      // 显示容器和内容区域
+      const container = document.getElementById('health-info-container');
+      const content = document.getElementById('health-content');
+      if (container) {
+        container.style.display = 'block';
+      }
+      if (content) {
+        content.style.display = 'block';
+      }
+      
+      // 更新时间
+      const timeElement = document.getElementById('health-time');
+      if (timeElement && updated) {
+        const updateTime = new Date(updated);
+        const now = new Date();
+        const diffInMs = now - updateTime;
+        const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+        const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+        const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+        
+        let timeago;
+        if (diffInMinutes < 1) {
+          timeago = '刚刚';
+        } else if (diffInMinutes < 60) {
+          timeago = `${diffInMinutes}分钟前`;
+        } else if (diffInHours < 24) {
+          timeago = `${diffInHours}小时前`;
+        } else if (diffInDays < 7) {
+          timeago = `${diffInDays}天前`;
+        } else {
+          timeago = updateTime.toLocaleDateString() + ' ' + updateTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+        
+        timeElement.textContent = timeago;
+        timeElement.setAttribute('datetime', updated);
+        timeElement.setAttribute('title', timeago);
+      }
+      
+      // 更新心率信息
+      const heartRateInfo = document.getElementById('heart-rate-info');
+      const heartRateValue = document.getElementById('heart-rate-value');
+      if (hasHeartRate && heartRateInfo && heartRateValue) {
+        heartRateValue.textContent = heart_rate;
+        heartRateInfo.style.display = 'flex';
+      } else if (heartRateInfo) {
+        heartRateInfo.style.display = 'none';
+      }
+      
+      // 更新位置信息
+      const locationInfo = document.getElementById('location-info');
+      const locationValue = document.getElementById('location-value');
+      if (hasLocation && locationInfo && locationValue) {
+        locationValue.textContent = `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}`;
+        locationInfo.style.display = 'flex';
+      } else if (locationInfo) {
+        locationInfo.style.display = 'none';
+      }
+    }
+    
+    // 页面加载完成后开始获取健康信息
+    document.addEventListener('DOMContentLoaded', function() {
+      // 设置时区和语言信息到时间元素
+      const timeElement = document.getElementById('health-time');
+      if (timeElement) {
+        timeElement.setAttribute('data-timezone', document.documentElement.getAttribute('data-timezone') || 'Asia/Shanghai');
+        timeElement.setAttribute('data-locale', document.documentElement.getAttribute('data-locale') || 'zh-cn');
+      }
+      
+      // 立即获取一次健康信息
+      fetchHealthInfo();
+      
+      // 每2秒获取一次健康信息
+      healthInfoInterval = setInterval(fetchHealthInfo, 2000);
+    });
+    
+    // 页面卸载时清理定时器
+    window.addEventListener('beforeunload', function() {
+      if (healthInfoInterval) {
+        clearInterval(healthInfoInterval);
+      }
+    });
+  </script>
+)}

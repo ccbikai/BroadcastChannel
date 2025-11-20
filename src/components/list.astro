@@ -2,6 +2,7 @@
 import Layout from '../layouts/base.astro'
 import Header from '../components/header.astro'
 import Item from '../components/item.astro'
+import HealthInfo from '../components/health-info.astro'
 
 const { SITE_URL } = Astro.locals
 const { channel, before = true, after = true, isItem = false } = Astro.props
@@ -17,6 +18,7 @@ const afterCursor = posts[0]?.id
     <Header channel={channel} />
   </slot>
   <div class="items">
+    <HealthInfo />
     {posts.map((post) => <Item post={post} isItem={isItem} />)}
   </div>
 

@@ -55,6 +55,9 @@ const HEADER_INJECT = getEnv(import.meta.env, Astro, 'HEADER_INJECT')
 const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
 const TAGS = getEnv(import.meta.env, Astro, 'TAGS')
 const LINKS = getEnv(import.meta.env, Astro, 'LINKS')
+
+const TEXT_FIRST_VALUE = getEnv(import.meta.env, Astro, 'TEXT_FIRST')
+const timezone = getEnv(import.meta.env, Astro, 'TIMEZONE')
 const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
   .split(';')
   .filter(Boolean)
@@ -68,7 +71,7 @@ const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
 ---
 
 <!doctype html>
-<html lang={locale ?? 'en'}>
+<html lang={locale ?? 'en'} data-locale={locale ?? 'en'} data-timezone={timezone ?? 'UTC'}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -89,6 +92,8 @@ const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
       {...seoParams}
     />
     <Fragment set:html={HEADER_INJECT} />
+    
+
   </head>
 
   <body>

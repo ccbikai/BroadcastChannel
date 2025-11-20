@@ -136,6 +136,12 @@ NAVS=Title1,URL1;Title2,URL3;Title3,URL3;
 
 ## Enable RSS beautify
 RSS_BEAUTIFY=true
+
+## Display text content above media resources (images, videos, etc.)
+TEXT_FIRST=false
+
+## Enable health information display (heart rate and location)
+HEALTH_INFO=false
 ```
 
 ## 🙋🏻 FAQs
